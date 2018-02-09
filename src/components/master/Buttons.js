@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Button from "../button/Button";
 import style from '../button/style.module.css';
-import Jodit from "jodit";
 import Separator from "../button/Separator";
 import Break from "../button/Break";
+import Jodit from "jodit";
+
 
 export default class Buttons extends Component {
     toggleAll = () => {

@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
 
-// import Jodit from 'jodit';
+import Jodit from 'jodit';
 // import 'jodit/build/jodit.min.css';
 
-const Jodit = window.Jodit;// eslint-disable-line
-import JoditEditor from "jodit-react";// eslint-disable-line
-import style from './style.module.css';// eslint-disable-line
 
+import JoditEditor from "jodit-react";
+import style from './style.module.css';
+import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/light";
+import js from 'react-syntax-highlighter/languages/hljs/javascript';
+import { ascetic as codeStyle } from 'react-syntax-highlighter/styles/hljs';
 
-import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/light";// eslint-disable-line
-import js from 'react-syntax-highlighter/languages/hljs/javascript';// eslint-disable-line
-import { ascetic as codeStyle } from 'react-syntax-highlighter/styles/hljs';// eslint-disable-line
-
-import Tabs from "../tab/Tabs";// eslint-disable-line
-import Tab from "../tab/Tab";// eslint-disable-line
-import Options from "./Options";// eslint-disable-line
-import Buttons from "./Buttons";// eslint-disable-line
+import Tabs from "../tab/Tabs";
+import Tab from "../tab/Tab";
+import Options from "./Options";
+import Buttons from "./Buttons";
 
 registerLanguage('javascript', js);
 

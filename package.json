@@ -1,8 +1,8 @@
 {
   "name": "jodit-play",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "dependencies": {
-    "jodit": "^3.1.36"
+    "jodit": "^3.1.37"
   },
   "scripts": {
     "build-rename": "npm run build-rename-js && npm run build-rename-css",
@@ -10,8 +10,8 @@
     "build-rename-css": "renamer --regex --find \"main\\.[^\\.]+\\.css(\\.map)?\"  --replace \"main.css$1\" build\\static\\css\\*",
     "newversion": "npm run build && npm version patch --no-git-tag-version && npm run github && npm publish ./",
     "github": "git add --all  && git commit -m \"New version %npm_package_version%. Read more https://github.com/xdan/jodit/releases/tag/%npm_package_version% \" && git tag %npm_package_version% && git push --tags origin HEAD:master",
-    "start": "react-scripts start",
-    "build": "react-scripts build && npm run build-rename",
+    "start": "react-app-rewired  start",
+    "build": "react-app-rewired  build && npm run build-rename",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
