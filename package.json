@@ -1,14 +1,8 @@
 {
   "name": "jodit-play",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "dependencies": {
-    "jodit": "^3.1.36",
-    "jodit-react": "^1.0.14",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "react-scripts": "2.0.0-next.47d2d941",
-    "react-syntax-highlighter": "^7.0.0",
-    "react-toggle": "^4.0.2"
+    "jodit": "^3.1.36"
   },
   "scripts": {
     "build-rename": "npm run build-rename-js && npm run build-rename-css",
@@ -36,6 +30,12 @@
     ]
   },
   "devDependencies": {
-    "renamer": "^0.6.1"
+    "jodit-react": "^1.0.14",
+    "renamer": "^0.6.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "2.0.0-next.47d2d941",
+    "react-syntax-highlighter": "^7.0.0",
+    "react-toggle": "^4.0.2"
   }
 }
