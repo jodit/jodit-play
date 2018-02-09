@@ -1,0 +1,38 @@
+.layout {
+    /*background-color: #f6f6f6;*/
+    /*border: 1px solid #ccc;*/
+    display: flex
+}
+.rightside {
+    width: 24%;
+    padding: 0;
+}
+
+.leftside {
+    padding: 0 5px 0 0;
+    width: 76%;
+}
+@media(max-width: 950px) {
+    .layout {
+        /*background-color: #f6f6f6;*/
+        /*border: 1px solid #ccc;*/
+        display: block
+    }
+    .rightside {
+        width: 100%;
+    }
+
+    .leftside {
+        width: 100%;
+    }
+}
+.item {
+
+}
+
+.leftside h2,
+.rightside h2{
+    margin: 10px 0;
+    font-weight: 500;
+    font-size: 1.2em;
+}
