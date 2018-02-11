@@ -8,6 +8,7 @@
 .header {
     margin-bottom: 10px;
     border-bottom: 1px solid #ccc;
+    font-size: 0;
 }
 .button {
     display: inline-block;
