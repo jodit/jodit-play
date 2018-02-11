@@ -14,23 +14,35 @@ import Tabs from "../tab/Tabs";
 import Tab from "../tab/Tab";
 import Options from "./Options";
 import Buttons from "./Buttons";
+import CheckBox from "../checkbox/CheckBox";
+import URL from "../url/URL";
+import Text from "../text/Text";
+import URLS from "../url/URLS";
 
 registerLanguage('javascript', js);
 
 class JoditMaster extends Component {
+    getButtons(type) {
+        return Jodit.defaultOptions.buttonsXS.concat(this.getRemoveButtons(type))
+    }
+    getRemoveButtons(type) {
+        return Jodit.defaultOptions.buttons.filter((key) => {
+            return key !== '|' && key !== '\n' && Jodit.defaultOptions[type].indexOf(key) === -1
+        })
+    }
     state = {
         workBoxWidth: 'auto',
         buttons: {
             buttons: Jodit.defaultOptions.buttons,
-            buttonsMD: Jodit.defaultOptions.buttonsMD,
-            buttonsSM: Jodit.defaultOptions.buttonsSM,
-            buttonsXS: Jodit.defaultOptions.buttonsXS,
+            buttonsMD: this.getButtons('buttonsMD'),
+            buttonsSM: this.getButtons('buttonsSM'),
+            buttonsXS: this.getButtons('buttonsXS')
         },
         removeButtons: {
             buttons: [],
-            buttonsMD: [],
-            buttonsSM: [],
-            buttonsXS: [],
+            buttonsMD: this.getRemoveButtons('buttonsMD'),
+            buttonsSM: this.getRemoveButtons('buttonsSM'),
+            buttonsXS: this.getRemoveButtons('buttonsXS'),
         },
         activeIndex: {
             buttons: 0,
@@ -40,8 +52,26 @@ class JoditMaster extends Component {
         },
 
         config: {
-            height: 'auto',
-            width: 'auto'
+            toolbar: Jodit.defaultOptions.toolbar,
+            iframe: Jodit.defaultOptions.iframe,
+            iframeStyle: Jodit.defaultOptions.iframeStyle,
+
+            textIcons: Jodit.defaultOptions.textIcons,
+            readonly: Jodit.defaultOptions.readonly,
+            spellcheck: Jodit.defaultOptions.spellcheck,
+            language: Jodit.defaultOptions.language,
+            theme: Jodit.defaultOptions.theme,
+            toolbarButtonSize: Jodit.defaultOptions.toolbarButtonSize,
+            enter: Jodit.defaultOptions.enter,
+            defaultMode: Jodit.defaultOptions.defaultMode,
+            allowResizeY: Jodit.defaultOptions.allowResizeY,
+            allowResizeX: Jodit.defaultOptions.allowResizeX,
+
+            toolbarAdaptive: Jodit.defaultOptions.toolbarAdaptive,
+
+            height:  Jodit.defaultOptions.height,
+            width:  Jodit.defaultOptions.width,
+            sizeLG: 800,
         }
     };
 
@@ -95,20 +125,29 @@ class JoditMaster extends Component {
             }
 
             if (JSON.stringify(this.state[name]) !== JSON.stringify(value)) {
-                this.setState(prevState => ({
-                    ...prevState,
-                    config: {
-                        ...prevState.config,
-                        [name]: value
+                this.setState(prevState => {
+                    let newStage = {...prevState.config};
+
+                    if (name === 'iframe' && value ===  false) {
+                        newStage.iframeStyle = Jodit.defaultOptions.iframeStyle;
+                        newStage.iframeCSSLinks = Jodit.defaultOptions.iframeCSSLinks;
+                        newStage.iframeBaseUrl = Jodit.defaultOptions.iframeBaseUrl;
                     }
-                }));
+
+                    newStage[name] = value;
+
+                    return {
+                    ...prevState,
+                        config: newStage
+                    }
+                });
             }
         }, 100)
     };
     getCode = () => {
         const keys = Object.keys(this.state.config), options= {};
         keys.forEach((key) => {
-            if (JSON.stringify(this.state.config[key]) !== JSON.stringify(Jodit.defaultOptions[key])) {
+            if (JSON.stringify(this.state.config[key]) !== JSON.stringify(Jodit.defaultOptions[key]) && ['sizeLG'].indexOf(key) === -1) {
                 options[key] = this.state.config[key];
             }
         });
@@ -172,20 +211,55 @@ class JoditMaster extends Component {
                             </Tab>
                             {this.state.config.toolbar === false ||
                             <Tab label="Buttons">
+                                <CheckBox name="toolbarAdaptive" onChange={this.setOption} defaultChecked={Jodit.defaultOptions.toolbarAdaptive} label="Toolbar adaptive"/>
                                 <Tabs>
                                     <Tab onClick={this.setWorkboxWidth} width={"auto"} label="Desctop">
                                         <Buttons activeIndex={this.state.activeIndex.buttons} removeButtons={this.state.removeButtons.buttons} name="buttons" setButtons={this.setButtons} buttons={this.state.buttons.buttons}/>
                                     </Tab>
-                                    <Tab onClick={this.setWorkboxWidth} width={899} label="Medium(900px)">
-                                        <Buttons activeIndex={this.state.activeIndex.buttonsMD} removeButtons={this.state.removeButtons.buttonsMD} name="buttonsMD" setButtons={this.setButtons} buttons={this.state.buttons.buttonsMD}/>
+                                    {!this.state.config.toolbarAdaptive ||
+                                    <Tab onClick={this.setWorkboxWidth} width={799} label="Medium(900px)">
+                                        <Buttons activeIndex={this.state.activeIndex.buttonsMD}
+                                                 removeButtons={this.state.removeButtons.buttonsMD} name="buttonsMD"
+                                                 setButtons={this.setButtons} buttons={this.state.buttons.buttonsMD}/>
                                     </Tab>
+                                    }
+                                    {!this.state.config.toolbarAdaptive ||
                                     <Tab onClick={this.setWorkboxWidth} width={699} label="Tablet(700px)">
-                                        <Buttons activeIndex={this.state.activeIndex.buttonsSM} removeButtons={this.state.removeButtons.buttonsSM} name="buttonsSM" setButtons={this.setButtons} buttons={this.state.buttons.buttonsSM}/>
+                                        <Buttons activeIndex={this.state.activeIndex.buttonsSM}
+                                                 removeButtons={this.state.removeButtons.buttonsSM} name="buttonsSM"
+                                                 setButtons={this.setButtons} buttons={this.state.buttons.buttonsSM}/>
                                     </Tab>
-                                    <Tab onClick={this.setWorkboxWidth}  width={399} label="Mobile(400px)">
-                                        <Buttons activeIndex={this.state.activeIndex.buttonsXS} removeButtons={this.state.removeButtons.buttonsXS} name="buttonsXS" setButtons={this.setButtons} buttons={this.state.buttons.buttonsXS}/>
+                                    }
+                                    {!this.state.config.toolbarAdaptive ||
+                                    <Tab onClick={this.setWorkboxWidth} width={399} label="Mobile(400px)">
+                                        <Buttons activeIndex={this.state.activeIndex.buttonsXS}
+                                                 removeButtons={this.state.removeButtons.buttonsXS} name="buttonsXS"
+                                                 setButtons={this.setButtons} buttons={this.state.buttons.buttonsXS}/>
                                     </Tab>
+                                    }
                                 </Tabs>
+                            </Tab>
+                            }
+                            {this.state.config.iframe === false ||
+                            <Tab label="Iframe mode">
+                                <URL
+                                    label="Iframe Base URL"
+                                    name="iframeBaseUrl"
+                                    onChange={this.setOption}
+                                    value={this.state.config.iframeBaseUrl}
+                                />
+                                <Text
+                                    label="iframe Default Style"
+                                    name="iframeStyle"
+                                    onChange={this.setOption}
+                                    value={this.state.config.iframeStyle}
+                                />
+                                <URLS
+                                    label="Iframe external stylesheets files"
+                                    name="iframeCSSLinks"
+                                    onChange={this.setOption}
+                                    value={this.state.config.iframeCSSLinks}
+                                />
                             </Tab>
                             }
                         </Tabs>

@@ -2,6 +2,8 @@ module.exports = function override(config, env) {
     if (!config.externals) {
         config.externals = {};
     }
-    config.externals.jodit = 'Jodit';
+    if (process.env.NODE_ENV === 'production') {
+        config.externals.jodit = 'Jodit';
+    }
     return config;
 };

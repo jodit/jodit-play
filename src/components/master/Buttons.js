@@ -108,8 +108,9 @@ export default class Buttons extends Component {
         });
 
         return (
-            <table className={style.table}>
-                <tbody>
+            <div>
+                <table className={style.table}>
+                    <tbody>
                     <tr>
                         <td colSpan={5} style={{textAlign: "right", padding: "5px 0"}}>
                             <span onClick={this.restoreDefaults} className={style.restore} title="Restore default"></span>
@@ -119,9 +120,11 @@ export default class Buttons extends Component {
                         </td>
                     </tr>
                     {list}
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+                <p className={style.info}>Double-Click selected row</p>
+            </div>
         );
     }
 }

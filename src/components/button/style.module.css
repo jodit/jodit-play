@@ -43,10 +43,8 @@
 .icon svg{
     display: inline-block;
     vertical-align: middle;
+    overflow: visible;
 }
-
-
-
 
 .moveDown,
 .moveUp,
@@ -97,7 +95,7 @@
     height: 20px;
 
     background: url(./resore.svg) no-repeat center center;
-    transition: .01s linear transform
+    transition: .01s linear transform;
 }
 
 .restore:active:before {
@@ -131,4 +129,19 @@
 .lastCol {
     text-align: center;
     width: 50px;
+}
+.info {
+    font-size: 12px;
+    color: #ccc;
+    margin: 3px 0;
+    text-align: center;
+}
+.fill {
+    padding: 0;
+    height: 34px;
+    width: 75px;
+    padding : 0 5px;
+}
+.label {
+    margin-bottom: 10px;
 }

@@ -4,13 +4,13 @@
     display: flex
 }
 .rightside {
-    width: 24%;
+    width: 32%;
     padding: 0;
 }
 
 .leftside {
-    padding: 0 5px 0 0;
-    width: 76%;
+    padding: 0 10px 0 0;
+    width: 68%;
 }
 @media(max-width: 950px) {
     .layout {
