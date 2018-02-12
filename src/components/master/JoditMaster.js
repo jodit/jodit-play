@@ -8,7 +8,7 @@ import JoditEditor from "jodit-react";
 import style from './style.module.css';
 import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/light";
 import js from 'react-syntax-highlighter/languages/hljs/javascript';
-import { ascetic as codeStyle } from 'react-syntax-highlighter/styles/hljs';
+import { agate as codeStyle} from 'react-syntax-highlighter/styles/hljs';
 
 import Tabs from "../tab/Tabs";
 import Tab from "../tab/Tab";
@@ -18,6 +18,7 @@ import CheckBox from "../checkbox/CheckBox";
 import URL from "../url/URL";
 import Text from "../text/Text";
 import URLS from "../url/URLS";
+import CopyText from "../copytext/CopyText";
 
 registerLanguage('javascript', js);
 
@@ -179,6 +180,7 @@ class JoditMaster extends Component {
     };
 
     render() {
+        const code = this.getCode();
         return (
             <div className={style.layout}>
                 <div className={style.leftside}>
@@ -193,7 +195,9 @@ class JoditMaster extends Component {
                     </div>
                     <div>
                         <h2>Code</h2>
-                        <SyntaxHighlighter showLineNumbers={false} language='javascript' style={codeStyle}>{this.getCode()}</SyntaxHighlighter>
+                            <CopyText>
+                                <SyntaxHighlighter showLineNumbers={false} language='javascript' style={codeStyle}>{code}</SyntaxHighlighter>
+                            </CopyText>
                     </div>
                 </div>
                 <div className={style.rightside}>
