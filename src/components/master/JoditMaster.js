@@ -74,6 +74,7 @@ class JoditMaster extends Component {
             height:  Jodit.defaultOptions.height,
             width:  Jodit.defaultOptions.width,
             sizeLG: 800,
+            ...this.props.config.initialConfig
         }
     };
 
@@ -160,6 +161,9 @@ class JoditMaster extends Component {
             }
         });
 
+        if (typeof this.props.config.setConfig === 'function') {
+            this.props.config.setConfig(options);
+        }
 
         const config = JSON.stringify(options, null, 2);
         return 'var editor = new Jodit("#editor"' + (config !== '{}' ? ', '  + config + '' : '') + ');';

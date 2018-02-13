@@ -9,12 +9,14 @@ $ npm install jodit jodit-play --save
 # Config
 ```html
 <script>
-window.JoditPlayConfig = {
+ window.JoditPlayConfig = {
 	showCode: true,
 	showEditor: true,
 	showButtonsTab: true,
-	setCode: function (code) {
-	    // do something
+	setCode: console.log,
+	setConfig: console.log,
+	initialConfig: {
+		autofocus: true
 	},
 };
 </script>
