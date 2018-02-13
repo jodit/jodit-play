@@ -53,6 +53,7 @@ class JoditMaster extends Component {
         },
 
         config: {
+            autofocus: Jodit.defaultOptions.autofocus,
             toolbar: Jodit.defaultOptions.toolbar,
             iframe: Jodit.defaultOptions.iframe,
             iframeStyle: Jodit.defaultOptions.iframeStyle,

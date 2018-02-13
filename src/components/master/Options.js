@@ -10,6 +10,7 @@ export default class Options extends Component {
     render() {
         return (
             <div>
+                <CheckBox name="autofocus" onChange={this.props.setOption} defaultChecked={this.props.state.autofocus} label="Autofocus"/>
                 <CheckBox name="toolbar" onChange={this.props.setOption} defaultChecked={this.props.state.toolbar} label="Show Toolbar"/>
                 {this.props.state.toolbar === false ||
                 <CheckBox

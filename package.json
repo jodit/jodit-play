@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "dependencies": {},
   "scripts": {
     "build-rename": "npm run build-rename-js && npm run build-rename-css",
