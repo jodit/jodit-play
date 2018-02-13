@@ -16,7 +16,7 @@ export default class Options extends Component {
                 <CheckBox
                     name="textIcons"
                     onChange={this.props.setOption}
-                    defaultChecked={this.props.textIcons}
+                    defaultChecked={this.props.state.textIcons}
                     label="Text Icons"
                 />
                 }
