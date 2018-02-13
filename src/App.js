@@ -13,6 +13,7 @@ class App extends Component {
         showButtonsTab: true,
         setCode: (code) => {},
         setConfig: (config) => {},
+        ready: () => {},
         initialConfig: {},
       ...window.JoditPlayConfig
     };
