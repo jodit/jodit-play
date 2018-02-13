@@ -181,9 +181,15 @@ class JoditMaster extends Component {
 
     render() {
         const code = this.getCode();
+
+        if (typeof this.props.config.setCode === 'function') {
+            this.props.config.setCode(code);
+        }
+
         return (
             <div className={style.layout}>
                 <div className={style.leftside}>
+                    {this.props.config.showEditor &&
                     <div>
                         <div className={style.workbox} style={{width: this.state.workBoxWidth}}>
                             <JoditEditor
@@ -193,12 +199,16 @@ class JoditMaster extends Component {
                             />
                         </div>
                     </div>
+                    }
+                    {this.props.config.showCode &&
                     <div>
                         <h2>Code</h2>
-                            <CopyText>
-                                <SyntaxHighlighter showLineNumbers={false} language='javascript' style={codeStyle}>{code}</SyntaxHighlighter>
-                            </CopyText>
+                        <CopyText>
+                            <SyntaxHighlighter showLineNumbers={false} language='javascript'
+                                               style={codeStyle}>{code}</SyntaxHighlighter>
+                        </CopyText>
                     </div>
+                    }
                 </div>
                 <div className={style.rightside}>
                     <div className={style.item}>
@@ -213,36 +223,37 @@ class JoditMaster extends Component {
                                     setWidth={this.setWidth}
                                 />
                             </Tab>
-                            {this.state.config.toolbar === false ||
-                            <Tab label="Buttons">
-                                <CheckBox name="toolbarAdaptive" onChange={this.setOption} defaultChecked={Jodit.defaultOptions.toolbarAdaptive} label="Toolbar adaptive"/>
-                                <Tabs>
-                                    <Tab onClick={this.setWorkboxWidth} width={"auto"} label="Desctop">
-                                        <Buttons activeIndex={this.state.activeIndex.buttons} removeButtons={this.state.removeButtons.buttons} name="buttons" setButtons={this.setButtons} buttons={this.state.buttons.buttons}/>
-                                    </Tab>
-                                    {!this.state.config.toolbarAdaptive ||
-                                    <Tab onClick={this.setWorkboxWidth} width={799} label="Medium(900px)">
-                                        <Buttons activeIndex={this.state.activeIndex.buttonsMD}
-                                                 removeButtons={this.state.removeButtons.buttonsMD} name="buttonsMD"
-                                                 setButtons={this.setButtons} buttons={this.state.buttons.buttonsMD}/>
-                                    </Tab>
-                                    }
-                                    {!this.state.config.toolbarAdaptive ||
-                                    <Tab onClick={this.setWorkboxWidth} width={699} label="Tablet(700px)">
-                                        <Buttons activeIndex={this.state.activeIndex.buttonsSM}
-                                                 removeButtons={this.state.removeButtons.buttonsSM} name="buttonsSM"
-                                                 setButtons={this.setButtons} buttons={this.state.buttons.buttonsSM}/>
-                                    </Tab>
-                                    }
-                                    {!this.state.config.toolbarAdaptive ||
-                                    <Tab onClick={this.setWorkboxWidth} width={399} label="Mobile(400px)">
-                                        <Buttons activeIndex={this.state.activeIndex.buttonsXS}
-                                                 removeButtons={this.state.removeButtons.buttonsXS} name="buttonsXS"
-                                                 setButtons={this.setButtons} buttons={this.state.buttons.buttonsXS}/>
-                                    </Tab>
-                                    }
-                                </Tabs>
-                            </Tab>
+                            {this.props.config.showButtonsTab === false ||
+                                this.state.config.toolbar === false ||
+                                <Tab label="Buttons">
+                                    <CheckBox name="toolbarAdaptive" onChange={this.setOption} defaultChecked={Jodit.defaultOptions.toolbarAdaptive} label="Toolbar adaptive"/>
+                                    <Tabs>
+                                        <Tab onClick={this.setWorkboxWidth} width={"auto"} label="Desctop">
+                                            <Buttons activeIndex={this.state.activeIndex.buttons} removeButtons={this.state.removeButtons.buttons} name="buttons" setButtons={this.setButtons} buttons={this.state.buttons.buttons}/>
+                                        </Tab>
+                                        {!this.state.config.toolbarAdaptive ||
+                                        <Tab onClick={this.setWorkboxWidth} width={799} label="Medium(900px)">
+                                            <Buttons activeIndex={this.state.activeIndex.buttonsMD}
+                                                     removeButtons={this.state.removeButtons.buttonsMD} name="buttonsMD"
+                                                     setButtons={this.setButtons} buttons={this.state.buttons.buttonsMD}/>
+                                        </Tab>
+                                        }
+                                        {!this.state.config.toolbarAdaptive ||
+                                        <Tab onClick={this.setWorkboxWidth} width={699} label="Tablet(700px)">
+                                            <Buttons activeIndex={this.state.activeIndex.buttonsSM}
+                                                     removeButtons={this.state.removeButtons.buttonsSM} name="buttonsSM"
+                                                     setButtons={this.setButtons} buttons={this.state.buttons.buttonsSM}/>
+                                        </Tab>
+                                        }
+                                        {!this.state.config.toolbarAdaptive ||
+                                        <Tab onClick={this.setWorkboxWidth} width={399} label="Mobile(400px)">
+                                            <Buttons activeIndex={this.state.activeIndex.buttonsXS}
+                                                     removeButtons={this.state.removeButtons.buttonsXS} name="buttonsXS"
+                                                     setButtons={this.setButtons} buttons={this.state.buttons.buttonsXS}/>
+                                        </Tab>
+                                        }
+                                    </Tabs>
+                                </Tab>
                             }
                             {this.state.config.iframe === false ||
                             <Tab label="Iframe mode">

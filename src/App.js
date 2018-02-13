@@ -4,10 +4,22 @@ import JoditMaster from "./components/master/JoditMaster";
 
 
 class App extends Component {
+  config;
+  constructor() {
+    super();
+    this.config = {
+        showCode: true,
+        showEditor: true,
+        showButtonsTab: true,
+        setCode: (code) => {},
+      ...window.JoditPlayConfig
+    };
+  }
+
   render() {
     return (
       <div className="App">
-          <JoditMaster/>
+          <JoditMaster config={this.config}/>
       </div>
     );
   }
