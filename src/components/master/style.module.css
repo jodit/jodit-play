@@ -13,6 +13,9 @@
     width: 68%;
 }
 
+.rightside {
+    line-height: 16px;
+}
 .rightside select,
 .rightside input[type=text],
 .rightside input[type=number],

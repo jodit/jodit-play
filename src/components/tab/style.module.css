@@ -20,8 +20,10 @@
     height: 23px;
     cursor: pointer;
     font-size: 12px;
+    line-height: 14px;
     opacity: .7;
     user-select: none;
+    vertical-align: top;
 }
 .buttonActive {
     position: relative;
