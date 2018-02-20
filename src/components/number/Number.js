@@ -3,7 +3,7 @@ import style from './style.module.css';
 
 export default class Number extends Component {
     onChange = (event) => {
-        this.props.onChange && this.props.onChange(event.target.value, this.props.name);
+        this.props.onChange && this.props.onChange(parseInt(event.target.value, 10), this.props.name);
     };
     render() {
         return (

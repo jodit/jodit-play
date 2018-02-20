@@ -70,6 +70,8 @@ class JoditMaster extends Component {
             allowResizeX: Jodit.defaultOptions.allowResizeX,
 
             toolbarAdaptive: Jodit.defaultOptions.toolbarAdaptive,
+            toolbarSticky: Jodit.defaultOptions.toolbarSticky,
+            toolbarStickyOffset: Jodit.defaultOptions.toolbarStickyOffset,
 
             height:  Jodit.defaultOptions.height,
             width:  Jodit.defaultOptions.width,
@@ -231,7 +233,7 @@ class JoditMaster extends Component {
                             {this.props.config.showButtonsTab === false ||
                                 this.state.config.toolbar === false ||
                                 <Tab label="Buttons">
-                                    <CheckBox name="toolbarAdaptive" onChange={this.setOption} defaultChecked={Jodit.defaultOptions.toolbarAdaptive} label="Toolbar adaptive"/>
+                                    <CheckBox name="toolbarAdaptive" onChange={this.setOption} defaultChecked={this.state.config.toolbarAdaptive} label="Toolbar adaptive"/>
                                     <Tabs>
                                         <Tab onClick={this.setWorkboxWidth} width={"auto"} label="Desctop">
                                             <Buttons activeIndex={this.state.activeIndex.buttons} removeButtons={this.state.removeButtons.buttons} name="buttons" setButtons={this.setButtons} buttons={this.state.buttons.buttons}/>

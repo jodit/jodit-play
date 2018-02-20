@@ -30,12 +30,27 @@ export default class Options extends Component {
                     'default' : 'Default',
                     'dark' : 'Dark',
                 }} label="Theme"/>
+
                 {this.props.state.toolbar === false ||
                 <List value={this.props.state.toolbarButtonSize} name="toolbarButtonSize"
                       onChange={this.props.setOption} list={[
                     "small", "middle", "large"
                 ]} label="Size of icons"/>
                 }
+
+                {this.props.state.toolbar === false ||
+                <CheckBox name="toolbarSticky" onChange={this.props.setOption} defaultChecked={this.props.state.toolbarSticky} label="Sticky Toolbar"/>
+                }
+
+                {this.props.state.toolbar === false || this.props.state.toolbarSticky === false ||
+                    <Number
+                        label="Sticky offset"
+                        name="toolbarStickyOffset"
+                        onChange={this.props.setOption}
+                        value={this.props.state.toolbarStickyOffset}
+                    />
+                }
+
                 <List name="enter" value={this.props.state.enter} onChange={this.props.setOption} list={{
                     "P": 'Paragraph (P)',
                     "DIV": 'Block (DIV)',
