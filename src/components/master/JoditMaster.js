@@ -73,6 +73,12 @@ class JoditMaster extends Component {
             toolbarSticky: Jodit.defaultOptions.toolbarSticky,
             toolbarStickyOffset: Jodit.defaultOptions.toolbarStickyOffset,
 
+            showCharsCounter: Jodit.defaultOptions.showCharsCounter,
+            showWordsCounter: Jodit.defaultOptions.showWordsCounter,
+            showXPathInStatusbar: Jodit.defaultOptions.showXPathInStatusbar,
+
+
+
             height:  Jodit.defaultOptions.height,
             width:  Jodit.defaultOptions.width,
             sizeLG: 800,
@@ -284,6 +290,26 @@ class JoditMaster extends Component {
                                 />
                             </Tab>
                             }
+                            <Tab label="Status bar">
+                                <CheckBox
+                                    name="showCharsCounter"
+                                    onChange={this.setOption}
+                                    defaultChecked={this.state.config.showCharsCounter}
+                                    label="Show chars counter"
+                                />
+                                <CheckBox
+                                    name="showWordsCounter"
+                                    onChange={this.setOption}
+                                    defaultChecked={this.state.config.showWordsCounter}
+                                    label="Show words counter"
+                                />
+                                <CheckBox
+                                    name="showXPathInStatusbar"
+                                    onChange={this.setOption}
+                                    defaultChecked={this.state.config.showXPathInStatusbar}
+                                    label="Show path to selected element"
+                                />
+                            </Tab>
                         </Tabs>
                     </div>
                 </div>
