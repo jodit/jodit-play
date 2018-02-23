@@ -77,6 +77,9 @@ class JoditMaster extends Component {
             showWordsCounter: Jodit.defaultOptions.showWordsCounter,
             showXPathInStatusbar: Jodit.defaultOptions.showXPathInStatusbar,
 
+            saveHeightInStorage: Jodit.defaultOptions.saveHeightInStorage,
+            saveModeInStorage: Jodit.defaultOptions.saveModeInStorage,
+
 
 
             height:  Jodit.defaultOptions.height,
@@ -308,6 +311,20 @@ class JoditMaster extends Component {
                                     onChange={this.setOption}
                                     defaultChecked={this.state.config.showXPathInStatusbar}
                                     label="Show path to selected element"
+                                />
+                            </Tab>
+                            <Tab label="State">
+                                <CheckBox
+                                    name="saveHeightInStorage"
+                                    onChange={this.setOption}
+                                    defaultChecked={this.state.config.saveHeightInStorage}
+                                    label="Save height in storage"
+                                />
+                                <CheckBox
+                                    name="saveModeInStorage"
+                                    onChange={this.setOption}
+                                    defaultChecked={this.state.config.saveModeInStorage}
+                                    label="Save mode in storage"
                                 />
                             </Tab>
                         </Tabs>
