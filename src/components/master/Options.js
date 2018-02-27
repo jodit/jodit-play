@@ -64,6 +64,8 @@ export default class Options extends Component {
                     [Jodit.MODE_SPLIT]: 'Split code',
                 }} label="Default mode"/>
 
+                <hr/>
+
                 {this.props.state.height === 'auto' ||
                 <CheckBox right name="allowResizeY" onChange={this.props.setOption} defaultChecked={this.props.state.allowResizeY} label="Allow Height resize"/>
                 }

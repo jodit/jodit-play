@@ -1,7 +1,9 @@
 {
   "name": "jodit-play",
-  "version": "0.1.26",
-  "dependencies": {},
+  "version": "0.1.27",
+  "dependencies": {
+    "history": "^4.7.2"
+  },
   "scripts": {
     "build-rename": "npm run build-rename-js && npm run build-rename-css",
     "build-rename-js": "renamer --regex --find \"main\\.[^\\.]+\\.js(\\.map)?\" --replace \"main.js$1\" build\\static\\js\\*",
@@ -28,13 +30,13 @@
     ]
   },
   "devDependencies": {
-    "jodit": "^3.1.50",
+    "jodit": "^3.1.56",
     "jodit-react": "^1.0.14",
     "react": "^16.2.0",
     "react-app-rewired": "^1.4.1",
     "react-dom": "^16.2.0",
     "react-scripts": "2.0.0-next.47d2d941",
-    "react-syntax-highlighter": "^7.0.0",
+    "react-syntax-highlighter": "^7.0.1",
     "react-toggle": "^4.0.2",
     "renamer": "^0.6.1"
   }

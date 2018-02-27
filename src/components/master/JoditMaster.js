@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import Jodit from 'jodit';
-// import 'jodit/build/jodit.min.css';
 
 
 import JoditEditor from "jodit-react";
@@ -19,8 +17,12 @@ import URL from "../url/URL";
 import Text from "../text/Text";
 import URLS from "../url/URLS";
 import CopyText from "../copytext/CopyText";
+import State from "./State";
+import {http_build_query} from "../../App";
+import createHistory from 'history/createBrowserHistory'
 
 registerLanguage('javascript', js);
+const history = createHistory()
 
 class JoditMaster extends Component {
     getButtons(type) {
@@ -79,6 +81,10 @@ class JoditMaster extends Component {
 
             saveHeightInStorage: Jodit.defaultOptions.saveHeightInStorage,
             saveModeInStorage: Jodit.defaultOptions.saveModeInStorage,
+
+            askBeforePasteHTML: Jodit.defaultOptions.askBeforePasteHTML,
+            askBeforePasteFromWord: Jodit.defaultOptions.askBeforePasteFromWord,
+            defaultActionOnPaste: Jodit.defaultOptions.defaultActionOnPaste,
 
 
 
@@ -155,6 +161,7 @@ class JoditMaster extends Component {
                         config: newStage
                     }
                 });
+
             }
         }, 100)
     };
@@ -177,6 +184,9 @@ class JoditMaster extends Component {
         }
 
         const config = JSON.stringify(options, null, 2);
+
+        history.push('?' + http_build_query(options), options)
+
         return 'var editor = new Jodit("#editor"' + (config !== '{}' ? ', '  + config + '' : '') + ');';
     };
     value = '';
@@ -314,17 +324,9 @@ class JoditMaster extends Component {
                                 />
                             </Tab>
                             <Tab label="State">
-                                <CheckBox
-                                    name="saveHeightInStorage"
-                                    onChange={this.setOption}
-                                    defaultChecked={this.state.config.saveHeightInStorage}
-                                    label="Save height in storage"
-                                />
-                                <CheckBox
-                                    name="saveModeInStorage"
-                                    onChange={this.setOption}
-                                    defaultChecked={this.state.config.saveModeInStorage}
-                                    label="Save mode in storage"
+                                <State
+                                    config={this.state.config}
+                                    setOption={this.setOption}
                                 />
                             </Tab>
                         </Tabs>
