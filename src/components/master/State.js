@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import List from "../list/List";
 import CheckBox from "../checkbox/CheckBox";
+import Jodit from 'jodit';
 
 export default class state extends Component {
     render() {
@@ -32,8 +33,10 @@ export default class state extends Component {
                     label="Ask before paste from Word/Excel"
                 />
                 <List value={this.props.config.defaultActionOnPaste} name="defaultActionOnPaste" onChange={this.props.setOption} list={{
-                    'insert_as_html' : 'Insert as HTML',
-                    'insert_as_text' : 'Insert as plain text',
+                    [Jodit.INSERT_AS_HTML] : 'Insert as HTML',
+                    [Jodit.INSERT_CLEAR_HTML] : 'Insert cleared HTML',
+                    [Jodit.INSERT_AS_TEXT] : 'Insert as plain text',
+                    [Jodit.INSERT_ONLY_TEXT] : 'Insert only text',
                 }} label="Default insert method"/>
             </div>
         )
