@@ -35,12 +35,19 @@ const getParams = query => {
         .reduce((params, param) => {
             let [ key, value ] = param.split('=');
             params[key] = value ? decodeURIComponent(value.replace(/\+/g, ' ')) : '';
+
+            if (params[key].toString().match(/^[0-9]+$/)) {
+                params[key] = parseInt(params[key], 10);
+            }
+
             if (params[key] === 'true') {
                 params[key] = true;
             }
             if (params[key] === 'false') {
                 params[key] = false;
             }
+
+
             return params;
         }, { });
 };
