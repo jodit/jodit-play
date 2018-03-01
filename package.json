@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.31",
+  "version": "0.1.32",
   "dependencies": {
     "history": "^4.7.2"
   },
@@ -16,7 +16,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "/jodit/node_modules/jodit-play/",
+  "homepage": "/jodit/node_modules/jodit-play/build/",
   "browserslist": {
     "development": [
       "last 2 chrome versions",

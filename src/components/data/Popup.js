@@ -6,7 +6,7 @@ export default class Popup extends Component {
     static data = null;
 
     static loadData(success) {
-        fetch(process.env.PUBLIC_URL + './data.json')
+        fetch(process.env.PUBLIC_URL + '/data.json')
             .then((data) => {
                 return data.json();
             })
