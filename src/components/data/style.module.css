@@ -1,0 +1,14 @@
+.box {
+    position: relative;
+    display: inline-block;
+}
+.popup {
+    position: absolute;
+    background-color: #000;
+    color: #fff;
+    padding: 10px;
+    border: 1px solid #f6f6f6;
+    min-width: 200px;
+    margin-top: -17px;
+    margin-left: 10px;
+}

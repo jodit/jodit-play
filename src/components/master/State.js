@@ -8,12 +8,14 @@ export default class state extends Component {
         return (
             <div>
                 <CheckBox
+                    popupKey={"saveHeightInStorage"}
                     name="saveHeightInStorage"
                     onChange={this.props.setOption}
                     defaultChecked={this.props.config.saveHeightInStorage}
                     label="Save height in storage"
                 />
                 <CheckBox
+                    popupKey={"saveModeInStorage"}
                     name="saveModeInStorage"
                     onChange={this.props.setOption}
                     defaultChecked={this.props.config.saveModeInStorage}
@@ -21,12 +23,14 @@ export default class state extends Component {
                 />
                 <hr/>
                 <CheckBox
+                    popupKey={"askBeforePasteHTML"}
                     name="askBeforePasteHTML"
                     onChange={this.props.setOption}
                     defaultChecked={this.props.config.askBeforePasteHTML}
                     label="Ask before paste HTML"
                 />
                 <CheckBox
+                    popupKey={"askBeforePasteFromWord"}
                     name="askBeforePasteFromWord"
                     onChange={this.props.setOption}
                     defaultChecked={this.props.config.askBeforePasteFromWord}

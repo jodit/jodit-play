@@ -10,19 +10,20 @@ export default class Options extends Component {
     render() {
         return (
             <div>
-                <CheckBox name="autofocus" onChange={this.props.setOption} defaultChecked={this.props.state.autofocus} label="Autofocus"/>
-                <CheckBox name="toolbar" onChange={this.props.setOption} defaultChecked={this.props.state.toolbar} label="Show Toolbar"/>
+                <CheckBox popupKey={"autofocus"} name="autofocus" onChange={this.props.setOption} defaultChecked={this.props.state.autofocus} label="Autofocus"/>
+                <CheckBox popupKey={"toolbar"} name="toolbar" onChange={this.props.setOption} defaultChecked={this.props.state.toolbar} label="Show Toolbar"/>
                 {this.props.state.toolbar === false ||
                 <CheckBox
+                    popupKey={"textIcons"}
                     name="textIcons"
                     onChange={this.props.setOption}
                     defaultChecked={this.props.state.textIcons}
                     label="Text Icons"
                 />
                 }
-                <CheckBox name="readonly" onChange={this.props.setOption} defaultChecked={this.props.state.readonly} label="Read Only"/>
+                <CheckBox popupKey={"readonly"} name="readonly" onChange={this.props.setOption} defaultChecked={this.props.state.readonly} label="Read Only"/>
 
-                <CheckBox name="spellcheck" onChange={this.props.setOption} defaultChecked={this.props.state.spellcheck} label="Spell Check"/>
+                <CheckBox popupKey={"spellcheck"} name="spellcheck" onChange={this.props.setOption} defaultChecked={this.props.state.spellcheck} label="Spell Check"/>
 
                 <List value={this.props.state.language} name="language" onChange={this.props.setOption} list={['Auto', ...Object.keys(Jodit.lang)]} label="Language"/>
 
@@ -39,7 +40,7 @@ export default class Options extends Component {
                 }
 
                 {this.props.state.toolbar === false ||
-                <CheckBox name="toolbarSticky" onChange={this.props.setOption} defaultChecked={this.props.state.toolbarSticky} label="Sticky Toolbar"/>
+                <CheckBox popupKey={"toolbarSticky"} name="toolbarSticky" onChange={this.props.setOption} defaultChecked={this.props.state.toolbarSticky} label="Sticky Toolbar"/>
                 }
 
                 {this.props.state.toolbar === false || this.props.state.toolbarSticky === false ||
@@ -67,9 +68,9 @@ export default class Options extends Component {
                 <hr/>
 
                 {this.props.state.height === 'auto' ||
-                <CheckBox right name="allowResizeY" onChange={this.props.setOption} defaultChecked={this.props.state.allowResizeY} label="Allow Height resize"/>
+                <CheckBox popupKey={"allowResizeY"} right name="allowResizeY" onChange={this.props.setOption} defaultChecked={this.props.state.allowResizeY} label="Allow Height resize"/>
                 }
-                <CheckBox name="height" onChange={this.props.setHeight} defaultChecked={this.props.state.height === 'auto'} label="Auto height"/>
+                <CheckBox popupKey={"height"} name="height" onChange={this.props.setHeight} defaultChecked={this.props.state.height === 'auto'} label="Auto height"/>
 
                 {this.props.state.height === 'auto' ||
                 <Number
@@ -80,9 +81,9 @@ export default class Options extends Component {
                 />
                 }
                 {this.props.state.width === 'auto' ||
-                <CheckBox right name="allowResizeX" onChange={this.props.setOption} defaultChecked={this.props.state.allowResizeX} label="Allow Width resize"/>
+                <CheckBox popupKey={"allowResizeX"} right name="allowResizeX" onChange={this.props.setOption} defaultChecked={this.props.state.allowResizeX} label="Allow Width resize"/>
                 }
-                <CheckBox name="width" onChange={this.props.setWidth} defaultChecked={this.props.state.width === 'auto'} label="Auto width"/>
+                <CheckBox popupKey={"width"} name="width" onChange={this.props.setWidth} defaultChecked={this.props.state.width === 'auto'} label="Auto width"/>
 
                 {this.props.state.width !== 'auto' ?
                     <Number
@@ -93,7 +94,7 @@ export default class Options extends Component {
                     /> : ''
                 }
 
-                <CheckBox name="iframe" onChange={this.props.setOption} defaultChecked={this.props.state.iframe} label="Iframe mode"/>
+                <CheckBox popupKey={"iframe"} name="iframe" onChange={this.props.setOption} defaultChecked={this.props.state.iframe} label="Iframe mode"/>
 
             </div>
         );

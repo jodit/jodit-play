@@ -20,6 +20,7 @@ import CopyText from "../copytext/CopyText";
 import State from "./State";
 import {http_build_query} from "../../App";
 import createHistory from 'history/createBrowserHistory'
+import Plugins from "../plugins/Plugins";
 
 registerLanguage('javascript', js);
 const history = createHistory()
@@ -86,7 +87,7 @@ class JoditMaster extends Component {
             askBeforePasteFromWord: Jodit.defaultOptions.askBeforePasteFromWord,
             defaultActionOnPaste: Jodit.defaultOptions.defaultActionOnPaste,
 
-
+            disablePlugins: Jodit.defaultOptions.disablePlugins,
 
             height:  Jodit.defaultOptions.height,
             width:  Jodit.defaultOptions.width,
@@ -252,7 +253,7 @@ class JoditMaster extends Component {
                             {this.props.config.showButtonsTab === false ||
                                 this.state.config.toolbar === false ||
                                 <Tab label="Buttons">
-                                    <CheckBox name="toolbarAdaptive" onChange={this.setOption} defaultChecked={this.state.config.toolbarAdaptive} label="Toolbar adaptive"/>
+                                    <CheckBox popupKey="toolbarAdaptive" name="toolbarAdaptive" onChange={this.setOption} defaultChecked={this.state.config.toolbarAdaptive} label="Toolbar adaptive"/>
                                     <Tabs>
                                         <Tab onClick={this.setWorkboxWidth} width={"auto"} label="Desctop">
                                             <Buttons activeIndex={this.state.activeIndex.buttons} removeButtons={this.state.removeButtons.buttons} name="buttons" setButtons={this.setButtons} buttons={this.state.buttons.buttons}/>
@@ -305,18 +306,21 @@ class JoditMaster extends Component {
                             }
                             <Tab label="Status bar">
                                 <CheckBox
+                                    popupKey={"showCharsCounter"}
                                     name="showCharsCounter"
                                     onChange={this.setOption}
                                     defaultChecked={this.state.config.showCharsCounter}
                                     label="Show chars counter"
                                 />
                                 <CheckBox
+                                    popupKey={"showWordsCounter"}
                                     name="showWordsCounter"
                                     onChange={this.setOption}
                                     defaultChecked={this.state.config.showWordsCounter}
                                     label="Show words counter"
                                 />
                                 <CheckBox
+                                    popupKey={"showXPathInStatusbar"}
                                     name="showXPathInStatusbar"
                                     onChange={this.setOption}
                                     defaultChecked={this.state.config.showXPathInStatusbar}
@@ -325,6 +329,12 @@ class JoditMaster extends Component {
                             </Tab>
                             <Tab label="State">
                                 <State
+                                    config={this.state.config}
+                                    setOption={this.setOption}
+                                />
+                            </Tab>
+                            <Tab label="Plugins">
+                                <Plugins
                                     config={this.state.config}
                                     setOption={this.setOption}
                                 />
