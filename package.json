@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.30",
+  "version": "0.1.31",
   "dependencies": {
     "history": "^4.7.2"
   },
@@ -12,11 +12,11 @@
     "newversion": "npm run build && npm version patch --no-git-tag-version && npm run github && npm publish ./",
     "github": "git add --all  && git commit -m \"New version %npm_package_version%. Read more https://github.com/xdan/jodit/releases/tag/%npm_package_version% \" && git tag %npm_package_version% && git push --tags origin HEAD:master",
     "start": "react-app-rewired  start",
-    "build": "react-app-rewired  build && npm run build-rename",
+    "build": "npm run doc && react-app-rewired  build && npm run build-rename",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "./",
+  "homepage": "/jodit/node_modules/jodit-play/",
   "browserslist": {
     "development": [
       "last 2 chrome versions",
