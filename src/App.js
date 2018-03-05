@@ -58,6 +58,7 @@ class App extends Component {
     super();
 
     this.config = {...{
+        currentTab: null,
         showCode: true,
         showEditor: true,
         showButtonsTab: true,
@@ -69,6 +70,7 @@ class App extends Component {
         ...window.JoditPlayConfig
     }};
 
+    this.config.currentTab = getParams(window.location.search.substr(1))['currentTab'] || null;
     this.config.initialConfig = {...this.config.initialConfig, ...getParams(window.location.search.substr(1))};
   }
 

@@ -6,6 +6,7 @@ import JoditEditor from "jodit-react";
 import style from './style.module.css';
 import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/light";
 import js from 'react-syntax-highlighter/languages/hljs/javascript';
+import css from 'react-syntax-highlighter/languages/hljs/css';
 import { agate as codeStyle} from 'react-syntax-highlighter/styles/hljs';
 
 import Tabs from "../tab/Tabs";
@@ -21,9 +22,12 @@ import State from "./State";
 import {http_build_query} from "../../App";
 import createHistory from 'history/createBrowserHistory'
 import Plugins from "../plugins/Plugins";
+import Themes from "../themes/Themes";
 
 registerLanguage('javascript', js);
-const history = createHistory()
+registerLanguage('css', css);
+
+const history = createHistory();
 
 class JoditMaster extends Component {
     getButtons(type) {
@@ -35,6 +39,8 @@ class JoditMaster extends Component {
         })
     }
     state = {
+        currentButtonsTab: null,
+        currentTab: this.props.config.currentTab,
         workBoxWidth: 'auto',
         buttons: {
             buttons: Jodit.defaultOptions.buttons,
@@ -54,8 +60,26 @@ class JoditMaster extends Component {
             buttonsSM: 0,
             buttonsXS: 0,
         },
-
+        css: '',
+        theme: {
+            ['.jodit_workplace,.jodit_toolbar,.jodit_statusbar,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-separator,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-break']: {
+                borderColor: '#ccc'
+            },
+            ['.jodit_toolbar,.jodit_statusbar']: {
+                backgroundColor: '#ccccc',
+            },
+            ['.jodit_icon,.jodit_toolbar .jodit_toolbar_btn>a']: {
+                'fill|color': '#ddd',
+            },
+            ['.jodit_container']: {
+                'backgroundColor': '#ddd',
+            },
+            ['.jodit_wysiwyg']: {
+                'color': '#ddd',
+            },
+        },
         config: {
+
             autofocus: Jodit.defaultOptions.autofocus,
             toolbar: Jodit.defaultOptions.toolbar,
             iframe: Jodit.defaultOptions.iframe,
@@ -94,6 +118,19 @@ class JoditMaster extends Component {
             sizeLG: 800,
             ...this.props.config.initialConfig
         }
+    };
+
+    setButtonsTab = (value) => {
+        this.setState({
+            ...this.state,
+            currentButtonsTab: value
+        });
+    };
+    setTab = (value) => {
+        this.setState({
+            ...this.state,
+            currentTab: value
+        });
     };
 
     height = 150;
@@ -166,10 +203,12 @@ class JoditMaster extends Component {
             }
         }, 100)
     };
+
     getCode = () => {
         const keys = Object.keys(this.state.config), options= {};
+
         keys.forEach((key) => {
-            if (JSON.stringify(this.state.config[key]) !== JSON.stringify(Jodit.defaultOptions[key]) && ['sizeLG'].indexOf(key) === -1) {
+            if (Jodit.defaultOptions[key] !== undefined && JSON.stringify(this.state.config[key]) !== JSON.stringify(Jodit.defaultOptions[key]) && ['sizeLG'].indexOf(key) === -1) {
                 options[key] = this.state.config[key];
             }
         });
@@ -185,6 +224,10 @@ class JoditMaster extends Component {
         }
 
         const config = JSON.stringify(options, null, 2);
+
+        if (this.state.currentTab !== 'Options' && this.state.currentTab !== null) {
+            options.currentTab = this.state.currentTab;
+        }
 
         history.push('?' + http_build_query(options), options)
 
@@ -205,7 +248,13 @@ class JoditMaster extends Component {
             window.dispatchEvent(event);
         }, 100);
     };
-
+    setCSS = (css, theme) => {
+        this.setState({
+            ...this.state,
+            css,
+            theme
+        });
+    };
     render() {
         const code = this.getCode();
 
@@ -234,12 +283,19 @@ class JoditMaster extends Component {
                             <SyntaxHighlighter showLineNumbers={false} language='javascript'
                                                style={codeStyle}>{code}</SyntaxHighlighter>
                         </CopyText>
+                        {this.state.css && <React.Fragment>
+                            <h2>CSS</h2>
+                            <CopyText>
+                                <SyntaxHighlighter showLineNumbers={false} language='css' style={codeStyle}>{this.state.css}</SyntaxHighlighter>
+                            </CopyText>
+                            <style>{this.state.css}</style>
+                        </React.Fragment>}
                     </div>
                     }
                 </div>
                 <div className={style.rightside}>
                     <div className={style.item}>
-                        <Tabs>
+                        <Tabs currentTab={this.state.currentTab} setTab={this.setTab}>
                             <Tab label="Options">
                                 <Options
                                     state={this.state.config}
@@ -254,7 +310,7 @@ class JoditMaster extends Component {
                                 this.state.config.toolbar === false ||
                                 <Tab label="Buttons">
                                     <CheckBox popupKey="toolbarAdaptive" name="toolbarAdaptive" onChange={this.setOption} defaultChecked={this.state.config.toolbarAdaptive} label="Toolbar adaptive"/>
-                                    <Tabs>
+                                    <Tabs setTab={this.setButtonsTab} currentTab={this.state.currentButtonsTab}>
                                         <Tab onClick={this.setWorkboxWidth} width={"auto"} label="Desctop">
                                             <Buttons activeIndex={this.state.activeIndex.buttons} removeButtons={this.state.removeButtons.buttons} name="buttons" setButtons={this.setButtons} buttons={this.state.buttons.buttons}/>
                                         </Tab>
@@ -304,29 +360,6 @@ class JoditMaster extends Component {
                                 />
                             </Tab>
                             }
-                            <Tab label="Status bar">
-                                <CheckBox
-                                    popupKey={"showCharsCounter"}
-                                    name="showCharsCounter"
-                                    onChange={this.setOption}
-                                    defaultChecked={this.state.config.showCharsCounter}
-                                    label="Show chars counter"
-                                />
-                                <CheckBox
-                                    popupKey={"showWordsCounter"}
-                                    name="showWordsCounter"
-                                    onChange={this.setOption}
-                                    defaultChecked={this.state.config.showWordsCounter}
-                                    label="Show words counter"
-                                />
-                                <CheckBox
-                                    popupKey={"showXPathInStatusbar"}
-                                    name="showXPathInStatusbar"
-                                    onChange={this.setOption}
-                                    defaultChecked={this.state.config.showXPathInStatusbar}
-                                    label="Show path to selected element"
-                                />
-                            </Tab>
                             <Tab label="State">
                                 <State
                                     config={this.state.config}
@@ -338,6 +371,9 @@ class JoditMaster extends Component {
                                     config={this.state.config}
                                     setOption={this.setOption}
                                 />
+                            </Tab>
+                            <Tab label="Themes">
+                                <Themes theme={this.state.theme} setCSS={this.setCSS}/>
                             </Tab>
                         </Tabs>
                     </div>

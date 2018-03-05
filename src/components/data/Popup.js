@@ -37,9 +37,12 @@ export default class Popup extends Component {
 
             Object.keys(haystack).some((key) => {
                 result = Popup.findInfo(needle, haystack[key], callback);
+
                 if (result) {
                     return true;
                 }
+
+                return false;
             });
 
             return result;

@@ -3,6 +3,9 @@
     margin-bottom: 10px;
     font-size: 12px;
 }
+.label:last-child{
+    margin-bottom: 0;
+}
 
 label {
     display: inline-block;

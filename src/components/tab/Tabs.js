@@ -3,19 +3,15 @@ import style from './style.module.css';
 import Tab from "./Tab";
 
 export default class Tabs extends Component {
-    state = {
-        currentTab: null
-    };
     openTab = (event) => {
-        this.setState({
-            currentTab: event.target.innerText
-        });
+        this.props.setTab(event.target.innerText);
     };
     render() {
-        let links = [], currentActive = this.state.currentTab;
+        let links = [],
+            currentActive = this.props.currentTab;
 
         const tabs = this.props.children.filter((tab) => tab.type === Tab).map((tab, index) => {
-            if (currentActive === null) {
+            if (!currentActive) {
                 currentActive  =  tab.props.label
             }
 

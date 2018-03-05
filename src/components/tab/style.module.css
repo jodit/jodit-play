@@ -7,8 +7,15 @@
 
 .header {
     margin-bottom: 10px;
-    border-bottom: 1px solid #ccc;
+    /*border-bottom: 1px solid #ccc;*/
     font-size: 0;
+}
+.header:after{
+    content: '';
+    display: block;
+    height: 0;
+    border-bottom: 1px solid #ccc;
+    margin-top: -5px;
 }
 .button {
     display: inline-block;
@@ -24,6 +31,7 @@
     opacity: .7;
     user-select: none;
     vertical-align: top;
+    margin-bottom: 5px;
 }
 .buttonActive {
     position: relative;
