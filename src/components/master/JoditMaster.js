@@ -23,6 +23,7 @@ import {http_build_query} from "../../App";
 import createHistory from 'history/createBrowserHistory'
 import Plugins from "../plugins/Plugins";
 import Themes from "../themes/Themes";
+import {LoremIpsum} from "./LoremIpsum";
 
 registerLanguage('javascript', js);
 registerLanguage('css', css);
@@ -39,6 +40,7 @@ class JoditMaster extends Component {
         })
     }
     state = {
+        showLoremIpsum: true,
         currentButtonsTab: null,
         currentTab: this.props.config.currentTab,
         workBoxWidth: 'auto',
@@ -62,19 +64,19 @@ class JoditMaster extends Component {
         },
         css: '',
         theme: {
-            ['.jodit_workplace,.jodit_toolbar,.jodit_statusbar,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-separator,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-break']: {
+            '.jodit_workplace,.jodit_toolbar,.jodit_statusbar,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-separator,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-break': {
                 borderColor: '#ccc'
             },
-            ['.jodit_toolbar,.jodit_statusbar']: {
+            '.jodit_toolbar,.jodit_statusbar': {
                 backgroundColor: '#ccccc',
             },
-            ['.jodit_icon,.jodit_toolbar .jodit_toolbar_btn>a']: {
+            '.jodit_icon,.jodit_toolbar .jodit_toolbar_btn>a': {
                 'fill|color': '#ddd',
             },
-            ['.jodit_container']: {
+            '.jodit_container': {
                 'backgroundColor': '#ddd',
             },
-            ['.jodit_wysiwyg']: {
+            '.jodit_wysiwyg': {
                 'color': '#ddd',
             },
         },
@@ -169,6 +171,15 @@ class JoditMaster extends Component {
         }
     };
     timer;
+    toggleLoremIpsum = (showLoremIpsum) => {
+        if (!showLoremIpsum && this.value === LoremIpsum) {
+            this.value = '';
+        }
+        this.setState({
+            ...this.state,
+            showLoremIpsum
+        });
+    };
     setOption = (value, name) => {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
@@ -233,10 +244,13 @@ class JoditMaster extends Component {
 
         return 'var editor = new Jodit("#editor"' + (config !== '{}' ? ', '  + config + '' : '') + ');';
     };
+
     value = '';
+
     onEditorChange = (value) => {
         this.value = value;
     };
+
     setWorkboxWidth = (tab) => {
         this.setState({
             ...this.state,
@@ -268,10 +282,16 @@ class JoditMaster extends Component {
                     {this.props.config.showEditor &&
                     <div>
                         <div className={style.workbox} style={{width: this.state.workBoxWidth}}>
+                            <CheckBox
+                                name="showLoremIpsum"
+                                onChange={this.toggleLoremIpsum}
+                                defaultChecked={this.state.showLoremIpsum}
+                                label="Show lorem ipsum text"
+                            />
                             <JoditEditor
                                 onChange={this.onEditorChange}
                                 config={this.state.config}
-                                value={this.value}
+                                value={this.state.showLoremIpsum ? LoremIpsum : this.value}
                             />
                         </div>
                     </div>

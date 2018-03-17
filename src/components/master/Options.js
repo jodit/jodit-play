@@ -10,6 +10,11 @@ export default class Options extends Component {
     render() {
         return (
             <div>
+                <List name="preset" value={this.props.state.preset} onChange={this.props.setOption} list={{
+                    custom: 'None',
+                    inline: 'Inline Mode',
+                }} label="Presets"/>
+
                 <fieldset>
                     <legend>Toolbar</legend>
                     <CheckBox popupKey={"toolbar"} name="toolbar" onChange={this.props.setOption} defaultChecked={this.props.state.toolbar} label="Show Toolbar"/>

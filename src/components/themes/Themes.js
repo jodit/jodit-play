@@ -30,7 +30,7 @@ export default class Themes extends Component {
         const css = [];
 
         Object.keys(state).forEach((selector) => {
-            let elm = document.querySelector(selector);
+            // let elm = document.querySelector(selector);
             css.push(`${selector.split(/,/g,).map((selector) => {
                 if (selector === '.jodit_container') {
                     return selector
