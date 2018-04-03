@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.40",
+  "version": "0.1.41",
   "dependencies": {
     "history": "^4.7.2",
     "react-color": "^2.14.0",
@@ -14,11 +14,11 @@
     "newversion": "npm run build && npm version patch --no-git-tag-version && npm run github && npm publish ./",
     "github": "git add --all  && git commit -m \"New version %npm_package_version%. Read more https://github.com/jodit/jodit-docs/releases/tag/%npm_package_version% \" && git tag %npm_package_version% && git push --tags origin HEAD:master",
     "start": "react-app-rewired  start",
-    "build": "npm run doc && react-app-rewired  build && npm run build-rename",
+    "build": "react-app-rewired  build && npm run build-rename",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage": "/jodit/node_modules/jodit-play/build/",
+  "homepage": "./",
   "browserslist": {
     "development": [
       "last 2 chrome versions",
