@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-// import createHistory from 'history/createBrowserHistory'
-// const history = createHistory()
+window.JoditPlayConfig.curScriptElement = document.currentScript;
 
 window.JoditPlayReady = (element) => {
     ReactDOM.render(<App />, element);
@@ -12,8 +11,3 @@ window.JoditPlayReady = (element) => {
 
 const element = document.getElementById('root');
 element && window.JoditPlayReady(element);
-
-//
-// history.listen((location, action) => {
-//     window.JoditPlayReady(element)
-// });

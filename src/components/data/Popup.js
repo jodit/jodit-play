@@ -5,8 +5,15 @@ export default class Popup extends Component {
     static loadingState = false;
     static data = null;
 
+    static getMyPath() {
+        let a = document.createElement('A');
+        a.href = window.JoditPlayConfig.curScriptElement.src;
+        let path = a.pathname.split('/');
+        return path.splice(0, path.length - 1).join('/')
+    }
+
     static loadData(success) {
-        fetch(process.env.PUBLIC_URL + '/data.json')
+        fetch(Popup.getMyPath() + '/../../data.json')
             .then((data) => {
                 return data.json();
             })
