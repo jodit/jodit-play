@@ -276,6 +276,10 @@ class JoditMaster extends Component {
             this.props.config.setCode(code);
         }
 
+        if (typeof this.props.config.setCSS === 'function' && this.state.css) {
+            this.props.config.setCSS(this.state.css);
+        }
+
         return (
             <div className={style.layout}>
                 <div className={style.leftside}>
@@ -308,10 +312,10 @@ class JoditMaster extends Component {
                             <CopyText>
                                 <SyntaxHighlighter showLineNumbers={false} language='css' style={codeStyle}>{this.state.css}</SyntaxHighlighter>
                             </CopyText>
-                            <style>{this.state.css}</style>
                         </React.Fragment>}
                     </div>
                     }
+                    {this.state.css && <style>{this.state.css}</style>}
                 </div>
                 <div className={style.rightside}>
                     <div className={style.item}>
