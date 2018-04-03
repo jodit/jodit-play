@@ -26,6 +26,11 @@ export default class Themes extends Component {
 
     };
 
+    /**
+     *
+     * @param state
+     * @return {string}
+     */
     generateCss = (state) => {
         const css = [];
 

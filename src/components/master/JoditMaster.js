@@ -62,7 +62,7 @@ class JoditMaster extends Component {
             buttonsSM: 0,
             buttonsXS: 0,
         },
-        css: '',
+        css: this.props.config.initialCSS || '',
         theme: {
             '.jodit_workplace,.jodit_toolbar,.jodit_statusbar,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-separator,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-break': {
                 borderColor: '#ccc'
@@ -265,7 +265,7 @@ class JoditMaster extends Component {
     setCSS = (css, theme) => {
         this.setState({
             ...this.state,
-            css,
+            css: css || this.props.config.initialCSS,
             theme
         });
     };
