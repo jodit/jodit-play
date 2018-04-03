@@ -3,6 +3,10 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
+if (!window.JoditPlayConfig) {
+    window.JoditPlayConfig = {};
+}
+
 window.JoditPlayReady = (element) => {
     ReactDOM.render(<App />, element);
 };
