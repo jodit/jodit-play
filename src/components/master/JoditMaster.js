@@ -240,7 +240,9 @@ class JoditMaster extends Component {
             options.currentTab = this.state.currentTab;
         }
 
-        history.push('?' + http_build_query(options), options)
+        if (this.props.config.historyAPI) {
+            history.push('?' + http_build_query(options), options)
+        }
 
         return 'var editor = new Jodit("#editor"' + (config !== '{}' ? ', '  + config + '' : '') + ');';
     };

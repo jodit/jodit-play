@@ -62,6 +62,7 @@ class App extends Component {
         showCode: true,
         showEditor: true,
         showButtonsTab: true,
+        historyAPI: true,
         setCSS: (css) => {},
         setCode: (code) => {},
         setConfig: (config) => {},
