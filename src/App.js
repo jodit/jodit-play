@@ -63,6 +63,7 @@ class App extends Component {
         showEditor: true,
         showButtonsTab: true,
         historyAPI: true,
+        dataURL: './',
         setCSS: (css) => {},
         setCode: (code) => {},
         setConfig: (config) => {},

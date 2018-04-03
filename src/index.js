@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-window.JoditPlayConfig.curScriptElement = document.currentScript;
-
 window.JoditPlayReady = (element) => {
     ReactDOM.render(<App />, element);
 };
