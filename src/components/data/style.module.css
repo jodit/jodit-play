@@ -1,6 +1,7 @@
 .box {
     position: relative;
-    display: inline-block;
+    display: block;
+    z-index: 10000;
 }
 .popup {
     position: absolute;
