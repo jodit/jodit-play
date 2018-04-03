@@ -4,7 +4,9 @@ import './index.css';
 import App from './App';
 
 if (!window.JoditPlayConfig) {
-    window.JoditPlayConfig = {};
+    window.JoditPlayConfig = {
+        // dataURL: './',
+    };
 }
 
 window.JoditPlayReady = (element) => {

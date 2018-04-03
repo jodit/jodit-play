@@ -9,7 +9,7 @@ export default class Popup extends Component {
         // let a = document.createElement('A');
         // a.href = window.JoditPlayConfig.curScriptElement.src;
         // let path = a.pathname.split('/');
-        return window.JoditPlayConfig.dataURL || './'
+        return window.JoditPlayConfig.dataURL || process.env.PUBLIC_URL
     }
 
     static loadData(success) {
