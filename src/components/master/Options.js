@@ -128,6 +128,15 @@ export default class Options extends Component {
                         label="Show path to selected element"
                     />
                 </fieldset>
+                <fieldset>
+                    <legend>Uploader</legend>
+                    <CheckBox
+                        name="uploader.insertImageAsBase64URI"
+                        onChange={this.props.setOption}
+                        defaultChecked={this.props.state.uploader.insertImageAsBase64URI}
+                        label="Insert image as Base64 URI"
+                    />
+                </fieldset>
             </div>
         );
     }

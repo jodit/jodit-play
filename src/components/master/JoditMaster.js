@@ -87,6 +87,8 @@ class JoditMaster extends Component {
             iframe: Jodit.defaultOptions.iframe,
             iframeStyle: Jodit.defaultOptions.iframeStyle,
 
+            uploader: Jodit.defaultOptions.uploader,
+
             textIcons: Jodit.defaultOptions.textIcons,
             readonly: Jodit.defaultOptions.readonly,
             spellcheck: Jodit.defaultOptions.spellcheck,
@@ -203,7 +205,18 @@ class JoditMaster extends Component {
                         newStage.iframeBaseUrl = Jodit.defaultOptions.iframeBaseUrl;
                     }
 
-                    newStage[name] = value;
+                    let link = newStage, keys = name.split('.');
+
+                    keys.forEach((key, index) => {
+                        if (index !== keys.length - 1) {
+                            link[key] = {...link[key]};
+                            link = link[key];
+                        }
+                    });
+
+                    name = keys[keys.length - 1];
+
+                    link[name] = value;
 
                     return {
                     ...prevState,
@@ -216,13 +229,20 @@ class JoditMaster extends Component {
     };
 
     getCode = () => {
-        const keys = Object.keys(this.state.config), options= {};
+        const getChangedOption = (config, defaultOptions) => {
+            const keys = Object.keys(config), options= {};
 
-        keys.forEach((key) => {
-            if (Jodit.defaultOptions[key] !== undefined && JSON.stringify(this.state.config[key]) !== JSON.stringify(Jodit.defaultOptions[key]) && ['sizeLG'].indexOf(key) === -1) {
-                options[key] = this.state.config[key];
-            }
-        });
+            keys.forEach((key) => {
+                if (defaultOptions[key] !== undefined && JSON.stringify(config[key]) !== JSON.stringify(defaultOptions[key]) && ['sizeLG'].indexOf(key) === -1) {
+                    options[key] = typeof config[key] === 'object' ? getChangedOption(config[key], defaultOptions[key]) : config[key];
+                }
+            });
+
+            return options;
+        };
+        const options = getChangedOption(this.state.config, Jodit.defaultOptions);
+
+
 
         ['buttons', 'buttonsMD', 'buttonsSM', 'buttonsXS'].forEach((key) => {
             if (options[key]) {
