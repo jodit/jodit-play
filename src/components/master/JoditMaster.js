@@ -30,7 +30,94 @@ registerLanguage('css', css);
 
 const history = createHistory();
 
+
 class JoditMaster extends Component {
+    getDefaultState = () => {
+        return {
+            showLoremIpsum: true,
+            currentButtonsTab: null,
+            currentTab: this.props.config.currentTab,
+            workBoxWidth: 'auto',
+            buttons: {
+                buttons: [...Jodit.defaultOptions.buttons],
+                buttonsMD: this.getButtons('buttonsMD'),
+                buttonsSM: this.getButtons('buttonsSM'),
+                buttonsXS: this.getButtons('buttonsXS')
+            },
+            removeButtons: {
+                buttons: [],
+                buttonsMD: this.getRemoveButtons('buttonsMD'),
+                buttonsSM: this.getRemoveButtons('buttonsSM'),
+                buttonsXS: this.getRemoveButtons('buttonsXS'),
+            },
+            activeIndex: {
+                buttons: 0,
+                buttonsMD: 0,
+                buttonsSM: 0,
+                buttonsXS: 0,
+            },
+            css: '',
+            theme: {
+                '.jodit_workplace,.jodit_toolbar,.jodit_statusbar,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-separator,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-break': {
+                    borderColor: '#ccc'
+                },
+                '.jodit_toolbar,.jodit_statusbar': {
+                    backgroundColor: '#ccccc',
+                },
+                '.jodit_icon,.jodit_toolbar .jodit_toolbar_btn>a': {
+                    'fill|color': '#ddd',
+                },
+                '.jodit_container': {
+                    'backgroundColor': '#ddd',
+                },
+                '.jodit_wysiwyg': {
+                    'color': '#ddd',
+                },
+            },
+            config: {
+
+                autofocus: Jodit.defaultOptions.autofocus,
+                toolbar: Jodit.defaultOptions.toolbar,
+                iframe: Jodit.defaultOptions.iframe,
+                iframeStyle: Jodit.defaultOptions.iframeStyle,
+
+                uploader: Jodit.defaultOptions.uploader,
+
+                textIcons: Jodit.defaultOptions.textIcons,
+                readonly: Jodit.defaultOptions.readonly,
+                spellcheck: Jodit.defaultOptions.spellcheck,
+                language: Jodit.defaultOptions.language,
+                theme: Jodit.defaultOptions.theme,
+                toolbarButtonSize: Jodit.defaultOptions.toolbarButtonSize,
+                enter: Jodit.defaultOptions.enter,
+                defaultMode: Jodit.defaultOptions.defaultMode,
+                allowResizeY: Jodit.defaultOptions.allowResizeY,
+                allowResizeX: Jodit.defaultOptions.allowResizeX,
+
+                toolbarAdaptive: Jodit.defaultOptions.toolbarAdaptive,
+                toolbarSticky: Jodit.defaultOptions.toolbarSticky,
+                toolbarStickyOffset: Jodit.defaultOptions.toolbarStickyOffset,
+
+                showCharsCounter: Jodit.defaultOptions.showCharsCounter,
+                showWordsCounter: Jodit.defaultOptions.showWordsCounter,
+                showXPathInStatusbar: Jodit.defaultOptions.showXPathInStatusbar,
+
+                saveHeightInStorage: Jodit.defaultOptions.saveHeightInStorage,
+                saveModeInStorage: Jodit.defaultOptions.saveModeInStorage,
+
+                askBeforePasteHTML: Jodit.defaultOptions.askBeforePasteHTML,
+                askBeforePasteFromWord: Jodit.defaultOptions.askBeforePasteFromWord,
+                defaultActionOnPaste: Jodit.defaultOptions.defaultActionOnPaste,
+
+                disablePlugins: Jodit.defaultOptions.disablePlugins,
+
+                height:  Jodit.defaultOptions.height,
+                width:  Jodit.defaultOptions.width,
+                sizeLG: 800,
+            }
+        }
+    };
+
     getButtons(type) {
         return Jodit.defaultOptions.buttonsXS.concat(this.getRemoveButtons(type))
     }
@@ -39,90 +126,17 @@ class JoditMaster extends Component {
             return key !== '|' && key !== '\n' && Jodit.defaultOptions[type].indexOf(key) === -1
         })
     }
-    state = {
-        showLoremIpsum: true,
-        currentButtonsTab: null,
-        currentTab: this.props.config.currentTab,
-        workBoxWidth: 'auto',
-        buttons: {
-            buttons: Jodit.defaultOptions.buttons,
-            buttonsMD: this.getButtons('buttonsMD'),
-            buttonsSM: this.getButtons('buttonsSM'),
-            buttonsXS: this.getButtons('buttonsXS')
-        },
-        removeButtons: {
-            buttons: [],
-            buttonsMD: this.getRemoveButtons('buttonsMD'),
-            buttonsSM: this.getRemoveButtons('buttonsSM'),
-            buttonsXS: this.getRemoveButtons('buttonsXS'),
-        },
-        activeIndex: {
-            buttons: 0,
-            buttonsMD: 0,
-            buttonsSM: 0,
-            buttonsXS: 0,
-        },
-        css: this.props.config.initialCSS || '',
-        theme: {
-            '.jodit_workplace,.jodit_toolbar,.jodit_statusbar,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-separator,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-break': {
-                borderColor: '#ccc'
-            },
-            '.jodit_toolbar,.jodit_statusbar': {
-                backgroundColor: '#ccccc',
-            },
-            '.jodit_icon,.jodit_toolbar .jodit_toolbar_btn>a': {
-                'fill|color': '#ddd',
-            },
-            '.jodit_container': {
-                'backgroundColor': '#ddd',
-            },
-            '.jodit_wysiwyg': {
-                'color': '#ddd',
-            },
-        },
-        config: {
 
-            autofocus: Jodit.defaultOptions.autofocus,
-            toolbar: Jodit.defaultOptions.toolbar,
-            iframe: Jodit.defaultOptions.iframe,
-            iframeStyle: Jodit.defaultOptions.iframeStyle,
-
-            uploader: Jodit.defaultOptions.uploader,
-
-            textIcons: Jodit.defaultOptions.textIcons,
-            readonly: Jodit.defaultOptions.readonly,
-            spellcheck: Jodit.defaultOptions.spellcheck,
-            language: Jodit.defaultOptions.language,
-            theme: Jodit.defaultOptions.theme,
-            toolbarButtonSize: Jodit.defaultOptions.toolbarButtonSize,
-            enter: Jodit.defaultOptions.enter,
-            defaultMode: Jodit.defaultOptions.defaultMode,
-            allowResizeY: Jodit.defaultOptions.allowResizeY,
-            allowResizeX: Jodit.defaultOptions.allowResizeX,
-
-            toolbarAdaptive: Jodit.defaultOptions.toolbarAdaptive,
-            toolbarSticky: Jodit.defaultOptions.toolbarSticky,
-            toolbarStickyOffset: Jodit.defaultOptions.toolbarStickyOffset,
-
-            showCharsCounter: Jodit.defaultOptions.showCharsCounter,
-            showWordsCounter: Jodit.defaultOptions.showWordsCounter,
-            showXPathInStatusbar: Jodit.defaultOptions.showXPathInStatusbar,
-
-            saveHeightInStorage: Jodit.defaultOptions.saveHeightInStorage,
-            saveModeInStorage: Jodit.defaultOptions.saveModeInStorage,
-
-            askBeforePasteHTML: Jodit.defaultOptions.askBeforePasteHTML,
-            askBeforePasteFromWord: Jodit.defaultOptions.askBeforePasteFromWord,
-            defaultActionOnPaste: Jodit.defaultOptions.defaultActionOnPaste,
-
-            disablePlugins: Jodit.defaultOptions.disablePlugins,
-
-            height:  Jodit.defaultOptions.height,
-            width:  Jodit.defaultOptions.width,
-            sizeLG: 800,
-            ...this.props.config.initialConfig
-        }
-    };
+    state = (((defaultState) => {
+        return {
+            ...defaultState,
+            css: defaultState.css || this.props.config.initialCSS || '',
+            config: {
+                ...defaultState.config,
+                ...this.props.config.initialConfig
+            }
+        };
+    })(this.getDefaultState()));
 
     setButtonsTab = (value) => {
         this.setState({
@@ -240,9 +254,8 @@ class JoditMaster extends Component {
 
             return options;
         };
+
         const options = getChangedOption(this.state.config, Jodit.defaultOptions);
-
-
 
         ['buttons', 'buttonsMD', 'buttonsSM', 'buttonsXS'].forEach((key) => {
             if (options[key]) {
@@ -253,6 +266,8 @@ class JoditMaster extends Component {
         if (typeof this.props.config.setConfig === 'function') {
             this.props.config.setConfig(options);
         }
+
+        this.__isDefault = Object.keys(options).length === 0 && this.state.css === '';
 
         const config = JSON.stringify(options, null, 2);
 
@@ -290,6 +305,17 @@ class JoditMaster extends Component {
             css: css || this.props.config.initialCSS,
             theme
         });
+    };
+
+    __isDefault = true;
+    isDefault = () => {
+        return this.__isDefault;
+    };
+    restoreDefault = () => {
+        if (window.confirm('Are you sure you want to restore the default settings?')) {
+            Themes.resetStyles = {};
+            this.setState({...this.getDefaultState()});
+        }
     };
     render() {
         const code = this.getCode();
@@ -343,6 +369,9 @@ class JoditMaster extends Component {
                     <div className={style.item}>
                         <Tabs currentTab={this.state.currentTab} setTab={this.setTab}>
                             <Tab label="Options">
+                                {this.isDefault() || (<div className={style.defaultRestore}>
+                                    <button onClick={this.restoreDefault} type={"button"}>Restore defaults</button>
+                                </div>)}
                                 <Options
                                     state={this.state.config}
                                     height={this.height}

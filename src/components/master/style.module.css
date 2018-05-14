@@ -66,3 +66,40 @@
     font-weight: 500;
     font-size: 1.2em;
 }
+
+.defaultRestore button{
+    color: #fafafa;
+    border: 0;
+    padding: 0 10px;
+    line-height: 31px;
+    height: 31px;
+    background-color: #19ab27;
+    vertical-align: middle;
+    transition: background-color linear .2s;
+}
+.defaultRestore button:before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    background: url(../button/resore.svg) no-repeat center center;
+    background-size: cover;
+    margin-right:  5px;
+    margin-top: -2px;
+    filter: invert(100%);
+    transition: transform linear .2s;
+}
+.defaultRestore button:active:before {
+    transform: rotate(-180deg);
+}
+.defaultRestore button:hover {
+    background-color: #7bab70;
+}
+.defaultRestore button:active {
+    background-color: #0076ab;
+}
+
+.defaultRestore {
+    margin-bottom:  10px;
+}
