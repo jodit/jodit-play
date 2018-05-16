@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.51",
+  "version": "0.1.52",
   "dependencies": {
     "history": "^4.7.2",
     "react-color": "^2.14.0",
