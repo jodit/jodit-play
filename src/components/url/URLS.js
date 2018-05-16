@@ -24,7 +24,6 @@ export default class URLS extends Component {
     };
 
     render() {
-        console.log('render');
         const urls = ((this.props.value && Array.isArray(this.props.value) && this.props.value.length) ? this.props.value : ['']).map((url, index) => {
             return (<tr key={index + '' + url}>
                 <td>

@@ -244,7 +244,7 @@ class JoditMaster extends Component {
 
     getCode = () => {
         const getChangedOption = (config, defaultOptions) => {
-            const keys = Object.keys(config), options= {};
+            const keys = Object.keys(config), options = Array.isArray(config) ? [] : {};
 
             keys.forEach((key) => {
                 if (defaultOptions[key] !== undefined && JSON.stringify(config[key]) !== JSON.stringify(defaultOptions[key]) && ['sizeLG'].indexOf(key) === -1) {

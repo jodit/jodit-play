@@ -90,7 +90,7 @@ const getParams = query => {
     if (!query) {
         return { };
     }
-debugger
+
     return (/^[?#]/.test(query) ? query.slice(1) : query).split('&')
         .reduce((params, param) => {
             let [ key, value ] = param.split('=');
