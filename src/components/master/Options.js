@@ -53,6 +53,7 @@ export default class Options extends Component {
                 <CheckBox popupKey={"spellcheck"} name="spellcheck" onChange={this.props.setOption} checked={this.props.state.spellcheck} label="Spell Check"/>
                 <CheckBox popupKey={"iframe"} name="iframe" onChange={this.props.setOption} checked={this.props.state.iframe} label="Iframe mode"/>
 
+                <List value={this.props.state.direction} name="direction" onChange={this.props.setOption} list={{'': 'auto', 'rtl': 'rtl', 'ltr': 'ltr'}} label="Direction"/>
                 <List value={this.props.state.language} name="language" onChange={this.props.setOption} list={['Auto', ...Object.keys(Jodit.lang)]} label="Language"/>
 
                 <List value={this.props.state.theme} name="theme" onChange={this.props.setOption} list={{

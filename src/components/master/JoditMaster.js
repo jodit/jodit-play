@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Jodit from 'jodit';
+import { Jodit } from 'jodit';
 
 
 import JoditEditor from "jodit-react";
@@ -19,11 +19,11 @@ import Text from "../text/Text";
 import URLS from "../url/URLS";
 import CopyText from "../copytext/CopyText";
 import State from "./State";
-import {http_build_query} from "../../App";
+import { http_build_query } from "../../App";
 import createHistory from 'history/createBrowserHistory'
 import Plugins from "../plugins/Plugins";
 import Themes from "../themes/Themes";
-import {LoremIpsum} from "./LoremIpsum";
+import { LoremIpsum } from "./LoremIpsum";
 
 registerLanguage('javascript', js);
 registerLanguage('css', css);
@@ -87,6 +87,7 @@ class JoditMaster extends Component {
                 readonly: Jodit.defaultOptions.readonly,
                 spellcheck: Jodit.defaultOptions.spellcheck,
                 language: Jodit.defaultOptions.language,
+                direction: Jodit.defaultOptions.direction,
                 theme: Jodit.defaultOptions.theme,
                 toolbarButtonSize: Jodit.defaultOptions.toolbarButtonSize,
                 enter: Jodit.defaultOptions.enter,
@@ -144,6 +145,7 @@ class JoditMaster extends Component {
             currentButtonsTab: value
         });
     };
+
     setTab = (value) => {
         this.setState({
             ...this.state,
@@ -155,10 +157,12 @@ class JoditMaster extends Component {
     setHeight = (value) => {
         this.setOption(value === true ? 'auto' : this.height, 'height')
     };
+
     width = 500;
     setWidth = (value) => {
         this.setOption(value === true ? 'auto' : this.width, 'width')
     };
+
     setButtons = (name, buttons, removeButtons, activeIndex) => {
         const state = {...this.state};
         let change = false;
@@ -186,6 +190,7 @@ class JoditMaster extends Component {
             this.setState(state);
         }
     };
+
     timer;
     toggleLoremIpsum = (showLoremIpsum) => {
         if (!showLoremIpsum && this.value === LoremIpsum) {

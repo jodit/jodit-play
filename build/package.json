@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jodit": "^3.1.95"
+    "jodit": "^3"
   }
 }
