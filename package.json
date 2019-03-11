@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.56",
+  "version": "0.1.57",
   "dependencies": {
     "history": "^4.7.2",
     "react-color": "^2.17.0",
@@ -35,9 +35,9 @@
   "devDependencies": {
     "jodit": "^3.2.44",
     "jodit-react": "^1.0.25",
-    "react": "^16.8.3",
+    "react": "^16.8.4",
     "react-app-rewired": "^1.6.2",
-    "react-dom": "^16.8.3",
+    "react-dom": "^16.8.4",
     "react-scripts": "2.0.0-next.47d2d941",
     "react-syntax-highlighter": "^7.0.4",
     "react-toggle": "^4.0.2",
