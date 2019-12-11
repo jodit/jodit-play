@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.60",
+  "version": "0.1.61",
   "dependencies": {
     "history": "^4.10.1",
     "react-color": "^2.17.3",
@@ -11,7 +11,7 @@
     "build-rename": "npm run build-rename-js && npm run build-rename-css",
     "build-rename-js": "renamer --regex --find 'main\\.[^\\.]+\\.js(\\.map)?' --replace \"main.js$1\" build/static/js/*",
     "build-rename-css": "renamer --regex --find \"main\\.[^\\.]+\\.css(\\.map)?\"  --replace \"main.css$1\" build/static/css/*",
-    "newversion": "npm run build && npm version patch --no-git-tag-version && npm run github && npm publish ./",
+    "newversion": "npm update && npm run build && npm version patch --no-git-tag-version && npm run github && npm publish ./",
     "github": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/jodit/jodit-docs/releases/tag/$npm_package_version \" && git tag $npm_package_version && git push --tags origin HEAD:master",
     "start": "react-app-rewired  start",
     "build": "react-app-rewired  build && npm run build-rename",
@@ -33,8 +33,8 @@
     ]
   },
   "devDependencies": {
-    "jodit": "^3.3.1",
-    "jodit-react": "^1.0.29",
+    "jodit": "^3.3.2",
+    "jodit-react": "^1.0.31",
     "react": "^16.12.0",
     "react-app-rewired": "^1.6.2",
     "react-dom": "^16.12.0",
