@@ -391,7 +391,7 @@ class JoditMaster extends Component {
                                 <Tab label="Buttons">
                                     <CheckBox popupKey="toolbarAdaptive" name="toolbarAdaptive" onChange={this.setOption} defaultChecked={this.state.config.toolbarAdaptive} label="Toolbar adaptive"/>
                                     <Tabs setTab={this.setButtonsTab} currentTab={this.state.currentButtonsTab}>
-                                        <Tab onClick={this.setWorkboxWidth} width={"auto"} label="Desctop">
+                                        <Tab onClick={this.setWorkboxWidth} width={"auto"} label="Desktop">
                                             <Buttons activeIndex={this.state.activeIndex.buttons} removeButtons={this.state.removeButtons.buttons} name="buttons" setButtons={this.setButtons} buttons={this.state.buttons.buttons}/>
                                         </Tab>
                                         {!this.state.config.toolbarAdaptive ||
