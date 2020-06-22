@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import style from './style.module.css';
-import Jodit from 'jodit';
+import {Jodit} from 'jodit';
 import CheckBox from "../checkbox/CheckBox";
 
 export default class Plugins extends Component {

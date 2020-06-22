@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import style from './style.module.css';
 import CheckBox from "../checkbox/CheckBox";
-import Jodit from "jodit";
+import {Jodit} from "jodit";
 
 
 export default class Button extends Component {

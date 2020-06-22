@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Jodit from 'jodit';
+import {Jodit} from 'jodit';
 
 
 import JoditEditor from "jodit-react";
@@ -377,6 +377,7 @@ class JoditMaster extends Component {
                                 {this.isDefault() || (<div className={style.defaultRestore}>
                                     <button onClick={this.restoreDefault} type={"button"}>Restore defaults</button>
                                 </div>)}
+
                                 <Options
                                     state={this.state.config}
                                     height={this.height}

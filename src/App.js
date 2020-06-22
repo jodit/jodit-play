@@ -2,29 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import JoditMaster from "./components/master/JoditMaster";
 
-
-// export const http_build_query = (formdata, numeric_prefix, arg_separator) => {
-//
-//     let key, use_val, use_key, i = 0, tmp_arr = [];
-//
-//     if(!arg_separator){
-//         arg_separator = '&';
-//     }
-//
-//     for(key in formdata){
-//         use_key = escape(key);
-//         use_val = escape((formdata[key].toString()));
-//         use_val = use_val.replace(/%20/g, '+');
-//
-//         if(numeric_prefix && !isNaN(key)){
-//             use_key = numeric_prefix + i;
-//         }
-//         tmp_arr[i] = use_key + '=' + use_val;
-//         i++;
-//     }
-//
-//     return tmp_arr.join(arg_separator);
-// };
 export const urlencode = function (str) {
     str = (str + '')
 

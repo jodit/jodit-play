@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Jodit from "jodit";
+import {Jodit} from "jodit";
 import List from "../list/List";
 import Number from "../number/Number";
 import CheckBox from "../checkbox/CheckBox";
@@ -30,7 +30,7 @@ export default class Options extends Component {
                     {this.props.state.toolbar === false ||
                     <List value={this.props.state.toolbarButtonSize} name="toolbarButtonSize"
                           onChange={this.props.setOption} list={[
-                        "small", "middle", "large"
+                        "tiny", "xsmall", "small", "middle", "large"
                     ]} label="Size of icons"/>
                     }
                     {this.props.state.toolbar === false ||

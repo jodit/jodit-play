@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import List from "../list/List";
 import CheckBox from "../checkbox/CheckBox";
-import Jodit from 'jodit';
+import {Jodit} from 'jodit';
 
 export default class state extends Component {
     render() {

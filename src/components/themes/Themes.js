@@ -1,4 +1,4 @@
-import Jodit from 'jodit';
+import {Jodit} from 'jodit';
 import React, { Component } from 'react';
 import Color from "./Color";
 import tinycolor from "tinycolor2";
