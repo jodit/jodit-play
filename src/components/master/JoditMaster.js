@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import 'jodit';
 import {Jodit} from 'jodit';
 
 
