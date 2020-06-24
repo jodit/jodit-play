@@ -20,7 +20,7 @@ export default class Button extends Component {
     render() {
         return <tr onDoubleClick={this.setActive} className={style.row + ' ' + (this.props.active ? style.row_active : '')+ ' ' + (!this.props.checked ? style.row_disable : '')}>
             <td>
-                <div className={style.icon} dangerouslySetInnerHTML={{__html:Jodit.modules.ToolbarIcon.getIcon(this.props.label)}}/>
+                <div className={style.icon} dangerouslySetInnerHTML={{__html:Jodit.modules.Icon.get(this.props.label)}}/>
             </td>
             <td>
                 {this.props.label}
