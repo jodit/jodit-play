@@ -76,6 +76,14 @@ export default class Options extends Component {
                 }} label="Default mode"/>
 
                 <fieldset>
+                    <legend>Units</legend>
+                    <List name="defaultFontSizePoints" value={this.props.state.defaultFontSizePoints} onChange={this.props.setOption} list={{
+                        pt: 'Points',
+                        px: 'Pixels',
+                    }} label="Font size units"/>
+                </fieldset>
+
+                <fieldset>
                     <legend>Sizes</legend>
 
                     {this.props.state.height === 'auto' ||

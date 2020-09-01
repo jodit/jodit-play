@@ -78,6 +78,7 @@ class JoditMaster extends Component {
 
                 autofocus: Jodit.defaultOptions.autofocus,
                 useSearch: Jodit.defaultOptions.useSearch,
+                defaultFontSizePoints: Jodit.defaultOptions.defaultFontSizePoints,
                 toolbar: Jodit.defaultOptions.toolbar,
                 iframe: Jodit.defaultOptions.iframe,
                 iframeStyle: Jodit.defaultOptions.iframeStyle,
