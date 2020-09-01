@@ -49,6 +49,7 @@ export default class Options extends Component {
                 <CheckBox popupKey={"autofocus"} name="autofocus" onChange={this.props.setOption} checked={this.props.state.autofocus} label="Autofocus"/>
 
                 <CheckBox popupKey={"readonly"} name="readonly" onChange={this.props.setOption} checked={this.props.state.readonly} label="Read Only"/>
+                <CheckBox popupKey={"useSearch"} name="useSearch" onChange={this.props.setOption} checked={this.props.state.useSearch} label="Use search"/>
 
                 <CheckBox popupKey={"spellcheck"} name="spellcheck" onChange={this.props.setOption} checked={this.props.state.spellcheck} label="Spell Check"/>
                 <CheckBox popupKey={"iframe"} name="iframe" onChange={this.props.setOption} checked={this.props.state.iframe} label="Iframe mode"/>
