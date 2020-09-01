@@ -21,6 +21,7 @@ export default class state extends Component {
                     defaultChecked={this.props.config.saveModeInStorage}
                     label="Save mode in storage"
                 />
+                <CheckBox popupKey={"readonly"} name="readonly" onChange={this.props.setOption} checked={this.props.config.readonly} label="Read Only"/>
                 <hr/>
                 <CheckBox
                     popupKey={"askBeforePasteHTML"}

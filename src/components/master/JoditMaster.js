@@ -24,6 +24,7 @@ import createHistory from 'history/createBrowserHistory'
 import Plugins from "../plugins/Plugins";
 import Themes from "../themes/Themes";
 import { LoremIpsum } from "./LoremIpsum";
+import Sizes from "./Sizes";
 
 registerLanguage('javascript', js);
 registerLanguage('css', css);
@@ -115,7 +116,11 @@ class JoditMaster extends Component {
                 disablePlugins: Jodit.defaultOptions.disablePlugins,
 
                 height:  Jodit.defaultOptions.height,
+                minHeight:  Jodit.defaultOptions.minHeight,
+                maxHeight:  Jodit.defaultOptions.maxHeight,
                 width:  Jodit.defaultOptions.width,
+                minWidth:  Jodit.defaultOptions.minWidth,
+                maxWidth:  Jodit.defaultOptions.maxWidth,
                 sizeLG: 800,
             }
         }
@@ -381,6 +386,16 @@ class JoditMaster extends Component {
                                 </div>)}
 
                                 <Options
+                                    state={this.state.config}
+                                    height={this.height}
+                                    width={this.width}
+                                    setOption={this.setOption}
+                                    setHeight={this.setHeight}
+                                    setWidth={this.setWidth}
+                                />
+                            </Tab>
+                            <Tab label="Sizes">
+                                <Sizes
                                     state={this.state.config}
                                     height={this.height}
                                     width={this.width}
