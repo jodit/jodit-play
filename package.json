@@ -3,6 +3,7 @@
   "version": "0.1.85",
   "dependencies": {
     "history": "^4.10.1",
+    "react-app-polyfill": "^1.0.6",
     "react-color": "^2.18.1",
     "tinycolor2": "^1.4.2"
   },
@@ -26,22 +27,22 @@
       "last 2 edge versions"
     ],
     "production": [
-      ">1%",
-      "last 4 versions",
-      "Firefox ESR",
-      "not ie < 11"
+      ">0.2%",
+      "not dead",
+      "not op_mini all",
+      "ie 11"
     ]
   },
   "devDependencies": {
     "jodit": "^3.4.27",
     "jodit-react": "^1.0.64",
     "react": "^16.13.1",
-    "react-app-rewired": "^1.6.2",
+    "react-app-rewired": "^2.1.6",
     "react-dom": "^16.13.1",
-    "react-scripts": "2.0.0-next.47d2d941",
+    "react-scripts": "^3.4.3",
     "react-syntax-highlighter": "^7.0.4",
     "react-toggle": "^4.1.1",
     "renamer": "^0.6.1",
-    "typedoc": "^0.10.0"
+    "typedoc": "^0.19.2"
   }
 }
