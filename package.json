@@ -38,7 +38,7 @@
     "jodit-react": "^1.0.70",
     "react": "^16.14.0",
     "react-app-rewired": "^2.1.8",
-    "react-dom": "^16.14.0",
+    "react-dom": "^16.2.1",
     "react-scripts": "^3.4.4",
     "react-syntax-highlighter": "^7.0.4",
     "react-toggle": "^4.1.1",
