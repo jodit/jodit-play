@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.90",
+  "version": "0.1.91",
   "dependencies": {
     "history": "^4.10.1",
     "react-app-polyfill": "^1.0.6",
@@ -34,8 +34,8 @@
     ]
   },
   "devDependencies": {
-    "jodit": "^3.5.2",
-    "jodit-react": "^1.0.68",
+    "jodit": "^3.5.3",
+    "jodit-react": "^1.0.69",
     "react": "^16.14.0",
     "react-app-rewired": "^2.1.8",
     "react-dom": "^16.14.0",
