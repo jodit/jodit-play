@@ -103,3 +103,14 @@
 .defaultRestore {
     margin-bottom:  10px;
 }
+
+.exampleHeader {
+    display: flex;
+    align-items: center;
+    margin: 16px 0;
+}
+
+.exampleHeader > * {
+    color: #5f5f5f;
+    margin: 0 16px 0 0;
+}

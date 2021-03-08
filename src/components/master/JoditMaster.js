@@ -366,12 +366,16 @@ class JoditMaster extends Component {
                     {this.props.config.showEditor &&
                     <div>
                         <div className={style.workbox} style={{width: this.state.workBoxWidth}}>
-                            <CheckBox
-                                name="showLoremIpsum"
-                                onChange={this.toggleLoremIpsum}
-                                defaultChecked={this.state.showLoremIpsum}
-                                label="Show lorem ipsum text"
-                            />
+                            <div className={style.exampleHeader}>
+                                <CheckBox
+                                    name="showLoremIpsum"
+                                    onChange={this.toggleLoremIpsum}
+                                    defaultChecked={this.state.showLoremIpsum}
+                                    label="Show lorem ipsum text"
+                                />
+
+                                <a href="https://xdsoft.net/jodit/pro/">Try Jodit PRO</a>
+                            </div>
                             <JoditEditor
                                 ref = {(ref) => this.editorRef = ref}
                                 onChange={this.onEditorChange}
