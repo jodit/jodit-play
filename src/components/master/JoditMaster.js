@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {Jodit} from 'jodit';
 
-
-import JoditEditor from "jodit-react";
 import style from './style.module.css';
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
@@ -25,6 +23,8 @@ import Plugins from "../plugins/Plugins";
 import Themes from "../themes/Themes";
 import { LoremIpsum } from "./LoremIpsum";
 import Sizes from "./Sizes";
+import JoditEditor from "../editor/editor";
+import List from "../list/List";
 
 SyntaxHighlighter.registerLanguage('javascript', js);
 SyntaxHighlighter.registerLanguage('css', css);
@@ -64,21 +64,10 @@ class JoditMaster extends Component {
             css: '',
 
             theme: {
-                '.jodit_workplace,.jodit_toolbar,.jodit_statusbar,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-separator,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-break': {
-                    borderColor: '#ccc'
-                },
-                '.jodit_toolbar,.jodit_statusbar': {
-                    backgroundColor: '#ccccc',
-                },
-                '.jodit_icon,.jodit_toolbar .jodit_toolbar_btn>a': {
-                    'fill|color': '#ddd',
-                },
-                '.jodit_container': {
-                    'backgroundColor': '#ddd',
-                },
-                '.jodit_wysiwyg': {
-                    'color': '#ddd',
-                },
+                '--jd-color-background-default': '#ffffff',
+                '--jd-color-border': '#dadada',
+                '--jd-color-panel': '#f9f9f9',
+                '--jd-color-icon': '#4c4c4c',
             },
 
             config: {
@@ -440,6 +429,7 @@ class JoditMaster extends Component {
                                 this.state.config.toolbar === false ||
                                 <Tab label="Buttons">
                                     <CheckBox popupKey="toolbarAdaptive" name="toolbarAdaptive" onChange={this.setOption} defaultChecked={this.state.config.toolbarAdaptive} label="Toolbar adaptive"/>
+
                                     <Tabs setTab={this.setButtonsTab} currentTab={this.state.currentButtonsTab}>
                                         <Tab onClick={this.setWorkboxWidth} width={"auto"} label="Desktop">
                                             <Buttons activeIndex={this.state.activeIndex.buttons} removeButtons={this.state.removeButtons.buttons} name="buttons" setButtons={this.setButtons} buttons={this.state.buttons.buttons}/>
@@ -503,7 +493,13 @@ class JoditMaster extends Component {
                                 />
                             </Tab>
                             <Tab label="Themes">
-                                <Themes theme={this.state.theme} setCSS={this.setCSS}/>
+                                <List value={this.state.config.theme} name="theme" onChange={this.setOption} list={{
+                                    'default' : 'Default',
+                                    'dark' : 'Dark',
+                                }} label="Theme"/>
+
+                                {this.state.config.theme === 'default' &&
+                                <Themes theme={this.state.theme} setCSS={this.setCSS}/>}
                             </Tab>
                         </Tabs>
                     </div>

@@ -15,8 +15,11 @@ export default class Options extends Component {
 
                 <fieldset>
                     <legend>Toolbar</legend>
+
                     <CheckBox popupKey={"toolbar"} name="toolbar" onChange={this.props.setOption} checked={this.props.state.toolbar} label="Show Toolbar"/>
+
                     {this.props.state.toolbar === false ||
+
                     <CheckBox
                         popupKey={"textIcons"}
                         name="textIcons"
@@ -53,11 +56,6 @@ export default class Options extends Component {
 
                 <List value={this.props.state.direction} name="direction" onChange={this.props.setOption} list={{'': 'auto', 'rtl': 'rtl', 'ltr': 'ltr'}} label="Direction"/>
                 <List value={this.props.state.language} name="language" onChange={this.props.setOption} list={['Auto', ...Object.keys(Jodit.lang)]} label="Language"/>
-
-                <List value={this.props.state.theme} name="theme" onChange={this.props.setOption} list={{
-                    'default' : 'Default',
-                    'dark' : 'Dark',
-                }} label="Theme"/>
 
                 <List name="enter" value={this.props.state.enter} onChange={this.props.setOption} list={{
                     "P": 'Paragraph (P)',

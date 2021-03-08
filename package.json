@@ -1,8 +1,9 @@
 {
   "name": "jodit-play",
-  "version": "0.1.96",
+  "version": "0.1.97",
   "dependencies": {
     "history": "^4.10.1",
+    "postcss-custom-properties": "^10.0.0",
     "react-app-polyfill": "^1.0.6",
     "react-color": "^2.19.3",
     "tinycolor2": "^1.4.2"
@@ -12,10 +13,10 @@
     "build-rename": "npm run build-rename-js && npm run build-rename-css",
     "build-rename-js": "renamer --find '/^main\\.(.+)\\.js(\\.map)?$/i' --replace 'main.js$2' build/static/js/*",
     "build-rename-css": "renamer --find '/^main\\.(.+)\\.css(\\.map)?$/'  --replace 'main.css$2' build/static/css/*",
-    "newversion": "npm update && npm run build && npm version patch --no-git-tag-version && npm run github && npm publish ./",
+    "newversion": "yarn upgrade && npm run build && npm version patch --no-git-tag-version && npm run github && npm publish ./",
     "github": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/jodit/jodit-docs/releases/tag/$npm_package_version \" && git tag $npm_package_version && git push --tags origin HEAD:master",
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "react-app-rewired build && npm run build-rename",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
@@ -33,9 +34,11 @@
       "ie 11"
     ]
   },
+  "resolutions": {
+    "react-scripts/postcss-preset-env/postcss-custom-properties": "^10.0.0"
+  },
   "devDependencies": {
     "jodit": "^3.6.3",
-    "jodit-react": "^1.0.72",
     "react": "^16.14.0",
     "react-app-rewired": "^2.1.8",
     "react-dom": "^16.14.0",

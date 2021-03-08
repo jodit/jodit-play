@@ -17,7 +17,9 @@ export default class extends Component {
 
     setColor = (color) => {
         this.setState({ color: color.rgb });
+
         this.props.setColor(this.props.selector, this.props.styleKey, color.hex);
+
         if (this.props.bindValue) {
             this.props.bindValue(this.props.bindTransform ? this.props.bindTransform(color.hex) : color.hex);
         }
