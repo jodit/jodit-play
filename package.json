@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.95",
+  "version": "0.1.96",
   "dependencies": {
     "history": "^4.10.1",
     "react-app-polyfill": "^1.0.6",
@@ -14,8 +14,8 @@
     "build-rename-css": "renamer --find '/^main\\.(.+)\\.css(\\.map)?$/'  --replace 'main.css$2' build/static/css/*",
     "newversion": "npm update && npm run build && npm version patch --no-git-tag-version && npm run github && npm publish ./",
     "github": "git add --all  && git commit -m \"New version $npm_package_version. Read more https://github.com/jodit/jodit-docs/releases/tag/$npm_package_version \" && git tag $npm_package_version && git push --tags origin HEAD:master",
-    "start": "react-app-rewired  start",
-    "build": "react-app-rewired  build && npm run build-rename",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
