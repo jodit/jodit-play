@@ -4,10 +4,10 @@ import {Jodit} from 'jodit';
 
 import JoditEditor from "jodit-react";
 import style from './style.module.css';
-import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/light";
-import js from 'react-syntax-highlighter/languages/hljs/javascript';
-import css from 'react-syntax-highlighter/languages/hljs/css';
-import { agate as codeStyle} from 'react-syntax-highlighter/styles/hljs';
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
+import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
+import css from 'react-syntax-highlighter/dist/esm/languages/hljs/css';
+import { agate as codeStyle} from 'react-syntax-highlighter/dist/cjs/styles/hljs';
 
 import Tabs from "../tab/Tabs";
 import Tab from "../tab/Tab";
@@ -26,8 +26,8 @@ import Themes from "../themes/Themes";
 import { LoremIpsum } from "./LoremIpsum";
 import Sizes from "./Sizes";
 
-registerLanguage('javascript', js);
-registerLanguage('css', css);
+SyntaxHighlighter.registerLanguage('javascript', js);
+SyntaxHighlighter.registerLanguage('css', css);
 
 const history = createHistory();
 
@@ -39,25 +39,30 @@ class JoditMaster extends Component {
             currentButtonsTab: null,
             currentTab: this.props.config.currentTab,
             workBoxWidth: 'auto',
+
             buttons: {
-                buttons: [...Jodit.defaultOptions.buttons],
+                buttons: [],// [...Jodit.defaultOptions.buttons],
                 buttonsMD: this.getButtons('buttonsMD'),
                 buttonsSM: this.getButtons('buttonsSM'),
                 buttonsXS: this.getButtons('buttonsXS')
             },
+
             removeButtons: {
                 buttons: [],
                 buttonsMD: this.getRemoveButtons('buttonsMD'),
                 buttonsSM: this.getRemoveButtons('buttonsSM'),
                 buttonsXS: this.getRemoveButtons('buttonsXS'),
             },
+
             activeIndex: {
                 buttons: 0,
                 buttonsMD: 0,
                 buttonsSM: 0,
                 buttonsXS: 0,
             },
+
             css: '',
+
             theme: {
                 '.jodit_workplace,.jodit_toolbar,.jodit_statusbar,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-separator,.jodit_toolbar>li.jodit_toolbar_btn.jodit_toolbar_btn-break': {
                     borderColor: '#ccc'
@@ -75,8 +80,8 @@ class JoditMaster extends Component {
                     'color': '#ddd',
                 },
             },
-            config: {
 
+            config: {
                 autofocus: Jodit.defaultOptions.autofocus,
                 useSearch: Jodit.defaultOptions.useSearch,
                 defaultFontSizePoints: Jodit.defaultOptions.defaultFontSizePoints,
@@ -127,12 +132,30 @@ class JoditMaster extends Component {
     };
 
     getButtons(type) {
-        return Jodit.defaultOptions.buttonsXS.concat(this.getRemoveButtons(type))
+        return []//;Jodit.defaultOptions.buttonsXS.concat(this.getRemoveButtons(type))
     }
+
     getRemoveButtons(type) {
-        return Jodit.defaultOptions.buttons.filter((key) => {
-            return key !== '|' && key !== '\n' && Jodit.defaultOptions[type].indexOf(key) === -1
-        })
+        return [];
+        // return Jodit.defaultOptions.buttons.filter((key) => {
+        //     return key !== '|' && key !== '\n' && Jodit.defaultOptions[type].indexOf(key) === -1
+        // })
+    }
+
+    componentDidMount() {
+        const jodit = Jodit.make(this.editorRef, {
+            disablePlugins: 'mobile'
+        });
+
+        this.setState({
+            ...this.state,
+            buttons: {
+                ...this.state.buttons,
+                buttons: jodit.toolbar.getButtonsNames()
+            }
+        });
+
+        jodit.destruct();
     }
 
     state = (((defaultState) => {
@@ -208,6 +231,7 @@ class JoditMaster extends Component {
             showLoremIpsum
         });
     };
+
     setOption = (value, name) => {
         clearTimeout(this.timer);
         this.timer = setTimeout(() => {
@@ -305,12 +329,14 @@ class JoditMaster extends Component {
             ...this.state,
             workBoxWidth: tab.props.width
         });
+
         setTimeout(() => {
             let event = document.createEvent("HTMLEvents");
             event.initEvent("resize", true, true);
             window.dispatchEvent(event);
         }, 100);
     };
+
     setCSS = (css, theme) => {
         this.setState({
             ...this.state,
@@ -320,15 +346,20 @@ class JoditMaster extends Component {
     };
 
     __isDefault = true;
+
+    editorRef;
+
     isDefault = () => {
         return this.__isDefault;
     };
+
     restoreDefault = () => {
         if (window.confirm('Are you sure you want to restore the default settings?')) {
             Themes.resetStyles = {};
             this.setState({...this.getDefaultState()});
         }
     };
+
     render() {
         const code = this.getCode();
 
@@ -353,6 +384,7 @@ class JoditMaster extends Component {
                                 label="Show lorem ipsum text"
                             />
                             <JoditEditor
+                                ref = {(ref) => this.editorRef = ref}
                                 onChange={this.onEditorChange}
                                 config={this.state.config}
                                 value={this.state.showLoremIpsum ? LoremIpsum : this.value}
