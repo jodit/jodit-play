@@ -5,7 +5,7 @@ object-assign
 */
 
 /*!
-  Copyright (c) 2017 Jed Watson.
+  Copyright (c) 2018 Jed Watson.
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */
@@ -13,7 +13,7 @@ object-assign
 /*!
  * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
  * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.6.5
+ * Version: v3.6.9
  * Url: https://xdsoft.net/jodit/
  * License(s): MIT
  */
