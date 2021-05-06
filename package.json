@@ -1,6 +1,6 @@
 {
   "name": "jodit-play",
-  "version": "0.1.102",
+  "version": "0.1.103",
   "dependencies": {
     "history": "^4.10.1",
     "postcss-custom-properties": "^10.0.0",
