@@ -10,14 +10,6 @@ object-assign
   http://jedwatson.github.io/classnames
 */
 
-/*!
- * jodit - Jodit is awesome and usefully wysiwyg editor with filebrowser
- * Author: Chupurnov <chupurnov@gmail.com> (https://xdsoft.net/)
- * Version: v3.8.6
- * Url: https://xdsoft.net/jodit/
- * License(s): MIT
- */
-
 /** @license React v0.19.1
  * scheduler.production.min.js
  *
