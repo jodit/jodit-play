@@ -6810,9 +6810,9 @@ jju@~1.4.0:
   integrity sha1-o6vicYryQaKykE+EpiWXDzia4yo=
 
 jodit@^3.6.3:
-  version "3.9.2"
-  resolved "https://registry.yarnpkg.com/jodit/-/jodit-3.9.2.tgz#95e19e5d27b91b3a2788a34a22dcb0b3f640b1bf"
-  integrity sha512-93ZK2XqMuexJ9OgRVZtrbLt2VCcgxB+DZGVcBeCQp6r666GJanyXpUdd0aKL/ZDfWqlr/D+NNBhTr4f+XxsI9w==
+  version "3.9.3"
+  resolved "https://registry.yarnpkg.com/jodit/-/jodit-3.9.3.tgz#0df9e017c24a93752b09f58aa4a990c0c183b87c"
+  integrity sha512-vXDkOTk/V2CEm1W8Wuz0Zgr70BVi5Eu5j7FwtSbrpLlXM13SNVLUP5EEmFunrIgVszzSCRMDIGCaBOhWRXDgRg==
   dependencies:
     autobind-decorator "^2.4.0"
     eslint-plugin-tsdoc "^0.2.14"
