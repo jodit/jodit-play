@@ -5,6 +5,7 @@ import CheckBox from "../checkbox/CheckBox";
 
 export default class Plugins extends Component {
 	togglePlugin = (value, pluginName) => {
+		debugger
 		let plugins = Array.isArray(this.props.config.disablePlugins) ?
       [...this.props.config.disablePlugins] :
       [...this.props.config.disablePlugins.split(/[\s,]+/)];
@@ -25,7 +26,7 @@ export default class Plugins extends Component {
 	};
 
 	render() {
-		const plugins = Array.from(Jodit.plugins.items.keys()).map((pluginName) =>
+		const plugins = Jodit.plugins.items().map(([pluginName]) =>
 			<CheckBox
 				popupKey={'plugins/' + pluginName}
 				key={pluginName}
