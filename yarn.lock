@@ -6679,9 +6679,9 @@ jest@26.6.0:
     jest-cli "^26.6.0"
 
 jodit@^3.6.3:
-  version "3.13.5"
-  resolved "https://registry.yarnpkg.com/jodit/-/jodit-3.13.5.tgz#29b4a6cdc258ba4814816e59089a1e9539c9d28e"
-  integrity sha512-7PkGWwZO6AT2C8hJFPyM8Lw8KeYceXRadcI6zwmT1r4n0gYkkdjZ5a+z9EiNk2Na14yT5GHZEFKqbcjRQ7dhcw==
+  version "3.13.6"
+  resolved "https://registry.yarnpkg.com/jodit/-/jodit-3.13.6.tgz#909a2ae92a258494a2492369359569b7e86d277f"
+  integrity sha512-0CHSB1FtZ4avpnGMqSC5mrPVJbfBHaANRLaOZHZol1riOee4m21GVldm91lhAqTxTjZoJjL+bf4OOutRhj3GaQ==
   dependencies:
     autobind-decorator "^2.4.0"
     core-js "^3.21.0"
