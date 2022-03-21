@@ -323,10 +323,14 @@ class JoditMaster extends Component {
 		}
 
 		if (this.props.config.historyAPI) {
-			history.push(
-				window.location.pathname + '?' + http_build_query(options),
-				options
-			);
+			const query = http_build_query(options),
+				route = window.location.pathname + (query ? '?' + query : '');
+
+			const oldRoute = window.location.pathname + window.location.search;
+
+			if (oldRoute !== route) {
+				history.push(route, options);
+			}
 		}
 
 		return (
