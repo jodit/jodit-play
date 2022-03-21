@@ -1,40 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component, useCallback, useRef, useState } from 'react';
 import style from './style.module.css';
 
-export default class CopyText extends Component {
-    state = {
-        mode: 'ready'
-    };
+export default function CopyText({ children }) {
+	const [mode, setMode] = useState('ready');
+	const ref = useRef(null);
 
-    onClick = () => {
-        const textarea = document.createElement('textarea');
+	const onClick = useCallback(() => {
+		const textarea = document.createElement('textarea');
 
-        document.body.appendChild(textarea);
-        textarea.value = this.refs.codebox.innerText;
-        textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
+		document.body.appendChild(textarea);
+		textarea.value = ref.current.innerText;
+		textarea.select();
+		document.execCommand('copy');
+		document.body.removeChild(textarea);
 
-        this.setState({
-            mode: 'copied'
-        });
+		setMode('copied');
 
-        setTimeout(() => {
-            if (this.state.mode === 'copied') {
-                this.setState({
-                    mode: 'ready'
-                });
-            }
-        }, 1000);
-    };
-    render = () => (
-        <div className={style.item}>
-            <button className={style.button + ' ' + style[this.state.mode]} onClick={this.onClick} type="button">
-                {this.state.mode === 'ready' ? 'Copy code' : 'Copied!'}
-            </button>
-            <div ref="codebox">
-                {this.props.children}
-            </div>
-        </div>
-    );
+		setTimeout(() => {
+			if (mode === 'copied') {
+				this.setState({
+					mode: 'ready'
+				});
+			}
+		}, 1000);
+	}, []);
+
+	return (
+		<div className={style.item}>
+			<button
+				className={style.button + ' ' + style[mode]}
+				onClick={onClick}
+				type="button"
+			>
+				{mode === 'ready' ? 'Copy code' : 'Copied!'}
+			</button>
+			<div ref={ref}>{children}</div>
+		</div>
+	);
 }
