@@ -1,4 +1,4 @@
-import React, { Component, useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import style from './style.module.css';
 
 export default function CopyText({ children }) {
@@ -18,12 +18,10 @@ export default function CopyText({ children }) {
 
 		setTimeout(() => {
 			if (mode === 'copied') {
-				this.setState({
-					mode: 'ready'
-				});
+				setMode('ready');
 			}
 		}, 1000);
-	}, []);
+	}, [mode]);
 
 	return (
 		<div className={style.item}>

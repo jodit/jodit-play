@@ -18,13 +18,14 @@ import URLS from '../url/URLS';
 import CopyText from '../copytext/CopyText';
 import State from './State';
 import { http_build_query } from '../../App';
-import createHistory from 'history/createBrowserHistory';
 import Plugins from '../plugins/Plugins';
 import Themes from '../themes/Themes';
 import { LoremIpsum } from './LoremIpsum';
 import Sizes from './Sizes';
 import JoditEditor from '../editor/editor';
 import List from '../list/List';
+
+const createHistory = require('history').createBrowserHistory;
 
 SyntaxHighlighter.registerLanguage('javascript', js);
 SyntaxHighlighter.registerLanguage('css', css);
@@ -322,11 +323,14 @@ class JoditMaster extends Component {
 		}
 
 		if (this.props.config.historyAPI) {
-			history.push('?' + http_build_query(options), options);
+			history.push(
+				window.location.pathname + '?' + http_build_query(options),
+				options
+			);
 		}
 
 		return (
-			'var editor = new Jodit("#editor"' +
+			'const editor = Jodit.make("#editor"' +
 			(config !== '{}' ? ', ' + config + '' : '') +
 			');'
 		);

@@ -1,4 +1,4 @@
-import React, { Component, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import style from './style.module.css';
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';

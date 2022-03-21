@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import reactCSS from 'reactcss'
-// import styles from "./style.module.css";
 import { SketchPicker } from 'react-color';
 
-export default class extends Component {
+export default class Color extends Component {
     state = {
         displayColorPicker: false,
     };
@@ -75,10 +74,5 @@ export default class extends Component {
 
             </div>
         )
-        // return <label className={styles.color}>
-        //
-        //     <SketchPicker onChangeComplete={this.setColor}/> {this.props.title};
-        //     <input defaultValue={this.props.color} type="text" onChange={this.setColor}/> {this.props.title}
-        // </label>;
     }
 }
