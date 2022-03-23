@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Jodit } from 'jodit';
 
 import style from './style.module.css';
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
-import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
-import css from 'react-syntax-highlighter/dist/esm/languages/hljs/css';
-import { agate as codeStyle } from 'react-syntax-highlighter/dist/cjs/styles/hljs';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { tomorrow } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 import Tabs from '../tab/Tabs';
 import Tab from '../tab/Tab';
@@ -26,9 +24,6 @@ import JoditEditor from '../editor/editor';
 import List from '../list/List';
 
 const createHistory = require('history').createBrowserHistory;
-
-SyntaxHighlighter.registerLanguage('javascript', js);
-SyntaxHighlighter.registerLanguage('css', css);
 
 const history = createHistory();
 
@@ -440,7 +435,7 @@ class JoditMaster extends Component {
 								<SyntaxHighlighter
 									showLineNumbers={false}
 									language="javascript"
-									style={codeStyle}
+									style={tomorrow}
 								>
 									{code}
 								</SyntaxHighlighter>
@@ -452,7 +447,7 @@ class JoditMaster extends Component {
 										<SyntaxHighlighter
 											showLineNumbers={false}
 											language="css"
-											style={codeStyle}
+											style={tomorrow}
 										>
 											{this.state.css}
 										</SyntaxHighlighter>
