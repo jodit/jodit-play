@@ -7,15 +7,19 @@ export default class Button extends Component {
 	toggle = (active) => {
 		this.props.toggle(this.props.index, active);
 	};
+
 	setActive = () => {
 		this.props.setActive(this.props.index);
 	};
+
 	moveUp = () => {
 		this.props.move(this.props.index, true);
 	};
+
 	moveDown = () => {
 		this.props.move(this.props.index, false);
 	};
+
 	render() {
 		return (
 			<tr
@@ -38,11 +42,11 @@ export default class Button extends Component {
 				</td>
 				<td>{this.props.label}</td>
 				<td>
-					<span onClick={this.moveUp} className={style.moveUp}></span>
+					<span onClick={this.moveUp} className={style.moveUp}/>
 					<span
 						onClick={this.moveDown}
 						className={style.moveDown}
-					></span>
+					/>
 				</td>
 				<td className={style.lastCol}>
 					<CheckBox
