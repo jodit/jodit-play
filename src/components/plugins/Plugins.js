@@ -5,7 +5,6 @@ import CheckBox from "../checkbox/CheckBox";
 
 export default class Plugins extends Component {
 	togglePlugin = (value, pluginName) => {
-		debugger
 		let plugins = Array.isArray(this.props.config.disablePlugins) ?
       [...this.props.config.disablePlugins] :
       [...this.props.config.disablePlugins.split(/[\s,]+/)];

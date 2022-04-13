@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, forwardRef, useLayoutEffect } from 'react';
+import s from './editor.module.css';
+
+import React, { useEffect, useRef, forwardRef, useLayoutEffect, useState } from 'react';
 import { func, number, object, string } from 'prop-types';
 import 'jodit/build/jodit.es2018.min.css';
 
@@ -26,10 +28,12 @@ export async function loadJoditEditor() {
 }
 
 const JoditEditor = forwardRef((props, ref) => {
-	const { config, id, name, onBlur, onChange, tabIndex, value, editorRef } =
+	const { config, id, name, onBlur, onChange, tabIndex, value, editorRef, children } =
 		props;
 
+	const [isLoading, setLoading] = useState(true);
 	const textArea = useRef(null);
+	const div = useRef(null);
 
 	useLayoutEffect(() => {
 		if (ref) {
@@ -54,6 +58,7 @@ const JoditEditor = forwardRef((props, ref) => {
 			}
 
 			textArea.current = Jodit.make(element, config);
+			setLoading(false);
 			textArea.current.workplace.tabIndex = tabIndex || -1;
 
 			// adding event handlers
@@ -90,7 +95,19 @@ const JoditEditor = forwardRef((props, ref) => {
 		}
 	}, [value]);
 
-	return <textarea ref={textArea} />;
+	return (
+		<div className={isLoading ? s.loading : s.finish}>
+			<div className={s.box}>
+				<div className={s.spinner}>
+					<div/>
+				</div>
+			</div>
+			<textarea className={s.area} id={id} ref={textArea}/>
+			<div style={{ display: 'none' }} id={id} ref={div}>
+				{children}
+			</div>
+		</div>
+	);
 });
 
 JoditEditor.propTypes = {
