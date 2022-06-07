@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import style from './style.module.css';
 import Tab from "./Tab";
 
-export default class Tabs extends Component {
+export default class Tabs extends PureComponent {
     openTab = (event) => {
         this.props.setTab(event.target.innerText);
     };
-    render() {
+
+		render() {
         let links = [],
             currentActive = this.props.currentTab;
 

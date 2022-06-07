@@ -5,11 +5,9 @@ import { func, number, object, string } from 'prop-types';
 import 'jodit/build/jodit.es2018.min.css';
 
 function isIE() {
-	return (
-		typeof navigator !== 'undefined' &&
-		(navigator.userAgent.match(/MSIE|Internet Explorer/i) ||
-			navigator.userAgent.match(/Trident\/7\..*?rv:11/i))
-	);
+	return typeof navigator !== 'undefined' &&
+    (navigator.userAgent.match(/MSIE|Internet Explorer/i) ||
+        navigator.userAgent.match(/Trident\/7\..*?rv:11/i));
 }
 
 let loadJoditPromise;
@@ -23,6 +21,13 @@ export async function loadJoditEditor() {
 	}
 
 	const { Jodit } = await loadJoditPromise;
+
+	if (!isIE()) {
+		// import('jodit/build/plugins/speech/speech-recognize/speech-recognize.es2018.en.min.css');
+		// const { SpeechRecognizeNative } = await import('jodit/build/plugins/speech/speech-recognize/speech-recognize.es2018.en.min');
+		// Jodit.plugins.add('speech-recognize', SpeechRecognizeNative);
+		// Jodit.defaultOptions.speechRecognize.lang = ''
+	}
 
 	return Jodit;
 }

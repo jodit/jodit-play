@@ -10,7 +10,7 @@ export const urlencode = function (str) {
         .replace(/'/g, '%27')
         .replace(/\(/g, '%28')
         .replace(/\)/g, '%29')
-        .replace(/\*/g, '%2A')
+        .replace(/\*/g, '%2A');
 };
 
 export function http_build_query (formdata, numericPrefix, argSeparator) {

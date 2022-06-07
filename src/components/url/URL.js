@@ -5,6 +5,7 @@ export default class URL extends Component {
     onChange = (event) => {
         this.props.onChange && this.props.onChange(event.target.value, this.props.name);
     };
+
     render() {
         return (
             <div className={style.label}>

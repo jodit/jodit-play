@@ -1,11 +1,3 @@
-import React, { Component } from 'react';
-
-export default class Tab extends Component {
-    render() {
-        return (
-            <div>
-                {this.props.children}
-            </div>
-        );
-    }
+export default function Tab({ children }) {
+	return <div>{children}</div>;
 }
