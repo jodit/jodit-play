@@ -23,10 +23,10 @@ export async function loadJoditEditor() {
 	const { Jodit } = await loadJoditPromise;
 
 	if (!isIE()) {
-		// import('jodit/build/plugins/speech/speech-recognize/speech-recognize.es2018.en.min.css');
-		// const { SpeechRecognizeNative } = await import('jodit/build/plugins/speech/speech-recognize/speech-recognize.es2018.en.min');
-		// Jodit.plugins.add('speech-recognize', SpeechRecognizeNative);
-		// Jodit.defaultOptions.speechRecognize.lang = ''
+		import('jodit/build/plugins/speech/speech-recognize/speech-recognize.es2018.en.min.css');
+		const { SpeechRecognizeNative } = await import('jodit/build/plugins/speech/speech-recognize/speech-recognize.es2018.en.min');
+		Jodit.plugins.add('speech-recognize', SpeechRecognizeNative);
+		Jodit.defaultOptions.speechRecognize.lang = ''
 	}
 
 	return Jodit;
