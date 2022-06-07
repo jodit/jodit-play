@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import style from './style.module.css';
 import CheckBox from '../checkbox/CheckBox';
-import { Jodit } from 'jodit';
 
-export default class Button extends Component {
+export class Button extends PureComponent {
 	toggle = (active) => {
 		this.props.toggle(this.props.index, active);
 	};
@@ -36,17 +35,14 @@ export default class Button extends Component {
 					<div
 						className={style.icon}
 						dangerouslySetInnerHTML={{
-							__html: Jodit.modules.Icon.get(this.props.label)
+							__html: this.props.Jodit.modules.Icon.get(this.props.label)
 						}}
 					/>
 				</td>
 				<td>{this.props.label}</td>
 				<td>
-					<span onClick={this.moveUp} className={style.moveUp}/>
-					<span
-						onClick={this.moveDown}
-						className={style.moveDown}
-					/>
+					<span onClick={this.moveUp} className={style.moveUp} />
+					<span onClick={this.moveDown} className={style.moveDown} />
 				</td>
 				<td className={style.lastCol}>
 					<CheckBox

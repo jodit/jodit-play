@@ -6,16 +6,16 @@ import { tomorrow } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 import Tabs from '../tab/Tabs';
 import Tab from '../tab/Tab';
-import Options from './Options';
-import Buttons from './Buttons';
+import { Options } from './Options';
+import { Buttons } from './Buttons';
 import CheckBox from '../checkbox/CheckBox';
 import URL from '../url/URL';
 import Text from '../text/Text';
 import URLS from '../url/URLS';
 import CopyText from '../copytext/CopyText';
-import State from './State';
+import { State } from './State';
 import { http_build_query } from '../../App';
-import Plugins from '../plugins/Plugins';
+import { Plugins } from '../plugins/Plugins';
 import Themes from '../themes/Themes';
 import { LoremIpsum } from './LoremIpsum';
 import Sizes from './Sizes';
@@ -389,6 +389,7 @@ class JoditMaster extends PureComponent {
 	};
 
 	render() {
+		const { Jodit } = this.props;
 		const code = this.getCode();
 
 		if (typeof this.props.config.setCode === 'function') {
@@ -485,6 +486,7 @@ class JoditMaster extends PureComponent {
 								)}
 
 								<Options
+									Jodit={Jodit}
 									state={this.state.config}
 									height={this.height}
 									width={this.width}
@@ -529,6 +531,7 @@ class JoditMaster extends PureComponent {
 												label="Desktop"
 											>
 												<Buttons
+													Jodit={Jodit}
 													activeIndex={
 														this.state.activeIndex
 															.buttons
@@ -555,6 +558,7 @@ class JoditMaster extends PureComponent {
 													label="Medium(900px)"
 												>
 													<Buttons
+														Jodit={Jodit}
 														activeIndex={
 															this.state
 																.activeIndex
@@ -586,6 +590,7 @@ class JoditMaster extends PureComponent {
 													label="Tablet(700px)"
 												>
 													<Buttons
+														Jodit={Jodit}
 														activeIndex={
 															this.state
 																.activeIndex
@@ -617,6 +622,7 @@ class JoditMaster extends PureComponent {
 													label="Mobile(400px)"
 												>
 													<Buttons
+														Jodit={Jodit}
 														activeIndex={
 															this.state
 																.activeIndex
@@ -665,12 +671,14 @@ class JoditMaster extends PureComponent {
 							)}
 							<Tab label="State">
 								<State
+									Jodit={Jodit}
 									config={this.state.config}
 									setOption={this.setOption}
 								/>
 							</Tab>
 							<Tab label="Plugins">
 								<Plugins
+									Jodit={Jodit}
 									config={this.state.config}
 									setOption={this.setOption}
 								/>

@@ -1,13 +1,12 @@
-import React, {Component} from 'react';
+import React, { PureComponent } from 'react';
 import style from './style.module.css';
-import {Jodit} from 'jodit';
-import CheckBox from "../checkbox/CheckBox";
+import CheckBox from '../checkbox/CheckBox';
 
-export default class Plugins extends Component {
+export class Plugins extends PureComponent {
 	togglePlugin = (value, pluginName) => {
-		let plugins = Array.isArray(this.props.config.disablePlugins) ?
-      [...this.props.config.disablePlugins] :
-      [...this.props.config.disablePlugins.split(/[\s,]+/)];
+		let plugins = Array.isArray(this.props.config.disablePlugins)
+			? [...this.props.config.disablePlugins]
+			: [...this.props.config.disablePlugins.split(/[\s,]+/)];
 
 		plugins = plugins.filter(Boolean);
 
@@ -19,27 +18,34 @@ export default class Plugins extends Component {
 			plugins.splice(plugins.indexOf(pluginName), 1);
 		}
 
-		if (plugins.toString() !== this.props.config.disablePlugins.toString()) {
-			this.props.setOption(plugins.length ? plugins.join(',') : [], 'disablePlugins');
+		if (
+			plugins.toString() !== this.props.config.disablePlugins.toString()
+		) {
+			this.props.setOption(
+				plugins.length ? plugins.join(',') : [],
+				'disablePlugins'
+			);
 		}
 	};
 
 	render() {
-		const plugins = Jodit.plugins.items().sort().map(([pluginName]) =>
-			<CheckBox
-				popupKey={'plugins/' + pluginName}
-				key={pluginName}
-				name={pluginName}
-				onChange={this.togglePlugin}
-				defaultChecked={this.props.config.disablePlugins.indexOf(pluginName) === -1}
-				label={pluginName}
-			/>
-		);
+		const plugins = this.props.Jodit.plugins
+			.items()
+			.sort()
+			.map(([pluginName]) => (
+				<CheckBox
+					popupKey={'plugins/' + pluginName}
+					key={pluginName}
+					name={pluginName}
+					onChange={this.togglePlugin}
+					defaultChecked={
+						this.props.config.disablePlugins.indexOf(pluginName) ===
+						-1
+					}
+					label={pluginName}
+				/>
+			));
 
-		return (
-			<div className={style.main}>
-				{plugins}
-			</div>
-		);
+		return <div className={style.main}>{plugins}</div>;
 	}
 }
