@@ -1,12 +1,27 @@
 import s from './editor.module.css';
 
-import React, { useEffect, useRef, forwardRef, useLayoutEffect, useState } from 'react';
+import React, {
+	useEffect,
+	useRef,
+	forwardRef,
+	useLayoutEffect,
+	useState
+} from 'react';
 import { func, number, object, string } from 'prop-types';
 
-
 const JoditEditor = forwardRef((props, ref) => {
-	const { config, id, name, onBlur, onChange, tabIndex, value, editorRef, children, Jodit } =
-		props;
+	const {
+		config,
+		id,
+		name,
+		onBlur,
+		onChange,
+		tabIndex,
+		value,
+		editorRef,
+		children,
+		Jodit
+	} = props;
 
 	const [isLoading, setLoading] = useState(true);
 	const textArea = useRef(null);
@@ -37,7 +52,10 @@ const JoditEditor = forwardRef((props, ref) => {
 			textArea.current.workplace.tabIndex = tabIndex || -1;
 
 			// adding event handlers
-			textArea.current.events.on('blur', (value) => onBlur && onBlur(value));
+			textArea.current.events.on(
+				'blur',
+				(value) => onBlur && onBlur(value)
+			);
 			textArea.current.events.on(
 				'change',
 				(value) => onChange && onChange(value)
@@ -74,10 +92,10 @@ const JoditEditor = forwardRef((props, ref) => {
 		<div className={isLoading ? s.loading : s.finish}>
 			<div className={s.box}>
 				<div className={s.spinner}>
-					<div/>
+					<div />
 				</div>
 			</div>
-			<textarea className={s.area} id={id} ref={textArea}/>
+			<textarea className={s.area} id={id} ref={textArea} />
 			<div style={{ display: 'none' }} id={id} ref={div}>
 				{children}
 			</div>

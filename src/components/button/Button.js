@@ -35,7 +35,9 @@ export class Button extends PureComponent {
 					<div
 						className={style.icon}
 						dangerouslySetInnerHTML={{
-							__html: this.props.Jodit.modules.Icon.get(this.props.label)
+							__html: this.props.Jodit.modules.Icon.get(
+								this.props.label
+							)
 						}}
 					/>
 				</td>

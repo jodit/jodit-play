@@ -7,13 +7,13 @@ import App from './App';
 import { loadJoditEditor } from './components/editor/loader';
 
 if (!window.JoditPlayConfig) {
-    window.JoditPlayConfig = {
-        // dataURL: './',
-    };
+	window.JoditPlayConfig = {
+		// dataURL: './',
+	};
 }
 
 window.JoditPlayReady = (element) => {
-    ReactDOM.render(<App loadJodit={loadJoditEditor}/>, element);
+	ReactDOM.render(<App loadJodit={loadJoditEditor} />, element);
 };
 
 const element = document.getElementById('root');

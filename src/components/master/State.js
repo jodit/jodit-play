@@ -46,8 +46,10 @@ export function State(props) {
 				onChange={props.setOption}
 				list={{
 					[props.Jodit.constants.INSERT_AS_HTML]: 'Insert as HTML',
-					[props.Jodit.constants.INSERT_CLEAR_HTML]: 'Insert cleared HTML',
-					[props.Jodit.constants.INSERT_AS_TEXT]: 'Insert as plain text',
+					[props.Jodit.constants.INSERT_CLEAR_HTML]:
+						'Insert cleared HTML',
+					[props.Jodit.constants.INSERT_AS_TEXT]:
+						'Insert as plain text',
 					[props.Jodit.constants.INSERT_ONLY_TEXT]: 'Insert only text'
 				}}
 				label="Default insert method"

@@ -1,27 +1,27 @@
-.label{
-    display: block;
-    margin-bottom: 10px;
-    font-size: 12px;
+.label {
+	display: block;
+	margin-bottom: 10px;
+	font-size: 12px;
 }
-.label:last-child{
-    margin-bottom: 0;
+.label:last-child {
+	margin-bottom: 0;
 }
 
 .label label {
-    display: inline-block !important;
-    max-width: 100%;
+	display: inline-block !important;
+	max-width: 100%;
 }
 :global(.react-toggle) {
-    margin-right: 8px;
-    vertical-align: middle;
+	margin-right: 8px;
+	vertical-align: middle;
 }
 label,
 .labelText {
-    vertical-align: middle;
-    font-weight: normal;
-    margin-bottom: 0;
+	vertical-align: middle;
+	font-weight: normal;
+	margin-bottom: 0;
 }
 
 .right {
-    float: right;
+	float: right;
 }
