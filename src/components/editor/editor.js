@@ -80,7 +80,7 @@ const JoditEditor = forwardRef((props, ref) => {
 
 			textArea.current = element;
 		};
-	}, [editorRef, config, id, value, onBlur, onChange, name, tabIndex]);
+	}, [editorRef, config, id, value, onBlur, onChange, name, tabIndex, Jodit]);
 
 	useEffect(() => {
 		if (textArea?.current?.value !== value) {
