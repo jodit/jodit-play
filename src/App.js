@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './App.css';
 import JoditMaster from "./components/master/JoditMaster";
 
@@ -106,9 +106,24 @@ const getParams = query => {
         }, { });
 };
 
-class App extends Component {
+class App extends PureComponent {
   config;
-  constructor() {
+
+	state = {
+		Jodit: null
+	};
+
+	componentDidMount() {
+		const loadJodit = this.props.loadJodit;
+
+		loadJodit().then((Jodit) => {
+			this.setState({
+				Jodit
+			})
+		});
+	}
+
+	constructor() {
     super();
 
     this.config = {...{
@@ -128,14 +143,14 @@ class App extends Component {
         ...window.JoditPlayConfig
     }};
 
-    this.config.currentTab = getParams(window.location.search.substr(1))['currentTab'] || null;
+    this.config.currentTab = getParams(window.location.search.substring(1))['currentTab'] || null;
     this.config.initialConfig = {...this.config.initialConfig, ...getParams(window.location.search.substr(1))};
   }
 
   render() {
     return (
       <div className="App">
-          <JoditMaster config={this.config}/>
+				{this.state.Jodit && <JoditMaster Jodit={this.state.Jodit} config={this.config}/>}
       </div>
     );
   }

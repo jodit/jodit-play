@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { loadJoditEditor } from './components/editor/loader';
 
 if (!window.JoditPlayConfig) {
     window.JoditPlayConfig = {
@@ -12,7 +13,7 @@ if (!window.JoditPlayConfig) {
 }
 
 window.JoditPlayReady = (element) => {
-    ReactDOM.render(<App />, element);
+    ReactDOM.render(<App loadJodit={loadJoditEditor}/>, element);
 };
 
 const element = document.getElementById('root');

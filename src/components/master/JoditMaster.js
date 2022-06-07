@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Jodit } from 'jodit';
+import React, { PureComponent } from 'react';
 
 import style from './style.module.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -27,8 +26,10 @@ const createHistory = require('history').createBrowserHistory;
 
 const history = createHistory();
 
-class JoditMaster extends Component {
+class JoditMaster extends PureComponent {
 	getDefaultState = () => {
+		const { Jodit } = this.props;
+
 		return {
 			showLoremIpsum: true,
 			currentButtonsTab: null,
@@ -126,6 +127,8 @@ class JoditMaster extends Component {
 	}
 
 	componentDidMount() {
+		const { Jodit } = this.props;
+
 		const jodit = Jodit.make(this.editorRef, {
 			disablePlugins: 'mobile'
 		});
@@ -221,6 +224,8 @@ class JoditMaster extends Component {
 	};
 
 	setOption = (value, name) => {
+		const { Jodit } = this.props;
+
 		clearTimeout(this.timer);
 		this.timer = setTimeout(() => {
 			switch (name) {
@@ -269,6 +274,8 @@ class JoditMaster extends Component {
 	};
 
 	getCode = () => {
+		const { Jodit } = this.props;
+
 		const getChangedOption = (config, defaultOptions) => {
 			const keys = Object.keys(config),
 				options = Array.isArray(config) ? [] : {};
@@ -417,6 +424,7 @@ class JoditMaster extends Component {
 								</div>
 								<JoditEditor
 									ref={(ref) => (this.editorRef = ref)}
+									Jodit={this.props.Jodit}
 									onChange={this.onEditorChange}
 									config={this.state.config}
 									value={

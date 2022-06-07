@@ -25,7 +25,7 @@ export default class Plugins extends Component {
 	};
 
 	render() {
-		const plugins = Jodit.plugins.items().map(([pluginName]) =>
+		const plugins = Jodit.plugins.items().sort().map(([pluginName]) =>
 			<CheckBox
 				popupKey={'plugins/' + pluginName}
 				key={pluginName}
