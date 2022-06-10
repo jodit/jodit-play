@@ -165,7 +165,9 @@ class App extends PureComponent {
 	render() {
 		return (
 			<div className="App">
-				{this.state.Jodit && (
+				{!this.state.Jodit ? (
+					this.props.loading
+				) : (
 					<JoditMaster
 						Jodit={this.state.Jodit}
 						config={this.config}
