@@ -1,5 +1,5 @@
 export const LoremIpsum = `<p>
-    <img style="float:right; margin: 10px;width:300px; height: 200px;" src="https://xdsoft.net/jodit/finder/files/pexels-kei-scampa-4507967.jpg" alt="Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus."></p>
+    <img style="float:right; margin: 10px;width:300px; height: 200px;" src="https://xdsoft.net/jodit/finder/files/pexels-kei-scampa-4507967.jpeg" alt="Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus."></p>
 <h1>Itaque nostrum est-quod nostrum dico, artis est-ad ea principia, quae accepimus.</h1>
 
 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <i>Quonam, inquit, modo?</i> <mark>Illum mallem levares, quo optimum atque humanissimum virum, Cn.</mark> Quae quidem vel cum periculo est quaerenda vobis; Amicitiam autem adhibendam esse censent,
