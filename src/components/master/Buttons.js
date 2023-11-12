@@ -98,7 +98,7 @@ export class Buttons extends PureComponent {
 		);
 	};
 	restoreDefaults = () => {
-		if (window.confirm('Are you shure?')) {
+		if (window.confirm('Are you sure?')) {
 			this.props.setButtons(
 				this.props.name,
 				this.props.Jodit.defaultOptions[this.props.name],

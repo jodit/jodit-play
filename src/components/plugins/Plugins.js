@@ -29,10 +29,9 @@ export class Plugins extends PureComponent {
 	};
 
 	render() {
-		const plugins = this.props.Jodit.plugins
-			.items()
+		const plugins = [...this.props.Jodit.plugins.__items.keys()]
 			.sort()
-			.map(([pluginName]) => (
+			.map((pluginName) => (
 				<CheckBox
 					popupKey={'plugins/' + pluginName}
 					key={pluginName}
