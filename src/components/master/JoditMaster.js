@@ -3,6 +3,7 @@ import React, { PureComponent } from 'react';
 import style from './style.module.css';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import * as history from 'history';
 
 import Tabs from '../tab/Tabs';
 import Tab from '../tab/Tab';
@@ -22,11 +23,18 @@ import Sizes from './Sizes';
 import JoditEditor from '../editor/editor';
 import List from '../list/List';
 
-const createHistory = require('history').createBrowserHistory;
-
-const history = createHistory();
-
 class JoditMaster extends PureComponent {
+	__history;
+
+	get history() {
+		if (this.__history) {
+			return this.__history;
+		}
+		const createHistory = history.createBrowserHistory;
+		this.__history = createHistory();
+		return this.__history;
+	}
+
 	getDefaultState = () => {
 		const { Jodit } = this.props;
 
@@ -331,7 +339,7 @@ class JoditMaster extends PureComponent {
 			const oldRoute = window.location.pathname + window.location.search;
 
 			if (oldRoute !== route) {
-				history.push(route, options);
+				this.history.push(route, options);
 			}
 		}
 
@@ -354,11 +362,13 @@ class JoditMaster extends PureComponent {
 			workBoxWidth: tab.props.width
 		});
 
-		setTimeout(() => {
-			let event = document.createEvent('HTMLEvents');
-			event.initEvent('resize', true, true);
-			window.dispatchEvent(event);
-		}, 100);
+		if (typeof document !== 'undefined') {
+			setTimeout(() => {
+				let event = document.createEvent('HTMLEvents');
+				event.initEvent('resize', true, true);
+				window.dispatchEvent(event);
+			}, 100);
+		}
 	};
 
 	setCSS = (css, theme) => {

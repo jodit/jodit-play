@@ -66,7 +66,7 @@ export default class Themes extends Component {
 	};
 
 	componentDidMount() {
-		if (!Themes.resetStyles) {
+		if (!Themes.resetStyles && typeof window !== 'undefined') {
 			const resetStyles = {};
 			Object.keys(this.props.theme).forEach((key) => {
 				resetStyles[key] = getComputedStyle(

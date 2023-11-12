@@ -6,6 +6,10 @@ export default class Popup extends Component {
 	static data = null;
 
 	static getMyPath() {
+		if (typeof window === 'undefined') {
+			return process.env.PUBLIC_URL ?? '';
+		}
+
 		return window.JoditPlayConfig.dataURL || process.env.PUBLIC_URL;
 	}
 
@@ -47,12 +51,7 @@ export default class Popup extends Component {
 
 			Object.keys(haystack).some((key) => {
 				result = Popup.findInfo(needle, haystack[key], callback);
-
-				if (result) {
-					return true;
-				}
-
-				return false;
+				return !!result;
 			});
 
 			return result;

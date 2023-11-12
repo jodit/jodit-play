@@ -149,16 +149,24 @@ class App extends PureComponent {
 				ready: () => {},
 				initialCSS: '',
 				initialConfig: {},
-				...window.JoditPlayConfig
+				...(typeof window !== 'undefined' ? window.JoditPlayConfig : {})
 			}
 		};
 
 		this.config.currentTab =
-			getParams(window.location.search.substring(1))['currentTab'] ||
-			null;
+			typeof window !== 'undefined'
+				? getParams(window.location.search.substring(1))[
+						'currentTab'
+				  ] || null
+				: null;
+
 		this.config.initialConfig = {
 			...this.config.initialConfig,
-			...getParams(window.location.search.substr(1))
+			...getParams(
+				typeof window !== 'undefined'
+					? window?.location.search.substring(1)
+					: ''
+			)
 		};
 	}
 
