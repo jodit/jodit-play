@@ -16,8 +16,15 @@ export function TabButtons(props) {
 				label="Toolbar adaptive"
 			/>
 
-			<Tabs setTab={props.setButtonsTab} currentTab={props.state.currentButtonsTab}>
-				<Tab onClick={props.setWorkboxWidth} width={'auto'} label="Desktop">
+			<Tabs
+				setTab={props.setButtonsTab}
+				currentTab={props.state.currentButtonsTab}
+			>
+				<Tab
+					onClick={props.setWorkboxWidth}
+					width={'auto'}
+					label="Desktop"
+				>
 					<Buttons
 						Jodit={props.Jodit}
 						activeIndex={props.state.activeIndex.buttons}

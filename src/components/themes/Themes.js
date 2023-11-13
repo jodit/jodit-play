@@ -15,14 +15,17 @@ export default function Themes(props) {
 		[props.theme]
 	);
 
-	const setValue = useCallback((_, key, value) => {
-		const state = { ...props.theme };
+	const setValue = useCallback(
+		(_, key, value) => {
+			const state = { ...props.theme };
 
-		if (state[key] !== value) {
-			state[key] = value;
-			props.setCSS(generateCss(state), state);
-		}
-	}, [props]);
+			if (state[key] !== value) {
+				state[key] = value;
+				props.setCSS(generateCss(state), state);
+			}
+		},
+		[props]
+	);
 
 	/**
 	 *

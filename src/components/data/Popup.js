@@ -7,8 +7,7 @@ export default function Popup(props) {
 	});
 
 	const updateContent = useCallback(() => {
-		const content =
-			findInfo(props.needle, DATA, checkInfo) || 'Not found';
+		const content = findInfo(props.needle, DATA, checkInfo) || 'Not found';
 
 		if (state.content !== content) {
 			setState({

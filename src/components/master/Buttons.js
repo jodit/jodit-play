@@ -12,7 +12,6 @@ export function Buttons({
 	name,
 	Jodit
 }) {
-
 	const toggleAll = useCallback(() => {
 		const rb = [...removeButtons];
 		buttons.forEach((button, index) => {
@@ -26,61 +25,76 @@ export function Buttons({
 		setButtons(name, buttons, rb, activeIndex);
 	}, [activeIndex, buttons, name, removeButtons, setButtons]);
 
-	const toggle = useCallback((index, active) => {
-		const button = buttons[index];
-		const rb = [...removeButtons];
+	const toggle = useCallback(
+		(index, active) => {
+			const button = buttons[index];
+			const rb = [...removeButtons];
 
-		if (rb.indexOf(button) !== -1 && active) {
-			rb.splice(rb.indexOf(button), 1);
-		} else {
-			!active && rb.push(button);
-		}
+			if (rb.indexOf(button) !== -1 && active) {
+				rb.splice(rb.indexOf(button), 1);
+			} else {
+				!active && rb.push(button);
+			}
 
-		setButtons(name, buttons, rb, activeIndex);
-	}, [activeIndex, buttons, name, removeButtons, setButtons]);
+			setButtons(name, buttons, rb, activeIndex);
+		},
+		[activeIndex, buttons, name, removeButtons, setButtons]
+	);
 
-	const move = useCallback((index, up) => {
-		const buttonsStart = buttons.slice();
-		const next = index + (up ? -1 : 1);
-		const buf = buttonsStart[index];
+	const move = useCallback(
+		(index, up) => {
+			const buttonsStart = buttons.slice();
+			const next = index + (up ? -1 : 1);
+			const buf = buttonsStart[index];
 
-		buttonsStart[index] = buttonsStart[next];
-		buttonsStart[next] = buf;
+			buttonsStart[index] = buttonsStart[next];
+			buttonsStart[next] = buf;
 
-		setButtons(name, buttonsStart, removeButtons, activeIndex);
-	}, [activeIndex, buttons, name, removeButtons, setButtons]);
+			setButtons(name, buttonsStart, removeButtons, activeIndex);
+		},
+		[activeIndex, buttons, name, removeButtons, setButtons]
+	);
 
-	const remove = useCallback((index) => {
-		const buttonsStart = buttons.slice(0, index);
-		const buttonsEnd = buttons.slice(index + 1);
+	const remove = useCallback(
+		(index) => {
+			const buttonsStart = buttons.slice(0, index);
+			const buttonsEnd = buttons.slice(index + 1);
 
-		setButtons(
-			name,
-			[...buttonsStart, ...buttonsEnd],
-			removeButtons,
-			activeIndex
-		);
-	}, [activeIndex, buttons, name, removeButtons, setButtons]);
+			setButtons(
+				name,
+				[...buttonsStart, ...buttonsEnd],
+				removeButtons,
+				activeIndex
+			);
+		},
+		[activeIndex, buttons, name, removeButtons, setButtons]
+	);
 
-	const addSeparator = useCallback((event) => {
-		const buttonsStart = buttons.slice(0, activeIndex);
-		const buttonsEnd = buttons.slice(activeIndex);
+	const addSeparator = useCallback(
+		(event) => {
+			const buttonsStart = buttons.slice(0, activeIndex);
+			const buttonsEnd = buttons.slice(activeIndex);
 
-		setButtons(
-			name,
-			[
-				...buttonsStart,
-				event.target.getAttribute('data-separator'),
-				...buttonsEnd
-			],
-			removeButtons,
-			activeIndex
-		);
-	}, [activeIndex, buttons, name, removeButtons, setButtons]);
+			setButtons(
+				name,
+				[
+					...buttonsStart,
+					event.target.getAttribute('data-separator'),
+					...buttonsEnd
+				],
+				removeButtons,
+				activeIndex
+			);
+		},
+		[activeIndex, buttons, name, removeButtons, setButtons]
+	);
 
-	const setActive = useCallback((index) => {
-		setButtons(name, buttons, removeButtons, index);
-	}, [buttons, name, removeButtons, setButtons]);
+	const setActive = useCallback(
+		(index) => {
+			setButtons(name, buttons, removeButtons, index);
+		},
+		[buttons, name, removeButtons, setButtons]
+	);
 
 	const restoreDefaults = useCallback(() => {
 		if (window.confirm('Are you sure?')) {
