@@ -9,16 +9,17 @@ export default function Color(props) {
 
 	const handleClick = () => {
 		setState((state) => ({
+			...state,
 			displayColorPicker: !state.displayColorPicker
 		}));
 	};
 
 	const handleClose = () => {
-		setState({ displayColorPicker: false });
+		setState((state) => ({ ...state, displayColorPicker: false }));
 	};
 
 	const setColor = (color) => {
-		setState({ color: color.rgb });
+		setState((state) => ({ ...state, color: color.rgb }));
 
 		props.setColor(props.selector, props.styleKey, color.hex);
 
