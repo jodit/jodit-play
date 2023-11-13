@@ -1,44 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
 import style from './style.module.css';
 
-export default class Break extends Component {
-	remove = (e) => {
-		this.props.remove(this.props.index);
+export default function Break(props) {
+	const remove = (e) => {
+		props.remove(props.index);
 		e.stopPropagation();
 	};
-	setActive = () => {
-		this.props.setActive(this.props.index);
+	const setActive = () => {
+		props.setActive(props.index);
 	};
-	moveUp = () => {
-		this.props.move(this.props.index, true);
+	const moveUp = () => {
+		props.move(props.index, true);
 	};
-	moveDown = () => {
-		this.props.move(this.props.index, false);
+	const moveDown = () => {
+		props.move(props.index, false);
 	};
-	render() {
-		return (
-			<tr
-				onDoubleClick={this.setActive}
-				className={
-					style.row +
-					' ' +
-					style.separator +
-					' ' +
-					(this.props.active ? style.row_active : '')
-				}
-			>
-				<td colSpan={2}>Break</td>
-				<td>
-					<span onClick={this.moveUp} className={style.moveUp}></span>
-					<span
-						onClick={this.moveDown}
-						className={style.moveDown}
-					></span>
-				</td>
-				<td className={style.lastCol}>
-					<span onClick={this.remove} className={style.trash}></span>
-				</td>
-			</tr>
-		);
-	}
+
+	return (
+		<tr
+			onDoubleClick={setActive}
+			className={
+				style.row +
+				' ' +
+				style.separator +
+				' ' +
+				(props.active ? style.row_active : '')
+			}
+		>
+			<td colSpan={2}>Break</td>
+			<td>
+				<span onClick={moveUp} className={style.moveUp}></span>
+				<span onClick={moveDown} className={style.moveDown}></span>
+			</td>
+			<td className={style.lastCol}>
+				<span onClick={remove} className={style.trash}></span>
+			</td>
+		</tr>
+	);
 }

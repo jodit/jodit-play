@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import style from './style.module.css';
 import Toggle from 'react-toggle';
 import 'react-toggle/style.css';
@@ -11,12 +11,9 @@ export default function CheckBox({
 	label,
 	name
 }) {
-	const onNativeChange = useCallback(
-		(event) => {
-			onChange && onChange(event.target.checked, name);
-		},
-		[onChange, name]
-	);
+	const onNativeChange = (event) => {
+		onChange && onChange(event.target.checked, name);
+	};
 
 	return (
 		<div className={style.label + (right ? ' ' + style.right : '')}>

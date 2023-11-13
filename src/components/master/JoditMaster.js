@@ -1,253 +1,128 @@
-import React, { PureComponent } from 'react';
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState
+} from 'react';
 
-import style from './style.module.css';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { tomorrow } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import * as history from 'history';
 
 import Tabs from '../tab/Tabs';
 import Tab from '../tab/Tab';
 import { Options } from './Options';
-import { Buttons } from './Buttons';
-import CheckBox from '../checkbox/CheckBox';
 import URL from '../url/URL';
 import Text from '../text/Text';
 import URLS from '../url/URLS';
-import CopyText from '../copytext/CopyText';
 import { State } from './State';
 import { http_build_query } from '../../App';
 import { Plugins } from '../plugins/Plugins';
 import Themes from '../themes/Themes';
 import { LoremIpsum } from './LoremIpsum';
 import Sizes from './Sizes';
-import JoditEditor from '../editor/editor';
 import List from '../list/List';
 
-class JoditMaster extends PureComponent {
-	__history;
+import style from './style.module.css';
+import { ViewEditor } from './ViewEditor';
+import { GeneratedCode } from './GeneratedCode';
+import { TabButtons } from './tabs/TabButtons';
 
-	get history() {
-		if (this.__history) {
-			return this.__history;
-		}
-		const createHistory = history.createBrowserHistory;
-		this.__history = createHistory();
-		return this.__history;
+let __history;
+
+function getHistory() {
+	if (__history) {
+		return __history;
 	}
+	const createHistory = history.createBrowserHistory;
+	__history = createHistory();
+	return __history;
+}
 
-	getDefaultState = () => {
-		const { Jodit } = this.props;
+const HEIGHT = 150;
+const WIDTH = 500;
 
+function JoditMaster(props) {
+	const { Jodit, config } = props;
+
+	const ref = useRef(null);
+	const [isDefault, setIsDefault] = useState(true);
+	const [tick, setTick] = useState(0);
+
+	const [sizes, setSizes] = useState({
+		height: HEIGHT,
+		width: WIDTH
+	});
+
+	const [state, setState] = useState(() => {
+		const defaultState = getDefaultState(Jodit, config);
 		return {
-			showLoremIpsum: true,
-			currentButtonsTab: null,
-			currentTab: this.props.config.currentTab,
-			workBoxWidth: 'auto',
-
-			buttons: {
-				buttons: [], // [...Jodit.defaultOptions.buttons],
-				buttonsMD: this.getButtons('buttonsMD'),
-				buttonsSM: this.getButtons('buttonsSM'),
-				buttonsXS: this.getButtons('buttonsXS')
-			},
-
-			removeButtons: {
-				buttons: [],
-				buttonsMD: this.getRemoveButtons('buttonsMD'),
-				buttonsSM: this.getRemoveButtons('buttonsSM'),
-				buttonsXS: this.getRemoveButtons('buttonsXS')
-			},
-
-			activeIndex: {
-				buttons: 0,
-				buttonsMD: 0,
-				buttonsSM: 0,
-				buttonsXS: 0
-			},
-
-			css: '',
-
-			theme: {
-				'--jd-color-background-default': '#ffffff',
-				'--jd-color-border': '#dadada',
-				'--jd-color-panel': '#f9f9f9',
-				'--jd-color-icon': '#4c4c4c'
-			},
-
+			...defaultState,
+			css: defaultState.css || config.initialCSS || '',
 			config: {
-				autofocus: Jodit.defaultOptions.autofocus,
-				useSearch: Jodit.defaultOptions.useSearch,
-				defaultFontSizePoints:
-					Jodit.defaultOptions.defaultFontSizePoints,
-				toolbar: Jodit.defaultOptions.toolbar,
-				iframe: Jodit.defaultOptions.iframe,
-				iframeStyle: Jodit.defaultOptions.iframeStyle,
-
-				uploader: Jodit.defaultOptions.uploader,
-
-				textIcons: Jodit.defaultOptions.textIcons,
-				readonly: Jodit.defaultOptions.readonly,
-				spellcheck: Jodit.defaultOptions.spellcheck,
-				language: Jodit.defaultOptions.language,
-				direction: Jodit.defaultOptions.direction,
-				theme: Jodit.defaultOptions.theme,
-				toolbarButtonSize: Jodit.defaultOptions.toolbarButtonSize,
-				enter: Jodit.defaultOptions.enter,
-				defaultMode: Jodit.defaultOptions.defaultMode,
-				allowResizeY: Jodit.defaultOptions.allowResizeY,
-				allowResizeX: Jodit.defaultOptions.allowResizeX,
-
-				toolbarAdaptive: Jodit.defaultOptions.toolbarAdaptive,
-				toolbarSticky: Jodit.defaultOptions.toolbarSticky,
-				toolbarStickyOffset: Jodit.defaultOptions.toolbarStickyOffset,
-
-				showCharsCounter: Jodit.defaultOptions.showCharsCounter,
-				showWordsCounter: Jodit.defaultOptions.showWordsCounter,
-				showXPathInStatusbar: Jodit.defaultOptions.showXPathInStatusbar,
-
-				saveHeightInStorage: Jodit.defaultOptions.saveHeightInStorage,
-				saveModeInStorage: Jodit.defaultOptions.saveModeInStorage,
-
-				askBeforePasteHTML: Jodit.defaultOptions.askBeforePasteHTML,
-				askBeforePasteFromWord:
-					Jodit.defaultOptions.askBeforePasteFromWord,
-				defaultActionOnPaste: Jodit.defaultOptions.defaultActionOnPaste,
-
-				disablePlugins: Jodit.defaultOptions.disablePlugins,
-
-				height: Jodit.defaultOptions.height,
-				minHeight: Jodit.defaultOptions.minHeight,
-				maxHeight: Jodit.defaultOptions.maxHeight,
-				width: Jodit.defaultOptions.width,
-				minWidth: Jodit.defaultOptions.minWidth,
-				maxWidth: Jodit.defaultOptions.maxWidth,
-				sizeLG: 800
+				...defaultState.config,
+				...config.initialConfig
 			}
 		};
-	};
+	});
 
-	getButtons(type) {
-		return [];
-	}
+	const [value, setValue] = useState('');
 
-	getRemoveButtons(type) {
-		return [];
-	}
-
-	componentDidMount() {
-		const { Jodit } = this.props;
-
-		const jodit = Jodit.make(this.editorRef, {
+	useEffect(() => {
+		const jodit = Jodit.make(ref.current, {
 			disablePlugins: 'mobile'
 		});
 
-		this.setState({
-			...this.state,
+		const buttonsList = jodit.toolbar.getButtonsNames();
+
+		setState((state) => ({
+			...state,
 			buttons: {
-				...this.state.buttons,
-				buttons: jodit.toolbar.getButtonsNames()
+				...state.buttons,
+				buttons: buttonsList
 			}
-		});
+		}));
 
 		jodit.destruct();
-	}
+	}, [Jodit, tick]);
 
-	state = ((defaultState) => {
-		return {
-			...defaultState,
-			css: defaultState.css || this.props.config.initialCSS || '',
-			config: {
-				...defaultState.config,
-				...this.props.config.initialConfig
-			}
-		};
-	})(this.getDefaultState());
-
-	setButtonsTab = (value) => {
-		this.setState({
-			...this.state,
+	const setButtonsTab = useCallback((value) => {
+		setState((state) => ({
+			...state,
 			currentButtonsTab: value
-		});
-	};
+		}));
+	}, []);
 
-	setTab = (value) => {
-		this.setState({
-			...this.state,
-			currentTab: value
-		});
-	};
+	const setTab = useCallback((v) => {
+		setState((state) => ({
+			...state,
+			currentTab: v
+		}));
+	}, []);
 
-	height = 150;
-	setHeight = (value) => {
-		this.setOption(value === true ? 'auto' : this.height, 'height');
-	};
+	const setOption = useMemo(
+		() =>
+			debounce((value, name) => {
+				switch (name) {
+					case 'height':
+					case 'width':
+						if (value !== 'auto') {
+							setSizes((sizes) => ({
+								...sizes,
+								[name]: value
+							}));
+						}
+						break;
+					default:
+				}
 
-	width = 500;
-	setWidth = (value) => {
-		this.setOption(value === true ? 'auto' : this.width, 'width');
-	};
-
-	setButtons = (name, buttons, removeButtons, activeIndex) => {
-		const state = { ...this.state };
-		let change = false;
-
-		if (this.state.buttons[name] !== buttons) {
-			state.buttons[name] = buttons;
-			change = true;
-		}
-
-		if (this.state.removeButtons[name] !== removeButtons) {
-			state.removeButtons[name] = removeButtons;
-			change = true;
-		}
-
-		if (change) {
-			state.config = {
-				...state.config,
-				[name]: buttons.filter(
-					(key) => removeButtons.indexOf(key) === -1
-				)
-			};
-		}
-
-		if (this.state.activeIndex[name] !== activeIndex) {
-			state.activeIndex[name] = activeIndex;
-			change = true;
-		}
-
-		if (change) {
-			this.setState(state);
-		}
-	};
-
-	timer;
-	toggleLoremIpsum = (showLoremIpsum) => {
-		if (!showLoremIpsum && this.value === LoremIpsum) {
-			this.value = '';
-		}
-		this.setState({
-			...this.state,
-			showLoremIpsum
-		});
-	};
-
-	setOption = (value, name) => {
-		const { Jodit } = this.props;
-
-		clearTimeout(this.timer);
-		this.timer = setTimeout(() => {
-			switch (name) {
-				case 'height':
-				case 'width':
-					if (value !== 'auto') {
-						this[name] = value;
+				setState((prevState) => {
+					if (
+						JSON.stringify(prevState[name]) ===
+						JSON.stringify(value)
+					) {
+						return prevState;
 					}
-					break;
-				default:
-			}
 
-			if (JSON.stringify(this.state[name]) !== JSON.stringify(value)) {
-				this.setState((prevState) => {
 					let newStage = { ...prevState.config };
 
 					if (name === 'iframe' && value === false) {
@@ -277,447 +152,424 @@ class JoditMaster extends PureComponent {
 						config: newStage
 					};
 				});
+			}, 100),
+		[Jodit]
+	);
+
+	const setHeight = useCallback(
+		(v) => {
+			setOption(v === true ? 'auto' : sizes.height, 'height');
+		},
+		[setOption, sizes.height]
+	);
+
+	const setWidth = useCallback(
+		(v) => {
+			setOption(v === true ? 'auto' : sizes.width, 'width');
+		},
+		[setOption, sizes.width]
+	);
+
+	const setButtons = useCallback(
+		(name, buttons, removeButtons, activeIndex) => {
+			const st = { ...state };
+			let change = false;
+
+			if (st.buttons[name] !== buttons) {
+				st.buttons[name] = buttons;
+				change = true;
 			}
-		}, 100);
-	};
 
-	getCode = () => {
-		const { Jodit } = this.props;
-
-		const getChangedOption = (config, defaultOptions) => {
-			const keys = Object.keys(config),
-				options = Array.isArray(config) ? [] : {};
-
-			keys.forEach((key) => {
-				if (
-					defaultOptions[key] !== undefined &&
-					JSON.stringify(config[key]) !==
-						JSON.stringify(defaultOptions[key]) &&
-					['sizeLG'].indexOf(key) === -1
-				) {
-					options[key] =
-						typeof config[key] === 'object'
-							? getChangedOption(config[key], defaultOptions[key])
-							: config[key];
-				}
-			});
-
-			return options;
-		};
-
-		const options = getChangedOption(
-			this.state.config,
-			Jodit.defaultOptions
-		);
-
-		['buttons', 'buttonsMD', 'buttonsSM', 'buttonsXS'].forEach((key) => {
-			if (options[key]) {
-				options[key] = options[key].toString();
+			if (st.removeButtons[name] !== removeButtons) {
+				st.removeButtons[name] = removeButtons;
+				change = true;
 			}
-		});
 
-		if (typeof this.props.config.setConfig === 'function') {
-			this.props.config.setConfig(options);
-		}
-
-		this.__isDefault =
-			Object.keys(options).length === 0 && this.state.css === '';
-
-		const config = JSON.stringify(options, null, 2);
-
-		if (
-			this.state.currentTab !== 'Options' &&
-			this.state.currentTab !== null
-		) {
-			options.currentTab = this.state.currentTab;
-		}
-
-		if (this.props.config.historyAPI) {
-			const query = http_build_query(options),
-				route = window.location.pathname + (query ? '?' + query : '');
-
-			const oldRoute = window.location.pathname + window.location.search;
-
-			if (oldRoute !== route) {
-				this.history.push(route, options);
+			if (change) {
+				st.config = {
+					...st.config,
+					[name]: buttons.filter(
+						(key) => removeButtons.indexOf(key) === -1
+					)
+				};
 			}
-		}
 
-		return (
-			'const editor = Jodit.make("#editor"' +
-			(config !== '{}' ? ', ' + config + '' : '') +
-			');'
-		);
-	};
+			if (st.activeIndex[name] !== activeIndex) {
+				st.activeIndex[name] = activeIndex;
+				change = true;
+			}
 
-	value = '';
+			if (change) {
+				setState(st);
+			}
+		},
+		[state]
+	);
 
-	onEditorChange = (value) => {
-		this.value = value;
-	};
+	const toggleLoremIpsum = useCallback(
+		(showLoremIpsum) => {
+			if (!showLoremIpsum && value === LoremIpsum) {
+				setValue(value);
+			}
 
-	setWorkboxWidth = (tab) => {
-		this.setState({
-			...this.state,
+			setState((state) => ({
+				...state,
+				showLoremIpsum
+			}));
+		},
+		[value]
+	);
+
+	const onEditorChange = useCallback((value) => {
+		setValue(value);
+	}, []);
+
+	const setWorkboxWidth = useCallback((tab) => {
+		setState((state) => ({
+			...state,
 			workBoxWidth: tab.props.width
-		});
+		}));
 
 		if (typeof document !== 'undefined') {
 			setTimeout(() => {
-				let event = document.createEvent('HTMLEvents');
+				const event = document.createEvent('HTMLEvents');
 				event.initEvent('resize', true, true);
 				window.dispatchEvent(event);
 			}, 100);
 		}
-	};
+	}, []);
 
-	setCSS = (css, theme) => {
-		this.setState({
-			...this.state,
-			css: css || this.props.config.initialCSS,
-			theme
-		});
-	};
+	const setCSS = useCallback(
+		(css, theme) => {
+			setState((state) => ({
+				...state,
+				css: css || config.initialCSS,
+				theme
+			}));
+		},
+		[config.initialCSS]
+	);
 
-	__isDefault = true;
-
-	editorRef;
-
-	isDefault = () => {
-		return this.__isDefault;
-	};
-
-	restoreDefault = () => {
+	const restoreDefault = useCallback(() => {
 		if (
 			window.confirm(
-				'Are you sure you want to restore the default settings?'
+				'Are you certain you want to revert to the default settings?'
 			)
 		) {
 			Themes.resetStyles = {};
-			this.setState({ ...this.getDefaultState() });
+			setState({ ...getDefaultState(Jodit, config) });
+			setTick((tick) => tick + 1);
 		}
-	};
+	}, [config, Jodit]);
 
-	render() {
-		const { Jodit } = this.props;
-		const code = this.getCode();
+	const code = useMemo(
+		() => getCode(Jodit, config, state, setIsDefault),
+		[Jodit, config, state, setIsDefault]
+	);
 
-		if (typeof this.props.config.setCode === 'function') {
-			this.props.config.setCode(code);
+	useEffect(() => {
+		if (typeof config.setCode === 'function') {
+			config.setCode(code);
 		}
 
-		if (typeof this.props.config.setCSS === 'function' && this.state.css) {
-			this.props.config.setCSS(this.state.css);
+		if (typeof config.setCSS === 'function' && state.css) {
+			config.setCSS(state.css);
 		}
+	}, [config, code, state.css]);
 
-		return (
-			<div className={style.layout}>
-				<div className={style.leftside}>
-					{this.props.config.showEditor && (
-						<div>
-							<div
-								className={style.workbox}
-								style={{ width: this.state.workBoxWidth }}
-							>
-								<div className={style.exampleHeader}>
-									<CheckBox
-										name="showLoremIpsum"
-										onChange={this.toggleLoremIpsum}
-										defaultChecked={
-											this.state.showLoremIpsum
-										}
-										label="Show lorem ipsum text"
-									/>
-
-									<a href="https://xdsoft.net/jodit/pro/">
-										Try Jodit PRO
-									</a>
+	return (
+		<div className={style.layout}>
+			<div className={style.leftside}>
+				<div ref={ref} />
+				{config.showEditor && (
+					<ViewEditor
+						state={state}
+						onChange={toggleLoremIpsum}
+						jodit={props.Jodit}
+						onChange1={onEditorChange}
+						value={value}
+					/>
+				)}
+				{config.showCode && <GeneratedCode code={code} state={state} />}
+				{state.css && <style>{state.css}</style>}
+			</div>
+			<div className={style.rightside}>
+				<div className={style.item}>
+					<Tabs currentTab={state.currentTab} setTab={setTab}>
+						<Tab label="Options">
+							{isDefault || (
+								<div className={style.defaultRestore}>
+									<button
+										onClick={restoreDefault}
+										type={'button'}
+									>
+										Restore defaults
+									</button>
 								</div>
-								<JoditEditor
-									ref={(ref) => (this.editorRef = ref)}
-									Jodit={this.props.Jodit}
-									onChange={this.onEditorChange}
-									config={this.state.config}
-									value={
-										this.state.showLoremIpsum
-											? LoremIpsum
-											: this.value
-									}
-								/>
-							</div>
-						</div>
-					)}
-					{this.props.config.showCode && (
-						<div>
-							<h2>Code</h2>
-							<CopyText>
-								<SyntaxHighlighter
-									showLineNumbers={false}
-									language="javascript"
-									style={tomorrow}
-								>
-									{code}
-								</SyntaxHighlighter>
-							</CopyText>
-							{this.state.css && (
-								<React.Fragment>
-									<h2>CSS</h2>
-									<CopyText>
-										<SyntaxHighlighter
-											showLineNumbers={false}
-											language="css"
-											style={tomorrow}
-										>
-											{this.state.css}
-										</SyntaxHighlighter>
-									</CopyText>
-								</React.Fragment>
 							)}
-						</div>
-					)}
-					{this.state.css && <style>{this.state.css}</style>}
-				</div>
-				<div className={style.rightside}>
-					<div className={style.item}>
-						<Tabs
-							currentTab={this.state.currentTab}
-							setTab={this.setTab}
-						>
-							<Tab label="Options">
-								{this.isDefault() || (
-									<div className={style.defaultRestore}>
-										<button
-											onClick={this.restoreDefault}
-											type={'button'}
-										>
-											Restore defaults
-										</button>
-									</div>
-								)}
 
-								<Options
-									Jodit={Jodit}
-									state={this.state.config}
-									height={this.height}
-									width={this.width}
-									setOption={this.setOption}
-									setHeight={this.setHeight}
-									setWidth={this.setWidth}
-								/>
-							</Tab>
-							<Tab label="Sizes">
-								<Sizes
-									state={this.state.config}
-									height={this.height}
-									width={this.width}
-									setOption={this.setOption}
-									setHeight={this.setHeight}
-									setWidth={this.setWidth}
-								/>
-							</Tab>
-							{this.props.config.showButtonsTab === false ||
-								this.state.config.toolbar === false || (
-									<Tab label="Buttons">
-										<CheckBox
-											popupKey="toolbarAdaptive"
-											name="toolbarAdaptive"
-											onChange={this.setOption}
-											defaultChecked={
-												this.state.config
-													.toolbarAdaptive
-											}
-											label="Toolbar adaptive"
-										/>
-
-										<Tabs
-											setTab={this.setButtonsTab}
-											currentTab={
-												this.state.currentButtonsTab
-											}
-										>
-											<Tab
-												onClick={this.setWorkboxWidth}
-												width={'auto'}
-												label="Desktop"
-											>
-												<Buttons
-													Jodit={Jodit}
-													activeIndex={
-														this.state.activeIndex
-															.buttons
-													}
-													removeButtons={
-														this.state.removeButtons
-															.buttons
-													}
-													name="buttons"
-													setButtons={this.setButtons}
-													buttons={
-														this.state.buttons
-															.buttons
-													}
-												/>
-											</Tab>
-											{!this.state.config
-												.toolbarAdaptive || (
-												<Tab
-													onClick={
-														this.setWorkboxWidth
-													}
-													width={799}
-													label="Medium(900px)"
-												>
-													<Buttons
-														Jodit={Jodit}
-														activeIndex={
-															this.state
-																.activeIndex
-																.buttonsMD
-														}
-														removeButtons={
-															this.state
-																.removeButtons
-																.buttonsMD
-														}
-														name="buttonsMD"
-														setButtons={
-															this.setButtons
-														}
-														buttons={
-															this.state.buttons
-																.buttonsMD
-														}
-													/>
-												</Tab>
-											)}
-											{!this.state.config
-												.toolbarAdaptive || (
-												<Tab
-													onClick={
-														this.setWorkboxWidth
-													}
-													width={699}
-													label="Tablet(700px)"
-												>
-													<Buttons
-														Jodit={Jodit}
-														activeIndex={
-															this.state
-																.activeIndex
-																.buttonsSM
-														}
-														removeButtons={
-															this.state
-																.removeButtons
-																.buttonsSM
-														}
-														name="buttonsSM"
-														setButtons={
-															this.setButtons
-														}
-														buttons={
-															this.state.buttons
-																.buttonsSM
-														}
-													/>
-												</Tab>
-											)}
-											{!this.state.config
-												.toolbarAdaptive || (
-												<Tab
-													onClick={
-														this.setWorkboxWidth
-													}
-													width={399}
-													label="Mobile(400px)"
-												>
-													<Buttons
-														Jodit={Jodit}
-														activeIndex={
-															this.state
-																.activeIndex
-																.buttonsXS
-														}
-														removeButtons={
-															this.state
-																.removeButtons
-																.buttonsXS
-														}
-														name="buttonsXS"
-														setButtons={
-															this.setButtons
-														}
-														buttons={
-															this.state.buttons
-																.buttonsXS
-														}
-													/>
-												</Tab>
-											)}
-										</Tabs>
-									</Tab>
-								)}
-							{this.state.config.iframe === false || (
-								<Tab label="Iframe mode">
-									<URL
-										label="Iframe Base URL"
-										name="iframeBaseUrl"
-										onChange={this.setOption}
-										value={this.state.config.iframeBaseUrl}
-									/>
-									<Text
-										label="iframe Default Style"
-										name="iframeStyle"
-										onChange={this.setOption}
-										value={this.state.config.iframeStyle}
-									/>
-									<URLS
-										label="Iframe external stylesheets files"
-										name="iframeCSSLinks"
-										onChange={this.setOption}
-										value={this.state.config.iframeCSSLinks}
+							<Options
+								Jodit={Jodit}
+								state={state.config}
+								height={sizes.height}
+								width={sizes.width}
+								setOption={setOption}
+								setHeight={setHeight}
+								setWidth={setWidth}
+							/>
+						</Tab>
+						<Tab label="Sizes">
+							<Sizes
+								state={state.config}
+								height={sizes.height}
+								width={sizes.width}
+								setOption={setOption}
+								setHeight={setHeight}
+								setWidth={setWidth}
+							/>
+						</Tab>
+						{config.showButtonsTab === false ||
+							state.config.toolbar === false || (
+								<Tab label="Buttons">
+									<TabButtons
+										setOption={setOption}
+										state={state}
+										setButtonsTab={setButtonsTab}
+										setWorkboxWidth={setWorkboxWidth}
+										Jodit={Jodit}
+										setButtons={setButtons}
 									/>
 								</Tab>
 							)}
-							<Tab label="State">
-								<State
-									Jodit={Jodit}
-									config={this.state.config}
-									setOption={this.setOption}
+						{state.config.iframe === false || (
+							<Tab label="Iframe mode">
+								<URL
+									label="Iframe Base URL"
+									name="iframeBaseUrl"
+									onChange={setOption}
+									value={state.config.iframeBaseUrl}
+								/>
+								<Text
+									label="iframe Default Style"
+									name="iframeStyle"
+									onChange={setOption}
+									value={state.config.iframeStyle}
+								/>
+								<URLS
+									label="Iframe external stylesheets files"
+									name="iframeCSSLinks"
+									onChange={setOption}
+									value={state.config.iframeCSSLinks}
 								/>
 							</Tab>
-							<Tab label="Plugins">
-								<Plugins
-									Jodit={Jodit}
-									config={this.state.config}
-									setOption={this.setOption}
-								/>
-							</Tab>
-							<Tab label="Themes">
-								<List
-									value={this.state.config.theme}
-									name="theme"
-									onChange={this.setOption}
-									list={{
-										default: 'Default',
-										dark: 'Dark'
-									}}
-									label="Theme"
-								/>
+						)}
+						<Tab label="State">
+							<State
+								Jodit={Jodit}
+								config={state.config}
+								setOption={setOption}
+							/>
+						</Tab>
+						<Tab label="Plugins">
+							<Plugins
+								Jodit={Jodit}
+								config={state.config}
+								setOption={setOption}
+							/>
+						</Tab>
+						<Tab label="Themes">
+							<List
+								value={state.config.theme}
+								name="theme"
+								onChange={setOption}
+								list={{
+									default: 'Default',
+									dark: 'Dark'
+								}}
+								label="Theme"
+							/>
 
-								{this.state.config.theme === 'default' && (
-									<Themes
-										theme={this.state.theme}
-										setCSS={this.setCSS}
-									/>
-								)}
-							</Tab>
-						</Tabs>
-					</div>
+							{state.config.theme === 'default' && (
+								<Themes theme={state.theme} setCSS={setCSS} />
+							)}
+						</Tab>
+					</Tabs>
 				</div>
 			</div>
-		);
+		</div>
+	);
+}
+
+function getDefaultState(Jodit, config) {
+	return {
+		showLoremIpsum: true,
+		currentButtonsTab: null,
+		currentTab: config.currentTab,
+		workBoxWidth: 'auto',
+
+		buttons: {
+			buttons: [],
+			buttonsMD: getButtons('buttonsMD'),
+			buttonsSM: getButtons('buttonsSM'),
+			buttonsXS: getButtons('buttonsXS')
+		},
+
+		removeButtons: {
+			buttons: [],
+			buttonsMD: getRemoveButtons('buttonsMD'),
+			buttonsSM: getRemoveButtons('buttonsSM'),
+			buttonsXS: getRemoveButtons('buttonsXS')
+		},
+
+		activeIndex: {
+			buttons: 0,
+			buttonsMD: 0,
+			buttonsSM: 0,
+			buttonsXS: 0
+		},
+
+		css: '',
+
+		theme: {
+			'--jd-color-background-default': '#ffffff',
+			'--jd-color-border': '#dadada',
+			'--jd-color-panel': '#f9f9f9',
+			'--jd-color-icon': '#4c4c4c'
+		},
+
+		config: {
+			autofocus: Jodit.defaultOptions.autofocus,
+			useSearch: Jodit.defaultOptions.useSearch,
+			defaultFontSizePoints: Jodit.defaultOptions.defaultFontSizePoints,
+			toolbar: Jodit.defaultOptions.toolbar,
+			iframe: Jodit.defaultOptions.iframe,
+			iframeStyle: Jodit.defaultOptions.iframeStyle,
+
+			uploader: Jodit.defaultOptions.uploader,
+
+			textIcons: Jodit.defaultOptions.textIcons,
+			readonly: Jodit.defaultOptions.readonly,
+			spellcheck: Jodit.defaultOptions.spellcheck,
+			language: Jodit.defaultOptions.language,
+			direction: Jodit.defaultOptions.direction,
+			theme: Jodit.defaultOptions.theme,
+			toolbarButtonSize: Jodit.defaultOptions.toolbarButtonSize,
+			enter: Jodit.defaultOptions.enter,
+			defaultMode: Jodit.defaultOptions.defaultMode,
+			allowResizeY: Jodit.defaultOptions.allowResizeY,
+			allowResizeX: Jodit.defaultOptions.allowResizeX,
+
+			toolbarAdaptive: Jodit.defaultOptions.toolbarAdaptive,
+			toolbarSticky: Jodit.defaultOptions.toolbarSticky,
+			toolbarStickyOffset: Jodit.defaultOptions.toolbarStickyOffset,
+
+			showCharsCounter: Jodit.defaultOptions.showCharsCounter,
+			showWordsCounter: Jodit.defaultOptions.showWordsCounter,
+			showXPathInStatusbar: Jodit.defaultOptions.showXPathInStatusbar,
+
+			saveHeightInStorage: Jodit.defaultOptions.saveHeightInStorage,
+			saveModeInStorage: Jodit.defaultOptions.saveModeInStorage,
+
+			askBeforePasteHTML: Jodit.defaultOptions.askBeforePasteHTML,
+			askBeforePasteFromWord: Jodit.defaultOptions.askBeforePasteFromWord,
+			defaultActionOnPaste: Jodit.defaultOptions.defaultActionOnPaste,
+
+			disablePlugins: Jodit.defaultOptions.disablePlugins,
+
+			height: Jodit.defaultOptions.height,
+			minHeight: Jodit.defaultOptions.minHeight,
+			maxHeight: Jodit.defaultOptions.maxHeight,
+			width: Jodit.defaultOptions.width,
+			minWidth: Jodit.defaultOptions.minWidth,
+			maxWidth: Jodit.defaultOptions.maxWidth,
+			sizeLG: 800
+		}
+	};
+}
+
+function getButtons(type) {
+	return [];
+}
+
+function getRemoveButtons(type) {
+	return [];
+}
+
+function getCode(Jodit, config, state, setDefault) {
+	const getChangedOption = (config, defaultOptions) => {
+		const keys = Object.keys(config),
+			options = Array.isArray(config) ? [] : {};
+
+		keys.forEach((key) => {
+			if (
+				defaultOptions[key] !== undefined &&
+				JSON.stringify(config[key]) !==
+					JSON.stringify(defaultOptions[key]) &&
+				['sizeLG'].indexOf(key) === -1
+			) {
+				options[key] =
+					typeof config[key] === 'object'
+						? getChangedOption(config[key], defaultOptions[key])
+						: config[key];
+			}
+		});
+
+		return options;
+	};
+
+	const options = getChangedOption(state.config, Jodit.defaultOptions);
+
+	['buttons', 'buttonsMD', 'buttonsSM', 'buttonsXS'].forEach((key) => {
+		if (options[key]) {
+			options[key] = options[key].toString();
+		}
+	});
+
+	if (typeof config.setConfig === 'function') {
+		config.setConfig(options);
 	}
+
+	setDefault(Object.keys(options).length === 0 && state.css === '');
+
+	const con = JSON.stringify(options, null, 2);
+
+	if (state.currentTab !== 'Options' && state.currentTab !== null) {
+		options.currentTab = state.currentTab;
+	}
+
+	if (config.historyAPI) {
+		const query = http_build_query(options),
+			route = window.location.pathname + (query ? '?' + query : '');
+
+		const oldRoute = window.location.pathname + window.location.search;
+
+		if (oldRoute !== route) {
+			getHistory().push(route, options);
+		}
+	}
+
+	return (
+		'const editor = Jodit.make("#editor"' +
+		(con !== '{}' ? ', ' + con + '' : '') +
+		');'
+	);
+}
+
+function debounce(f, ms) {
+	let timer = null;
+
+	return function (...args) {
+		const onComplete = () => {
+			f.apply(this, args);
+			timer = null;
+		};
+
+		if (timer) {
+			clearTimeout(timer);
+		}
+
+		timer = setTimeout(onComplete, ms);
+	};
 }
 
 export default JoditMaster;

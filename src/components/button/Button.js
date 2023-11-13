@@ -1,58 +1,51 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import style from './style.module.css';
 import CheckBox from '../checkbox/CheckBox';
 
-export class Button extends PureComponent {
-	toggle = (active) => {
-		this.props.toggle(this.props.index, active);
+export function Button(props) {
+	const toggle = (active) => {
+		props.toggle(props.index, active);
 	};
 
-	setActive = () => {
-		this.props.setActive(this.props.index);
+	const setActive = () => {
+		props.setActive(props.index);
 	};
 
-	moveUp = () => {
-		this.props.move(this.props.index, true);
+	const moveUp = () => {
+		props.move(props.index, true);
 	};
 
-	moveDown = () => {
-		this.props.move(this.props.index, false);
+	const moveDown = () => {
+		props.move(props.index, false);
 	};
 
-	render() {
-		return (
-			<tr
-				onDoubleClick={this.setActive}
-				className={
-					style.row +
-					' ' +
-					(this.props.active ? style.row_active : '') +
-					' ' +
-					(!this.props.checked ? style.row_disable : '')
-				}
-			>
-				<td>
-					<div
-						className={style.icon}
-						dangerouslySetInnerHTML={{
-							__html: this.props.Jodit.modules.Icon.get(
-								this.props.label
-							)
-						}}
-					/>
-				</td>
-				<td>{this.props.label}</td>
-				<td>
-					<span onClick={this.moveUp} className={style.moveUp} />
-					<span onClick={this.moveDown} className={style.moveDown} />
-				</td>
-				<td className={style.lastCol}>
-					<CheckBox
-						checked={this.props.checked}
-						onChange={this.toggle}
-					/>
-				</td>
-			</tr>
-		);
-	}
+	return (
+		<tr
+			onDoubleClick={setActive}
+			className={
+				style.row +
+				' ' +
+				(props.active ? style.row_active : '') +
+				' ' +
+				(!props.checked ? style.row_disable : '')
+			}
+		>
+			<td>
+				<div
+					className={style.icon}
+					dangerouslySetInnerHTML={{
+						__html: props.Jodit.modules.Icon.get(props.label)
+					}}
+				/>
+			</td>
+			<td>{props.label}</td>
+			<td>
+				<span onClick={moveUp} className={style.moveUp} />
+				<span onClick={moveDown} className={style.moveDown} />
+			</td>
+			<td className={style.lastCol}>
+				<CheckBox checked={props.checked} onChange={toggle} />
+			</td>
+		</tr>
+	);
 }

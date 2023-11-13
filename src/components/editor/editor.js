@@ -1,15 +1,9 @@
-import s from './editor.module.css';
-
-import React, {
-	useEffect,
-	useRef,
-	forwardRef,
-	useLayoutEffect,
-	useState
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { func, number, object, string } from 'prop-types';
 
-const JoditEditor = forwardRef((props, ref) => {
+import s from './editor.module.css';
+
+const JoditEditor = (props) => {
 	const {
 		config,
 		id,
@@ -18,7 +12,6 @@ const JoditEditor = forwardRef((props, ref) => {
 		onChange,
 		tabIndex,
 		value,
-		editorRef,
 		children,
 		Jodit
 	} = props;
@@ -26,16 +19,6 @@ const JoditEditor = forwardRef((props, ref) => {
 	const [isLoading, setLoading] = useState(true);
 	const textArea = useRef(null);
 	const div = useRef(null);
-
-	useLayoutEffect(() => {
-		if (ref) {
-			if (typeof ref === 'function') {
-				ref(textArea.current);
-			} else {
-				ref.current = textArea.current;
-			}
-		}
-	}, [ref]);
 
 	useEffect(() => {
 		const element = textArea.current;
@@ -63,10 +46,6 @@ const JoditEditor = forwardRef((props, ref) => {
 
 			if (id) element.id = id;
 			if (name) element.name = name;
-
-			if (typeof editorRef === 'function') {
-				editorRef(textArea.current);
-			}
 		}
 
 		void loadAndInit();
@@ -80,7 +59,7 @@ const JoditEditor = forwardRef((props, ref) => {
 
 			textArea.current = element;
 		};
-	}, [editorRef, config, id, value, onBlur, onChange, name, tabIndex, Jodit]);
+	}, [config, id, value, onBlur, onChange, name, tabIndex, Jodit]);
 
 	useEffect(() => {
 		if (textArea?.current?.value !== value) {
@@ -101,7 +80,7 @@ const JoditEditor = forwardRef((props, ref) => {
 			</div>
 		</div>
 	);
-});
+};
 
 JoditEditor.propTypes = {
 	config: object,
@@ -109,7 +88,6 @@ JoditEditor.propTypes = {
 	name: string,
 	onBlur: func,
 	onChange: func,
-	editorRef: func,
 	loadJodit: func,
 	tabIndex: number,
 	value: string

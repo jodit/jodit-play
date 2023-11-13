@@ -1,21 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import style from '../button/style.module.css';
 
-export default class URLS extends Component {
-	add = () => {
-		this.onChange(['']);
+export default function URLS(props) {
+	const ref = React.useRef(null);
+	const add = () => {
+		onChange(['']);
 	};
-	remove = (event) => {
+	const remove = (event) => {
 		let tr = event.target.parentNode.parentNode;
 		tr.querySelector('input').value = '';
 
-		this.onChange();
+		onChange();
 	};
 
-	onChange = (plus) => {
+	const onChange = (plus) => {
 		let urls = [];
 		urls = [].slice
-			.call(this.refs.table.querySelectorAll('input'))
+			.call(ref.current.querySelectorAll('input'))
 			.map((input) => input.value)
 			.filter((elm) => elm);
 
@@ -23,44 +24,38 @@ export default class URLS extends Component {
 			urls = urls.concat(plus);
 		}
 
-		this.props.onChange && this.props.onChange(urls, this.props.name);
+		props.onChange && props.onChange(urls, props.name);
 	};
 
-	render() {
-		const urls = (
-			this.props.value &&
-			Array.isArray(this.props.value) &&
-			this.props.value.length
-				? this.props.value
-				: ['']
-		).map((url, index) => {
-			return (
-				<tr key={index + '' + url}>
-					<td>
-						<input
-							placeholder="https://"
-							onBlur={this.onChange}
-							type="url"
-							defaultValue={url}
-						/>
-					</td>
-					<td className={style.fill}>
-						<span onClick={this.add} className={style.add}></span>
-						<span
-							onClick={this.remove}
-							className={style.trash}
-						></span>
-					</td>
-				</tr>
-			);
-		});
+	const urls = (
+		props.value && Array.isArray(props.value) && props.value.length
+			? props.value
+			: ['']
+	).map((url, index) => {
 		return (
-			<div className={style.label}>
-				<label>{this.props.label}</label>
-				<table className={style.table} ref="table">
-					<tbody>{urls}</tbody>
-				</table>
-			</div>
+			<tr key={index + '' + url}>
+				<td>
+					<input
+						placeholder="https://"
+						onBlur={onChange}
+						type="url"
+						defaultValue={url}
+					/>
+				</td>
+				<td className={style.fill}>
+					<span onClick={add} className={style.add}></span>
+					<span onClick={remove} className={style.trash}></span>
+				</td>
+			</tr>
 		);
-	}
+	});
+
+	return (
+		<div className={style.label}>
+			<label>{props.label}</label>
+			<table className={style.table} ref={ref}>
+				<tbody>{urls}</tbody>
+			</table>
+		</div>
+	);
 }

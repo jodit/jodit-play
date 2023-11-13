@@ -3,6 +3,7 @@ import style from './style.module.css';
 
 export default function List({ list, onChange, name, label, value }) {
 	const ref = useRef(null);
+
 	const onNativeChange = useCallback(() => {
 		onChange && onChange(ref.current.value, name);
 	}, [onChange, name]);

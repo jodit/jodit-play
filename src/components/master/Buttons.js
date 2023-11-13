@@ -1,203 +1,179 @@
-import React, { PureComponent } from 'react';
+import React, { useCallback } from 'react';
 import { Button } from '../button/Button';
 import style from '../button/style.module.css';
 import Separator from '../button/Separator';
 import Break from '../button/Break';
 
-export class Buttons extends PureComponent {
-	toggleAll = () => {
-		const buttons = [...this.props.buttons];
-		const removeButtons = [...this.props.removeButtons];
+export function Buttons({
+	buttons,
+	removeButtons,
+	activeIndex,
+	setButtons,
+	name,
+	Jodit
+}) {
 
+	const toggleAll = useCallback(() => {
+		const rb = [...removeButtons];
 		buttons.forEach((button, index) => {
-			if (removeButtons.indexOf(button) !== -1) {
-				removeButtons.splice(removeButtons.indexOf(button), 1);
+			if (rb.indexOf(button) !== -1) {
+				rb.splice(rb.indexOf(button), 1);
 			} else {
-				removeButtons.push(button);
+				rb.push(button);
 			}
 		});
 
-		this.props.setButtons(
-			this.props.name,
-			buttons,
-			removeButtons,
-			this.props.activeIndex
-		);
-	};
+		setButtons(name, buttons, rb, activeIndex);
+	}, [activeIndex, buttons, name, removeButtons, setButtons]);
 
-	toggle = (index, active) => {
-		const button = this.props.buttons[index];
-		const removeButtons = [...this.props.removeButtons];
+	const toggle = useCallback((index, active) => {
+		const button = buttons[index];
+		const rb = [...removeButtons];
 
-		if (removeButtons.indexOf(button) !== -1 && active) {
-			removeButtons.splice(removeButtons.indexOf(button), 1);
+		if (rb.indexOf(button) !== -1 && active) {
+			rb.splice(rb.indexOf(button), 1);
 		} else {
-			!active && removeButtons.push(button);
+			!active && rb.push(button);
 		}
 
-		this.props.setButtons(
-			this.props.name,
-			this.props.buttons,
-			removeButtons,
-			this.props.activeIndex
-		);
-	};
+		setButtons(name, buttons, rb, activeIndex);
+	}, [activeIndex, buttons, name, removeButtons, setButtons]);
 
-	move = (index, up) => {
-		const buttonsStart = this.props.buttons.slice();
+	const move = useCallback((index, up) => {
+		const buttonsStart = buttons.slice();
 		const next = index + (up ? -1 : 1);
 		const buf = buttonsStart[index];
 
 		buttonsStart[index] = buttonsStart[next];
 		buttonsStart[next] = buf;
 
-		this.props.setButtons(
-			this.props.name,
-			buttonsStart,
-			this.props.removeButtons,
-			this.props.activeIndex
-		);
-	};
+		setButtons(name, buttonsStart, removeButtons, activeIndex);
+	}, [activeIndex, buttons, name, removeButtons, setButtons]);
 
-	remove = (index) => {
-		const buttonsStart = this.props.buttons.slice(0, index);
-		const buttonsEnd = this.props.buttons.slice(index + 1);
+	const remove = useCallback((index) => {
+		const buttonsStart = buttons.slice(0, index);
+		const buttonsEnd = buttons.slice(index + 1);
 
-		this.props.setButtons(
-			this.props.name,
+		setButtons(
+			name,
 			[...buttonsStart, ...buttonsEnd],
-			this.props.removeButtons,
-			this.props.activeIndex
+			removeButtons,
+			activeIndex
 		);
-	};
+	}, [activeIndex, buttons, name, removeButtons, setButtons]);
 
-	addSeparator = (event) => {
-		const buttonsStart = this.props.buttons.slice(
-			0,
-			this.props.activeIndex
-		);
-		const buttonsEnd = this.props.buttons.slice(this.props.activeIndex);
+	const addSeparator = useCallback((event) => {
+		const buttonsStart = buttons.slice(0, activeIndex);
+		const buttonsEnd = buttons.slice(activeIndex);
 
-		this.props.setButtons(
-			this.props.name,
+		setButtons(
+			name,
 			[
 				...buttonsStart,
 				event.target.getAttribute('data-separator'),
 				...buttonsEnd
 			],
-			this.props.removeButtons,
-			this.props.activeIndex
+			removeButtons,
+			activeIndex
 		);
-	};
-	setActive = (index) => {
-		this.props.setButtons(
-			this.props.name,
-			this.props.buttons,
-			this.props.removeButtons,
-			index
-		);
-	};
-	restoreDefaults = () => {
+	}, [activeIndex, buttons, name, removeButtons, setButtons]);
+
+	const setActive = useCallback((index) => {
+		setButtons(name, buttons, removeButtons, index);
+	}, [buttons, name, removeButtons, setButtons]);
+
+	const restoreDefaults = useCallback(() => {
 		if (window.confirm('Are you sure?')) {
-			this.props.setButtons(
-				this.props.name,
-				this.props.Jodit.defaultOptions[this.props.name],
-				[],
-				0
-			);
+			setButtons(name, Jodit.defaultOptions[name], [], 0);
 		}
-	};
+	}, [Jodit.defaultOptions, name, setButtons]);
 
-	render() {
-		const list = this.props.buttons.map((key, index) => {
-			switch (key) {
-				case '\n':
-					return (
-						<Break
-							move={this.move}
-							remove={this.remove}
-							setActive={this.setActive}
-							active={this.props.activeIndex === index}
-							label={key}
-							index={index}
-							key={index}
-						/>
-					);
-				case '|':
-					return (
-						<Separator
-							move={this.move}
-							remove={this.remove}
-							setActive={this.setActive}
-							active={this.props.activeIndex === index}
-							label={key}
-							index={index}
-							key={index}
-						/>
-					);
-				default:
-					return (
-						<Button
-							Jodit={this.props.Jodit}
-							move={this.move}
-							checked={
-								this.props.removeButtons.indexOf(key) === -1
-							}
-							toggle={this.toggle}
-							setActive={this.setActive}
-							active={this.props.activeIndex === index}
-							label={key}
-							index={index}
-							key={index}
-						/>
-					);
-			}
-		});
+	const list = buttons.map((key, index) => {
+		switch (key) {
+			case '\n':
+				return (
+					<Break
+						move={move}
+						remove={remove}
+						setActive={setActive}
+						active={activeIndex === index}
+						label={key}
+						index={index}
+						key={index}
+					/>
+				);
+			case '|':
+				return (
+					<Separator
+						move={move}
+						remove={remove}
+						setActive={setActive}
+						active={activeIndex === index}
+						label={key}
+						index={index}
+						key={index}
+					/>
+				);
+			default:
+				return (
+					<Button
+						Jodit={Jodit}
+						move={move}
+						checked={removeButtons.indexOf(key) === -1}
+						toggle={toggle}
+						setActive={setActive}
+						active={activeIndex === index}
+						label={key}
+						index={index}
+						key={index}
+					/>
+				);
+		}
+	});
 
-		return (
-			<div>
-				<table className={style.table}>
-					<tbody>
-						<tr>
-							<td
-								colSpan={5}
-								style={{ textAlign: 'right', padding: '5px 0' }}
+	return (
+		<div>
+			<table className={style.table}>
+				<tbody>
+					<tr>
+						<td
+							colSpan={5}
+							style={{ textAlign: 'right', padding: '5px 0' }}
+						>
+							<span
+								onClick={restoreDefaults}
+								className={style.restore}
+								title="Restore default"
+							></span>
+							<span
+								onClick={addSeparator}
+								data-separator={'\n'}
+								className={style.add}
+								title="Add Break"
 							>
-								<span
-									onClick={this.restoreDefaults}
-									className={style.restore}
-									title="Restore default"
-								></span>
-								<span
-									onClick={this.addSeparator}
-									data-separator={'\n'}
-									className={style.add}
-									title="Add Break"
-								>
-									Break
-								</span>
-								<span
-									onClick={this.addSeparator}
-									data-separator="|"
-									className={style.add}
-									title="Add Separator"
-								>
-									Separator
-								</span>
-								<span
-									onClick={this.toggleAll}
-									className={style.restore}
-									title="Toggle all"
-								>
-									Toggle all
-								</span>
-							</td>
-						</tr>
-						{list}
-					</tbody>
-				</table>
-				<p className={style.info}>Double-Click selected row</p>
-			</div>
-		);
-	}
+								Break
+							</span>
+							<span
+								onClick={addSeparator}
+								data-separator="|"
+								className={style.add}
+								title="Add Separator"
+							>
+								Separator
+							</span>
+							<span
+								onClick={toggleAll}
+								className={style.restore}
+								title="Toggle all"
+							>
+								Toggle all
+							</span>
+						</td>
+					</tr>
+					{list}
+				</tbody>
+			</table>
+			<p className={style.info}>Double-Click selected row</p>
+		</div>
+	);
 }

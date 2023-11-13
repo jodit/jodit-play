@@ -1,97 +1,93 @@
-import React, { Component } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import style from './style.module.css';
 
-export default class Popup extends Component {
-	static loadingState = false;
-	static data = null;
-
-	static getMyPath() {
-		if (typeof window === 'undefined') {
-			return process.env.PUBLIC_URL ?? '';
-		}
-
-		return window.JoditPlayConfig.dataURL || process.env.PUBLIC_URL;
-	}
-
-	static loadData(success) {
-		fetch(Popup.getMyPath() + 'data.json')
-			.then((data) => {
-				return data.json();
-			})
-			.then((data) => {
-				Popup.data = data;
-				success();
-			});
-	}
-
-	static checkInfo(needle, haystack) {
-		if (
-			haystack.name !== undefined &&
-			haystack.name.replace(/"/g, '') === needle
-		) {
-			return Popup.findInfo(needle, haystack, (needle, haystack) => {
-				if (
-					haystack.shortText &&
-					haystack.shortText.replace(/\s/g, '').length
-				) {
-					return haystack.shortText;
-				}
-			});
-		}
-	}
-	static findInfo(needle, haystack, callback) {
-		const info = callback(needle, haystack);
-
-		if (info) {
-			return info;
-		}
-
-		if (typeof haystack === 'object') {
-			let result;
-
-			Object.keys(haystack).some((key) => {
-				result = Popup.findInfo(needle, haystack[key], callback);
-				return !!result;
-			});
-
-			return result;
-		}
-	}
-
-	state = {
+export default function Popup(props) {
+	const [state, setState] = React.useState({
 		content: ''
-	};
+	});
 
-	updateContent() {
+	const updateContent = useCallback(() => {
 		const content =
-			Popup.findInfo(this.props.needle, Popup.data, Popup.checkInfo) ||
-			'Not found';
-		if (this.state.content !== content) {
-			this.setState({
+			findInfo(props.needle, DATA, checkInfo) || 'Not found';
+
+		if (state.content !== content) {
+			setState({
 				content
 			});
 		}
-	}
+	}, [props.needle, state.content]);
 
-	componentWillMount() {
-		if (!Popup.data && !Popup.loadingState) {
-			Popup.loadingState = true;
-			Popup.loadData(() => {
-				this.updateContent();
+	useEffect(() => {
+		if (!DATA && !LOADINGSTATE) {
+			LOADINGSTATE = true;
+			loadData(() => {
+				updateContent();
 			});
 		}
-		if (Popup.data) {
-			this.updateContent();
+		if (DATA) {
+			updateContent();
 		}
+	}, [updateContent]);
+
+	return (
+		<div className={style.box}>
+			<div className={style.popup}>
+				{state.content || <span>Loading ...</span>}
+			</div>
+		</div>
+	);
+}
+
+let LOADINGSTATE = false;
+let DATA = null;
+
+function getMyPath() {
+	if (typeof window === 'undefined') {
+		return process.env.PUBLIC_URL ?? '';
 	}
 
-	render() {
-		return (
-			<div className={style.box}>
-				<div className={style.popup}>
-					{this.state.content || <span>Loading ...</span>}
-				</div>
-			</div>
-		);
+	return window.JoditPlayConfig.dataURL || process.env.PUBLIC_URL;
+}
+
+function loadData(success) {
+	fetch(getMyPath() + 'data.json')
+		.then((data) => data.json())
+		.then((data) => {
+			DATA = data;
+			success();
+		});
+}
+
+function checkInfo(needle, haystack) {
+	if (
+		haystack.name !== undefined &&
+		haystack.name.replace(/"/g, '') === needle
+	) {
+		return findInfo(needle, haystack, (needle, haystack) => {
+			if (
+				haystack.shortText &&
+				haystack.shortText.replace(/\s/g, '').length
+			) {
+				return haystack.shortText;
+			}
+		});
+	}
+}
+function findInfo(needle, haystack, callback) {
+	const info = callback(needle, haystack);
+
+	if (info) {
+		return info;
+	}
+
+	if (typeof haystack === 'object') {
+		let result;
+
+		Object.keys(haystack).some((key) => {
+			result = findInfo(needle, haystack[key], callback);
+			return !!result;
+		});
+
+		return result;
 	}
 }

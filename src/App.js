@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import JoditMaster from './components/master/JoditMaster';
 
@@ -115,75 +115,60 @@ const getParams = (query) => {
 		}, {});
 };
 
-class App extends PureComponent {
-	config;
+const config = {
+	...{
+		currentTab: null,
+		showCode: true,
+		showEditor: true,
+		showButtonsTab: true,
+		historyAPI: true,
+		dataURL: './',
+		setCSS: (css) => {},
+		setCode: (code) => {},
+		setConfig: (config) => {},
+		ready: () => {},
+		initialCSS: '',
+		initialConfig: {},
+		...(typeof window !== 'undefined' ? window.JoditPlayConfig : {})
+	}
+};
 
-	state = {
+config.currentTab =
+	typeof window !== 'undefined'
+		? getParams(window.location.search.substring(1))['currentTab'] || null
+		: null;
+
+config.initialConfig = {
+	...config.initialConfig,
+	...getParams(
+		typeof window !== 'undefined'
+			? window?.location.search.substring(1)
+			: ''
+	)
+};
+
+function App({ loadJodit, loading }) {
+	const [state, setState] = useState({
 		Jodit: null
-	};
+	});
 
-	componentDidMount() {
-		const loadJodit = this.props.loadJodit;
-
+	useEffect(() => {
 		loadJodit().then((Jodit) => {
-			this.setState({
+			setState({
 				Jodit
 			});
 		});
-	}
+	}, [loadJodit]);
 
-	constructor() {
-		super();
-
-		this.config = {
-			...{
-				currentTab: null,
-				showCode: true,
-				showEditor: true,
-				showButtonsTab: true,
-				historyAPI: true,
-				dataURL: './',
-				setCSS: (css) => {},
-				setCode: (code) => {},
-				setConfig: (config) => {},
-				ready: () => {},
-				initialCSS: '',
-				initialConfig: {},
-				...(typeof window !== 'undefined' ? window.JoditPlayConfig : {})
-			}
-		};
-
-		this.config.currentTab =
-			typeof window !== 'undefined'
-				? getParams(window.location.search.substring(1))[
-						'currentTab'
-				  ] || null
-				: null;
-
-		this.config.initialConfig = {
-			...this.config.initialConfig,
-			...getParams(
-				typeof window !== 'undefined'
-					? window?.location.search.substring(1)
-					: ''
-			)
-		};
-	}
-
-	render() {
-		return (
-			<div className="App">
-				{!this.state.Jodit ? (
-					this.props.loading
-				) : (
-					<JoditMaster
-						Jodit={this.state.Jodit}
-						config={this.config}
-					/>
-				)}
-			</div>
-		);
-	}
+	return (
+		<div className="App">
+			{!state.Jodit ? (
+				loading
+			) : (
+				<JoditMaster Jodit={state.Jodit} config={config} />
+			)}
+		</div>
+	);
 }
 
 export default App;
