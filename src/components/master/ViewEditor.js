@@ -1,5 +1,4 @@
 import React from 'react';
-import * as PropTypes from 'prop-types';
 
 import CheckBox from '../checkbox/CheckBox';
 import JoditEditor from '../editor/editor';
