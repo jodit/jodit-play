@@ -1,0 +1,86 @@
+.field {
+	padding: 6px 0;
+}
+
+.label {
+	display: block;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--play-text-secondary);
+	margin-bottom: 4px;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.list {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.row {
+	display: flex;
+	gap: 4px;
+	align-items: center;
+}
+
+.input {
+	flex: 1;
+	height: 34px;
+	padding: 0 10px;
+	font-size: 13px;
+	color: var(--play-text);
+	background-color: var(--play-surface);
+	border: 1px solid var(--play-border);
+	border-radius: var(--play-radius);
+	outline: none;
+	transition:
+		border-color var(--play-transition),
+		box-shadow var(--play-transition);
+}
+
+.input:hover {
+	border-color: var(--play-accent);
+}
+
+.input:focus {
+	border-color: var(--play-accent);
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.actions {
+	display: flex;
+	gap: 2px;
+	flex-shrink: 0;
+}
+
+.btn,
+.btnDanger {
+	width: 28px;
+	height: 28px;
+	border: 1px solid var(--play-border);
+	border-radius: var(--play-radius);
+	background: var(--play-surface);
+	color: var(--play-text-secondary);
+	font-size: 16px;
+	line-height: 1;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition:
+		background-color var(--play-transition),
+		color var(--play-transition);
+}
+
+.btn:hover {
+	background: var(--play-accent);
+	color: white;
+	border-color: var(--play-accent);
+}
+
+.btnDanger:hover {
+	background: #ef4444;
+	color: white;
+	border-color: #ef4444;
+}

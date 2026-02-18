@@ -1,0 +1,16 @@
+:root {
+	--play-bg: #f8fafc;
+	--play-surface: #ffffff;
+	--play-border: #e2e8f0;
+	--play-text: #1e293b;
+	--play-text-secondary: #64748b;
+	--play-accent: #3b82f6;
+	--play-accent-hover: #2563eb;
+	--play-success: #22c55e;
+	--play-radius: 8px;
+	--play-radius-lg: 12px;
+	--play-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+	--play-shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.1);
+	--play-transition: 150ms ease;
+	--play-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}

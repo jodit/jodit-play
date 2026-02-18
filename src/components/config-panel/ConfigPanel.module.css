@@ -1,0 +1,65 @@
+.panel {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	background: var(--play-surface);
+	border: 1px solid var(--play-border);
+	border-radius: var(--play-radius-lg);
+	overflow: hidden;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 12px 16px;
+	border-bottom: 1px solid var(--play-border);
+	background: var(--play-bg);
+	flex-shrink: 0;
+}
+
+.title {
+	font-size: 14px;
+	font-weight: 700;
+	color: var(--play-text);
+}
+
+.resetBtn {
+	padding: 4px 10px;
+	font-size: 12px;
+	font-weight: 500;
+	color: white;
+	background: var(--play-accent);
+	border: none;
+	border-radius: var(--play-radius);
+	cursor: pointer;
+	transition: background-color var(--play-transition);
+	font-family: var(--play-font);
+}
+
+.resetBtn:hover {
+	background: var(--play-accent-hover);
+}
+
+.sections {
+	flex: 1;
+	overflow-y: auto;
+}
+
+/* Custom scrollbar */
+.sections::-webkit-scrollbar {
+	width: 6px;
+}
+
+.sections::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.sections::-webkit-scrollbar-thumb {
+	background: var(--play-border);
+	border-radius: 3px;
+}
+
+.sections::-webkit-scrollbar-thumb:hover {
+	background: var(--play-text-secondary);
+}

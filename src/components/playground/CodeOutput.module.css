@@ -1,0 +1,86 @@
+.card {
+	border: 1px solid var(--play-border);
+	border-radius: var(--play-radius-lg);
+	overflow: hidden;
+	background: var(--play-surface);
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 8px 12px;
+	background: var(--play-bg);
+	border-bottom: 1px solid var(--play-border);
+}
+
+.tabs {
+	display: flex;
+	gap: 4px;
+}
+
+.tab,
+.tabActive {
+	padding: 4px 10px;
+	font-size: 12px;
+	font-weight: 500;
+	border: 1px solid transparent;
+	border-radius: var(--play-radius);
+	cursor: pointer;
+	font-family: var(--play-font);
+	transition:
+		background-color var(--play-transition),
+		color var(--play-transition);
+}
+
+.tab {
+	background: transparent;
+	color: var(--play-text-secondary);
+}
+
+.tab:hover {
+	background: var(--play-surface);
+}
+
+.tabActive {
+	background: var(--play-surface);
+	color: var(--play-text);
+	border-color: var(--play-border);
+}
+
+.copyBtn,
+.copyBtnDone {
+	padding: 4px 12px;
+	font-size: 12px;
+	font-weight: 500;
+	border: none;
+	border-radius: var(--play-radius);
+	cursor: pointer;
+	font-family: var(--play-font);
+	transition:
+		background-color var(--play-transition),
+		color var(--play-transition);
+}
+
+.copyBtn {
+	background: var(--play-accent);
+	color: white;
+}
+
+.copyBtn:hover {
+	background: var(--play-accent-hover);
+}
+
+.copyBtnDone {
+	background: var(--play-success);
+	color: white;
+}
+
+.code {
+	max-height: 300px;
+	overflow: auto;
+}
+
+.code pre {
+	margin: 0 !important;
+}

@@ -1,0 +1,38 @@
+.field {
+	padding: 6px 0;
+}
+
+.label {
+	display: block;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--play-text-secondary);
+	margin-bottom: 4px;
+	text-transform: uppercase;
+	letter-spacing: 0.02em;
+}
+
+.input {
+	display: block;
+	width: 100%;
+	height: 34px;
+	padding: 0 10px;
+	font-size: 13px;
+	color: var(--play-text);
+	background-color: var(--play-surface);
+	border: 1px solid var(--play-border);
+	border-radius: var(--play-radius);
+	outline: none;
+	transition:
+		border-color var(--play-transition),
+		box-shadow var(--play-transition);
+}
+
+.input:hover {
+	border-color: var(--play-accent);
+}
+
+.input:focus {
+	border-color: var(--play-accent);
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}

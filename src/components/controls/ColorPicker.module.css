@@ -1,0 +1,46 @@
+.field {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 6px 0;
+	position: relative;
+}
+
+.swatch {
+	padding: 4px;
+	background: var(--play-surface);
+	border: 1px solid var(--play-border);
+	border-radius: var(--play-radius);
+	cursor: pointer;
+	display: inline-flex;
+	transition: border-color var(--play-transition);
+}
+
+.swatch:hover {
+	border-color: var(--play-accent);
+}
+
+.color {
+	display: block;
+	width: 32px;
+	height: 16px;
+	border-radius: 3px;
+}
+
+.label {
+	font-size: 13px;
+	color: var(--play-text);
+}
+
+.popover {
+	position: absolute;
+	z-index: 10;
+	top: 100%;
+	left: 0;
+	margin-top: 4px;
+}
+
+.cover {
+	position: fixed;
+	inset: 0;
+}
